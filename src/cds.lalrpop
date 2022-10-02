@@ -1,0 +1,214 @@
+use crate::ast::traits::service_usable_term::ServiceUsableTerm;
+use crate::ast::traits::module_usable_term::ModuleUsableTerm;
+use crate::ast::traits::ast_term::ASTTerm;
+use crate::ast::name_term::NameTerm;
+use crate::ast::type_term::TypeTerm;
+use crate::ast::param_term::ParamTerm;
+use crate::ast::returns_term::ReturnsTerm;
+use crate::ast::field_term::FieldTerm;
+use crate::ast::function_term::FunctionTerm;
+use crate::ast::action_term::ActionTerm;
+use crate::ast::entity_term::EntityTerm;
+use crate::ast::service_term::ServiceTerm;
+use crate::ast::module_term::ModuleTerm;
+
+grammar;
+
+pub Module: Box<ModuleTerm> = {
+    <definitions:ModuleDefinitions> => {
+        ModuleTerm::new_boxed(definitions)
+    },
+}
+
+ModuleDefinitions: Vec<Box<dyn ModuleUsableTerm>> = {
+    <entity:Entity> => {
+        let mut definitions: Vec<Box<dyn ModuleUsableTerm>> = Vec::new();
+        definitions.push(entity);
+        definitions
+    },
+    <service:Service> => {
+        let mut definitions: Vec<Box<dyn ModuleUsableTerm>> = Vec::new();
+        definitions.push(service);
+        definitions
+    },
+    <type_definition:Type> => {
+        let mut definitions: Vec<Box<dyn ModuleUsableTerm>> = Vec::new();
+        definitions.push(type_definition);
+        definitions
+    },
+    <definitions:ModuleDefinitions> <entity:Entity> => {
+        let mut new_definitions = Vec::new();
+        new_definitions.extend(definitions);
+        new_definitions.push(entity);
+        new_definitions
+    },
+    <definitions:ModuleDefinitions> <service:Service> => {
+        let mut new_definitions = Vec::new();
+        new_definitions.extend(definitions);
+        new_definitions.push(service);
+        new_definitions
+    },
+    <definitions:ModuleDefinitions> <type_definition:Type> => {
+        let mut new_definitions = Vec::new();
+        new_definitions.extend(definitions);
+        new_definitions.push(type_definition);
+        new_definitions
+    }
+}
+
+Service: Box<ServiceTerm> = {
+    "service" <name:Name> "{" "}" => {
+        ServiceTerm::new_boxed(name, Vec::new())
+    },
+    "service" <name:Name> "{" <definitions:ServiceDefinitions> "}" => {
+        ServiceTerm::new_boxed(name, definitions)
+    },
+}
+
+ServiceDefinitions: Vec<Box<dyn ServiceUsableTerm>> = {
+    <entity:Entity> => {
+        let mut definitions: Vec<Box<dyn ServiceUsableTerm>> = Vec::new();
+        definitions.push(entity);
+        definitions
+    },
+    <action:Action> => {
+        let mut definitions: Vec<Box<dyn ServiceUsableTerm>> = Vec::new();
+        definitions.push(action);
+        definitions
+    },
+    <function:Function> => {
+        let mut definitions: Vec<Box<dyn ServiceUsableTerm>> = Vec::new();
+        definitions.push(function);
+        definitions
+    },
+    <type_definition:Type> => {
+        let mut definitions: Vec<Box<dyn ServiceUsableTerm>> = Vec::new();
+        definitions.push(type_definition);
+        definitions
+    },
+    <definitions:ServiceDefinitions> <entity:Entity> => {
+        let mut new_definitions = Vec::new();
+        new_definitions.extend(definitions);
+        new_definitions.push(entity);
+        new_definitions
+    },
+    <definitions:ServiceDefinitions> <action:Action> => {
+        let mut new_definitions = Vec::new();
+        new_definitions.extend(definitions);
+        new_definitions.push(action);
+        new_definitions
+    },
+    <definitions:ServiceDefinitions> <function:Function> => {
+        let mut new_definitions = Vec::new();
+        new_definitions.extend(definitions);
+        new_definitions.push(function);
+        new_definitions
+    },
+    <definitions:ServiceDefinitions> <type_definition:Type> => {
+        let mut new_definitions = Vec::new();
+        new_definitions.extend(definitions);
+        new_definitions.push(type_definition);
+        new_definitions
+    },
+}
+
+Entity: Box<EntityTerm> = {
+    "entity" <name:Name> "{" "}" => {
+        EntityTerm::new_boxed(name, Vec::new(), Vec::new())
+    },
+    "entity" <name:Name> "{" <fields:Fields> "}" => {
+        EntityTerm::new_boxed(name, Vec::new(), fields)
+    },
+    "entity" <name:Name> ":" <aspects:AspectNames> "{" "}" => {
+        EntityTerm::new_boxed(name, aspects, Vec::new())
+    },
+    "entity" <name:Name> ":" <aspects:AspectNames> "{" <fields:Fields> "}" => {
+        EntityTerm::new_boxed(name, aspects, fields)
+    }
+}
+
+AspectNames: Vec<Box<dyn ASTTerm>> = {
+    <aspect_name:Name> => {
+        let mut aspect_names: Vec<Box<dyn ASTTerm>> = Vec::new();
+        aspect_names.push(aspect_name);
+        aspect_names
+    },
+    <aspect_names:AspectNames> "," <aspect_name:Name> => {
+        let mut new_aspect_names: Vec<Box<dyn ASTTerm>> = Vec::new();
+        new_aspect_names.extend(aspect_names);
+        new_aspect_names.push(aspect_name);
+        new_aspect_names
+    }
+}
+
+Fields: Vec<Box<dyn ASTTerm>> = {
+    <field:Field> => {
+        let mut fields: Vec<Box<dyn ASTTerm>> = Vec::new();
+        fields.push(field);
+        fields
+    },
+    <fields:Fields> <field:Field> => {
+        let mut new_fields: Vec<Box<dyn ASTTerm>> = Vec::new();
+        new_fields.extend(fields);
+        new_fields.push(field);
+        new_fields
+    }
+}
+
+Field: Box<FieldTerm> = {
+    <name:Name> ":" <type_name:Name> ";" => FieldTerm::new_boxed(name, type_name)
+}
+
+Action: Box<ActionTerm> = {
+    "action" <name:Name> "(" <params:Params> ")" ";" => {
+        ActionTerm::new_boxed(name, params, None)
+    },
+    "action" <name:Name> "(" <params:Params> ")" "returns" <returns:Returns> ";" => {
+        ActionTerm::new_boxed(name, params, Some(returns))
+    }
+};
+
+Function: Box<FunctionTerm> = {
+    "function" <name:Name> "(" ")" "returns" <returns:Returns> ";" => {
+        FunctionTerm::new_boxed(name, Vec::new(), returns)
+    },
+    "function" <name:Name> "(" <params:Params> ")" "returns" <returns:Returns> ";" => {
+        FunctionTerm::new_boxed(name, params, returns)
+    }
+};
+
+Returns: Box<ReturnsTerm> = {
+    <name:Name> => ReturnsTerm::new_boxed(name),
+    "array" "of" <name:Name> => ReturnsTerm::new_arrayed_boxed(name),
+}
+
+Params: Vec<Box<dyn ASTTerm>> = {
+    <param:Param> => {
+        let mut params: Vec<Box<dyn ASTTerm>> = Vec::new();
+        params.push(param);
+        params
+    },
+    <params:Params> <param:Param> => {
+        let mut new_params: Vec<Box<dyn ASTTerm>> = Vec::new();
+        new_params.extend(params);
+        new_params.push(param);
+        new_params
+    },
+}
+
+Param: Box<ParamTerm> = {
+    <name:Name> ":" <type_name:Name> => ParamTerm::new_boxed(name, type_name)
+}
+
+Type: Box<TypeTerm> = {
+    "define" "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
+        TypeTerm::new_boxed(name, resolved_type_name)
+    },
+    "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
+        TypeTerm::new_boxed(name, resolved_type_name)
+    }
+}
+
+Name: Box<NameTerm> = {
+    <value:r"[a-zA-Z0-9-]+"> => NameTerm::new_boxed(value.to_string())
+}

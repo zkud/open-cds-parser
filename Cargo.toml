@@ -1,0 +1,11 @@
+[package]
+name = "cds-parser"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+lalrpop = "0.19.8"
+
+[dependencies]
+lalrpop-util = { version = "0.19.8", features = ["lexer"] }
+regex = "1"
