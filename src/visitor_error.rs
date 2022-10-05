@@ -7,9 +7,7 @@ pub struct VisitorError {
 
 impl VisitorError {
   pub fn new(message: String) -> VisitorError {
-    VisitorError {
-      message,
-    }
+    VisitorError { message }
   }
 
   pub fn get_message(&self) -> String {
@@ -19,10 +17,6 @@ impl VisitorError {
 
 impl fmt::Display for VisitorError {
   fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-    write!(
-      formatter,
-      "Visitor reason: {}",
-      self.message
-    )
+    write!(formatter, "Visitor reason: {}", self.message)
   }
 }

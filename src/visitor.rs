@@ -1,14 +1,14 @@
-use super::visitor_error::VisitorError;
-use super::ast::name_term::NameTerm;
-use super::ast::type_term::TypeTerm;
-use super::ast::param_term::ParamTerm;
-use super::ast::returns_term::ReturnsTerm;
-use super::ast::field_term::FieldTerm;
-use super::ast::function_term::FunctionTerm;
 use super::ast::action_term::ActionTerm;
 use super::ast::entity_term::EntityTerm;
-use super::ast::service_term::ServiceTerm;
+use super::ast::field_term::FieldTerm;
+use super::ast::function_term::FunctionTerm;
 use super::ast::module_term::ModuleTerm;
+use super::ast::name_term::NameTerm;
+use super::ast::param_term::ParamTerm;
+use super::ast::returns_term::ReturnsTerm;
+use super::ast::service_term::ServiceTerm;
+use super::ast::type_term::TypeTerm;
+use super::visitor_error::VisitorError;
 
 pub trait Visitor {
   fn process_name(&mut self, term: &NameTerm) -> Result<(), VisitorError> {

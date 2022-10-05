@@ -1,7 +1,7 @@
-use super::traits::ast_term::ASTTerm;
-use super::traits::module_usable_term::ModuleUsableTerm;
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
+use super::traits::ast_term::ASTTerm;
+use super::traits::module_usable_term::ModuleUsableTerm;
 
 pub struct ModuleTerm {
   definitions: Vec<Box<dyn ModuleUsableTerm>>,
