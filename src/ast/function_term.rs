@@ -1,6 +1,8 @@
 use super::traits::ast_term::ASTTerm;
 use super::traits::service_term_type::ServiceTermType;
 use super::traits::service_usable_term::ServiceUsableTerm;
+use super::super::visitor::Visitor;
+use super::super::visitor_error::VisitorError;
 
 pub struct FunctionTerm {
   name: Box<dyn ASTTerm>,
@@ -8,7 +10,19 @@ pub struct FunctionTerm {
   returned_type: Box<dyn ASTTerm>,
 }
 
-impl ASTTerm for FunctionTerm {}
+impl ASTTerm for FunctionTerm {
+  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    visitor.process_function(&self)?;
+
+    self.name.accept(visitor)?;
+    for param in self.params.iter() {
+      param.accept(visitor)?;
+    }
+    self.returned_type.accept(visitor)?;
+
+    Ok(())
+  }
+}
 
 impl ServiceUsableTerm for FunctionTerm {
   fn get_type(&self) -> ServiceTermType {

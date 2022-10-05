@@ -3,6 +3,8 @@ use super::traits::module_term_type::ModuleTermType;
 use super::traits::module_usable_term::ModuleUsableTerm;
 use super::traits::service_term_type::ServiceTermType;
 use super::traits::service_usable_term::ServiceUsableTerm;
+use super::super::visitor::Visitor;
+use super::super::visitor_error::VisitorError;
 
 pub struct EntityTerm {
   name: Box<dyn ASTTerm>,
@@ -10,7 +12,20 @@ pub struct EntityTerm {
   fields: Vec<Box<dyn ASTTerm>>,
 }
 
-impl ASTTerm for EntityTerm {}
+impl ASTTerm for EntityTerm {
+  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    visitor.process_entity(&self)?;
+
+    for aspect in self.applied_aspects.iter() {
+      aspect.accept(visitor)?;
+    }
+    for field in self.fields.iter() {
+      field.accept(visitor)?;
+    }
+
+    Ok(())
+  }
+}
 
 impl ModuleUsableTerm for EntityTerm {
   fn get_type(&self) -> ModuleTermType {

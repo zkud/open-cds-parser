@@ -3,6 +3,8 @@ use super::traits::module_term_type::ModuleTermType;
 use super::traits::module_usable_term::ModuleUsableTerm;
 use super::traits::service_term_type::ServiceTermType;
 use super::traits::service_usable_term::ServiceUsableTerm;
+use super::super::visitor::Visitor;
+use super::super::visitor_error::VisitorError;
 
 impl ModuleUsableTerm for TypeTerm {
   fn get_type(&self) -> ModuleTermType {
@@ -16,11 +18,18 @@ impl ServiceUsableTerm for TypeTerm {
   }
 }
 
-impl ASTTerm for TypeTerm {}
-
 pub struct TypeTerm {
   name: Box<dyn ASTTerm>,
   resolved_type_name: Box<dyn ASTTerm>,
+}
+
+impl ASTTerm for TypeTerm {
+  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    visitor.process_type(&self)?;
+    self.name.accept(visitor)?;
+    self.resolved_type_name.accept(visitor)?;
+    Ok(())
+  }
 }
 
 impl TypeTerm {

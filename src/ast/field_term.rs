@@ -1,11 +1,22 @@
 use super::traits::ast_term::ASTTerm;
+use super::super::visitor::Visitor;
+use super::super::visitor_error::VisitorError;
 
 pub struct FieldTerm {
   name: Box<dyn ASTTerm>,
   type_name: Box<dyn ASTTerm>,
 }
 
-impl ASTTerm for FieldTerm {}
+impl ASTTerm for FieldTerm {
+  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    visitor.process_field(&self)?;
+
+    self.name.accept(visitor)?;
+    self.type_name.accept(visitor)?;
+
+    Ok(())
+  }
+}
 
 impl FieldTerm {
   pub fn new_boxed(name: Box<dyn ASTTerm>, type_name: Box<dyn ASTTerm>) -> Box<FieldTerm> {

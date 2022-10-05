@@ -2,6 +2,9 @@ use super::traits::ast_term::ASTTerm;
 use super::traits::module_term_type::ModuleTermType;
 use super::traits::module_usable_term::ModuleUsableTerm;
 use super::traits::service_usable_term::ServiceUsableTerm;
+use super::super::visitor::Visitor;
+use super::super::visitor_error::VisitorError;
+
 
 pub struct ServiceTerm {
   name: Box<dyn ASTTerm>,
@@ -14,7 +17,16 @@ impl ModuleUsableTerm for ServiceTerm {
   }
 }
 
-impl ASTTerm for ServiceTerm {}
+impl ASTTerm for ServiceTerm {
+  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    visitor.process_service(&self)?;
+    self.name.accept(visitor)?;
+    for definition in self.definitions.iter() {
+      definition.accept(visitor)?;
+    }
+    Ok(())
+  }
+}
 
 impl ServiceTerm {
   pub fn new_boxed(
