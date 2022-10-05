@@ -3,6 +3,7 @@ use super::super::visitor_error::VisitorError;
 use super::ast_term::ASTTerm;
 use super::name_term::NameTerm;
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct TypeTerm {
   name: Box<NameTerm>,
   resolved_type_name: Box<NameTerm>,

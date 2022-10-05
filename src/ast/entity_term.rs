@@ -4,6 +4,7 @@ use super::ast_term::ASTTerm;
 use super::field_term::FieldTerm;
 use super::name_term::NameTerm;
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct EntityTerm {
   name: Box<NameTerm>,
   applied_aspects: Vec<Box<NameTerm>>,

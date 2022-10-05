@@ -5,6 +5,7 @@ use super::name_term::NameTerm;
 use super::param_term::ParamTerm;
 use super::returns_term::ReturnsTerm;
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct ActionTerm {
   name: Box<NameTerm>,
   params: Vec<Box<ParamTerm>>,

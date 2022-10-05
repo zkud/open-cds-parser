@@ -7,11 +7,13 @@ use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;
 use super::type_term::TypeTerm;
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct ServiceTerm {
   name: Box<NameTerm>,
   definitions: Vec<ServiceDefinition>,
 }
 
+#[derive(PartialEq, Eq, Debug)]
 pub enum ServiceDefinition {
   Entity(Box<EntityTerm>),
   Function(Box<FunctionTerm>),
@@ -28,7 +30,7 @@ impl ASTTerm for ServiceTerm {
         ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
         ServiceDefinition::Function(function) => function.accept(visitor)?,
         ServiceDefinition::Action(action) => action.accept(visitor)?,
-        ServiceDefinition::Type(_type) => _type.accept(visitor)?,
+        ServiceDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
       };
     }
     Ok(())

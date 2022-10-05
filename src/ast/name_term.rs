@@ -2,6 +2,7 @@ use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
 use super::ast_term::ASTTerm;
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct NameTerm {
   value: String,
 }

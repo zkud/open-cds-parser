@@ -5,10 +5,12 @@ use super::entity_term::EntityTerm;
 use super::service_term::ServiceTerm;
 use super::type_term::TypeTerm;
 
+#[derive(PartialEq, Eq, Debug)]
 pub struct ModuleTerm {
   definitions: Vec<ModuleDefinition>,
 }
 
+#[derive(PartialEq, Eq, Debug)]
 pub enum ModuleDefinition {
   Entity(Box<EntityTerm>),
   Type(Box<TypeTerm>),
@@ -22,7 +24,7 @@ impl ASTTerm for ModuleTerm {
     for param in self.definitions.iter() {
       match param {
         ModuleDefinition::Entity(entity) => entity.accept(visitor)?,
-        ModuleDefinition::Type(_type) => _type.accept(visitor)?,
+        ModuleDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
         ModuleDefinition::Service(service) => service.accept(visitor)?,
       };
     }
