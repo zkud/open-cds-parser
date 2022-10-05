@@ -1,9 +1,10 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
+use super::ast_term::ASTTerm;
+use super::name_term::NameTerm;
 
 pub struct ReturnsTerm {
-  type_name: Box<dyn ASTTerm>,
+  type_name: Box<NameTerm>,
   is_arrayed: bool,
 }
 
@@ -16,7 +17,7 @@ impl ASTTerm for ReturnsTerm {
 }
 
 impl ReturnsTerm {
-  pub fn type_name(&self) -> &dyn ASTTerm {
+  pub fn type_name(&self) -> &NameTerm {
     self.type_name.as_ref()
   }
 
@@ -24,22 +25,22 @@ impl ReturnsTerm {
     self.is_arrayed
   }
 
-  pub fn new_boxed(type_name: Box<dyn ASTTerm>) -> Box<ReturnsTerm> {
+  pub fn new_boxed(type_name: Box<NameTerm>) -> Box<ReturnsTerm> {
     Box::new(ReturnsTerm::new(type_name))
   }
 
-  pub fn new(type_name: Box<dyn ASTTerm>) -> ReturnsTerm {
+  pub fn new(type_name: Box<NameTerm>) -> ReturnsTerm {
     ReturnsTerm {
       type_name,
       is_arrayed: false,
     }
   }
 
-  pub fn new_arrayed_boxed(type_name: Box<dyn ASTTerm>) -> Box<ReturnsTerm> {
+  pub fn new_arrayed_boxed(type_name: Box<NameTerm>) -> Box<ReturnsTerm> {
     Box::new(ReturnsTerm::new_arrayed(type_name))
   }
 
-  pub fn new_arrayed(type_name: Box<dyn ASTTerm>) -> ReturnsTerm {
+  pub fn new_arrayed(type_name: Box<NameTerm>) -> ReturnsTerm {
     ReturnsTerm {
       type_name,
       is_arrayed: true,

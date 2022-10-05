@@ -1,26 +1,11 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
-use super::traits::module_term_type::ModuleTermType;
-use super::traits::module_usable_term::ModuleUsableTerm;
-use super::traits::service_term_type::ServiceTermType;
-use super::traits::service_usable_term::ServiceUsableTerm;
-
-impl ModuleUsableTerm for TypeTerm {
-  fn get_type(&self) -> ModuleTermType {
-    ModuleTermType::Type
-  }
-}
-
-impl ServiceUsableTerm for TypeTerm {
-  fn get_type(&self) -> ServiceTermType {
-    ServiceTermType::Type
-  }
-}
+use super::ast_term::ASTTerm;
+use super::name_term::NameTerm;
 
 pub struct TypeTerm {
-  name: Box<dyn ASTTerm>,
-  resolved_type_name: Box<dyn ASTTerm>,
+  name: Box<NameTerm>,
+  resolved_type_name: Box<NameTerm>,
 }
 
 impl ASTTerm for TypeTerm {
@@ -33,19 +18,19 @@ impl ASTTerm for TypeTerm {
 }
 
 impl TypeTerm {
-  pub fn name(&self) -> &dyn ASTTerm {
+  pub fn name(&self) -> &NameTerm {
     self.name.as_ref()
   }
 
-  pub fn resolved_type_name(&self) -> &dyn ASTTerm {
+  pub fn resolved_type_name(&self) -> &NameTerm {
     self.resolved_type_name.as_ref()
   }
 
-  pub fn new_boxed(name: Box<dyn ASTTerm>, resolved_type_name: Box<dyn ASTTerm>) -> Box<TypeTerm> {
+  pub fn new_boxed(name: Box<NameTerm>, resolved_type_name: Box<NameTerm>) -> Box<TypeTerm> {
     Box::new(TypeTerm::new(name, resolved_type_name))
   }
 
-  pub fn new(name: Box<dyn ASTTerm>, resolved_type_name: Box<dyn ASTTerm>) -> TypeTerm {
+  pub fn new(name: Box<NameTerm>, resolved_type_name: Box<NameTerm>) -> TypeTerm {
     TypeTerm {
       name,
       resolved_type_name,

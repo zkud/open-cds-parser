@@ -1,4 +1,5 @@
 pub mod action_term;
+pub mod ast_term;
 pub mod entity_term;
 pub mod field_term;
 pub mod function_term;
@@ -7,5 +8,4 @@ pub mod name_term;
 pub mod param_term;
 pub mod returns_term;
 pub mod service_term;
-pub mod traits;
 pub mod type_term;

@@ -1,10 +1,18 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
-use super::traits::module_usable_term::ModuleUsableTerm;
+use super::ast_term::ASTTerm;
+use super::entity_term::EntityTerm;
+use super::service_term::ServiceTerm;
+use super::type_term::TypeTerm;
 
 pub struct ModuleTerm {
-  definitions: Vec<Box<dyn ModuleUsableTerm>>,
+  definitions: Vec<ModuleDefinition>,
+}
+
+pub enum ModuleDefinition {
+  Entity(Box<EntityTerm>),
+  Type(Box<TypeTerm>),
+  Service(Box<ServiceTerm>),
 }
 
 impl ASTTerm for ModuleTerm {
@@ -12,7 +20,11 @@ impl ASTTerm for ModuleTerm {
     visitor.process_module(self)?;
 
     for param in self.definitions.iter() {
-      param.accept(visitor)?;
+      match param {
+        ModuleDefinition::Entity(entity) => entity.accept(visitor)?,
+        ModuleDefinition::Type(_type) => _type.accept(visitor)?,
+        ModuleDefinition::Service(service) => service.accept(visitor)?,
+      };
     }
 
     Ok(())
@@ -20,15 +32,15 @@ impl ASTTerm for ModuleTerm {
 }
 
 impl ModuleTerm {
-  pub fn definitions(&self) -> &[Box<dyn ModuleUsableTerm>] {
+  pub fn definitions(&self) -> &[ModuleDefinition] {
     self.definitions.as_ref()
   }
 
-  pub fn new_boxed(definitions: Vec<Box<dyn ModuleUsableTerm>>) -> Box<ModuleTerm> {
+  pub fn new_boxed(definitions: Vec<ModuleDefinition>) -> Box<ModuleTerm> {
     Box::new(ModuleTerm::new(definitions))
   }
 
-  pub fn new(definitions: Vec<Box<dyn ModuleUsableTerm>>) -> ModuleTerm {
+  pub fn new(definitions: Vec<ModuleDefinition>) -> ModuleTerm {
     ModuleTerm { definitions }
   }
 }

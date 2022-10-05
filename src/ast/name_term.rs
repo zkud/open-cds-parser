@@ -1,6 +1,6 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
+use super::ast_term::ASTTerm;
 
 pub struct NameTerm {
   value: String,

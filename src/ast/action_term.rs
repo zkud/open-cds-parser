@@ -1,13 +1,14 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
-use super::traits::service_term_type::ServiceTermType;
-use super::traits::service_usable_term::ServiceUsableTerm;
+use super::ast_term::ASTTerm;
+use super::name_term::NameTerm;
+use super::param_term::ParamTerm;
+use super::returns_term::ReturnsTerm;
 
 pub struct ActionTerm {
-  name: Box<dyn ASTTerm>,
-  params: Vec<Box<dyn ASTTerm>>,
-  returned_type: Option<Box<dyn ASTTerm>>,
+  name: Box<NameTerm>,
+  params: Vec<Box<ParamTerm>>,
+  returned_type: Option<Box<ReturnsTerm>>,
 }
 
 impl ASTTerm for ActionTerm {
@@ -26,37 +27,31 @@ impl ASTTerm for ActionTerm {
   }
 }
 
-impl ServiceUsableTerm for ActionTerm {
-  fn get_type(&self) -> ServiceTermType {
-    ServiceTermType::Action
-  }
-}
-
 impl ActionTerm {
-  pub fn name(&self) -> &Box<dyn ASTTerm> {
+  pub fn name(&self) -> &NameTerm {
     &self.name
   }
 
-  pub fn params(&self) -> &[Box<dyn ASTTerm>] {
+  pub fn params(&self) -> &[Box<ParamTerm>] {
     &self.params
   }
 
-  pub fn returned_type(&self) -> &Option<Box<dyn ASTTerm>> {
+  pub fn returned_type(&self) -> &Option<Box<ReturnsTerm>> {
     &self.returned_type
   }
 
   pub fn new_boxed(
-    name: Box<dyn ASTTerm>,
-    params: Vec<Box<dyn ASTTerm>>,
-    returned_type: Option<Box<dyn ASTTerm>>,
+    name: Box<NameTerm>,
+    params: Vec<Box<ParamTerm>>,
+    returned_type: Option<Box<ReturnsTerm>>,
   ) -> Box<ActionTerm> {
     Box::new(ActionTerm::new(name, params, returned_type))
   }
 
   pub fn new(
-    name: Box<dyn ASTTerm>,
-    params: Vec<Box<dyn ASTTerm>>,
-    returned_type: Option<Box<dyn ASTTerm>>,
+    name: Box<NameTerm>,
+    params: Vec<Box<ParamTerm>>,
+    returned_type: Option<Box<ReturnsTerm>>,
   ) -> ActionTerm {
     ActionTerm {
       name,

@@ -1,10 +1,11 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
+use super::ast_term::ASTTerm;
+use super::name_term::NameTerm;
 
 pub struct ParamTerm {
-  name: Box<dyn ASTTerm>,
-  type_name: Box<dyn ASTTerm>,
+  name: Box<NameTerm>,
+  type_name: Box<NameTerm>,
 }
 
 impl ASTTerm for ParamTerm {
@@ -19,19 +20,19 @@ impl ASTTerm for ParamTerm {
 }
 
 impl ParamTerm {
-  pub fn name(&self) -> &dyn ASTTerm {
+  pub fn name(&self) -> &NameTerm {
     self.name.as_ref()
   }
 
-  pub fn type_name(&self) -> &dyn ASTTerm {
+  pub fn type_name(&self) -> &NameTerm {
     self.type_name.as_ref()
   }
 
-  pub fn new_boxed(name: Box<dyn ASTTerm>, type_name: Box<dyn ASTTerm>) -> Box<ParamTerm> {
+  pub fn new_boxed(name: Box<NameTerm>, type_name: Box<NameTerm>) -> Box<ParamTerm> {
     Box::new(ParamTerm::new(name, type_name))
   }
 
-  pub fn new(name: Box<dyn ASTTerm>, type_name: Box<dyn ASTTerm>) -> ParamTerm {
+  pub fn new(name: Box<NameTerm>, type_name: Box<NameTerm>) -> ParamTerm {
     ParamTerm { name, type_name }
   }
 }

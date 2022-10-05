@@ -1,10 +1,11 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
+use super::ast_term::ASTTerm;
+use super::name_term::NameTerm;
 
 pub struct FieldTerm {
-  name: Box<dyn ASTTerm>,
-  type_name: Box<dyn ASTTerm>,
+  name: Box<NameTerm>,
+  type_name: Box<NameTerm>,
 }
 
 impl ASTTerm for FieldTerm {
@@ -19,19 +20,19 @@ impl ASTTerm for FieldTerm {
 }
 
 impl FieldTerm {
-  pub fn name(&self) -> &Box<dyn ASTTerm> {
+  pub fn name(&self) -> &NameTerm {
     &self.name
   }
 
-  pub fn type_name(&self) -> &Box<dyn ASTTerm> {
+  pub fn type_name(&self) -> &NameTerm {
     &self.type_name
   }
 
-  pub fn new_boxed(name: Box<dyn ASTTerm>, type_name: Box<dyn ASTTerm>) -> Box<FieldTerm> {
+  pub fn new_boxed(name: Box<NameTerm>, type_name: Box<NameTerm>) -> Box<FieldTerm> {
     Box::new(FieldTerm::new(name, type_name))
   }
 
-  pub fn new(name: Box<dyn ASTTerm>, type_name: Box<dyn ASTTerm>) -> FieldTerm {
+  pub fn new(name: Box<NameTerm>, type_name: Box<NameTerm>) -> FieldTerm {
     FieldTerm { name, type_name }
   }
 }

@@ -1,19 +1,22 @@
 use super::super::visitor::Visitor;
 use super::super::visitor_error::VisitorError;
-use super::traits::ast_term::ASTTerm;
-use super::traits::module_term_type::ModuleTermType;
-use super::traits::module_usable_term::ModuleUsableTerm;
-use super::traits::service_usable_term::ServiceUsableTerm;
+use super::action_term::ActionTerm;
+use super::ast_term::ASTTerm;
+use super::entity_term::EntityTerm;
+use super::function_term::FunctionTerm;
+use super::name_term::NameTerm;
+use super::type_term::TypeTerm;
 
 pub struct ServiceTerm {
-  name: Box<dyn ASTTerm>,
-  definitions: Vec<Box<dyn ServiceUsableTerm>>,
+  name: Box<NameTerm>,
+  definitions: Vec<ServiceDefinition>,
 }
 
-impl ModuleUsableTerm for ServiceTerm {
-  fn get_type(&self) -> ModuleTermType {
-    ModuleTermType::Service
-  }
+pub enum ServiceDefinition {
+  Entity(Box<EntityTerm>),
+  Function(Box<FunctionTerm>),
+  Action(Box<ActionTerm>),
+  Type(Box<TypeTerm>),
 }
 
 impl ASTTerm for ServiceTerm {
@@ -21,29 +24,31 @@ impl ASTTerm for ServiceTerm {
     visitor.process_service(self)?;
     self.name.accept(visitor)?;
     for definition in self.definitions.iter() {
-      definition.accept(visitor)?;
+      match definition {
+        ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
+        ServiceDefinition::Function(function) => function.accept(visitor)?,
+        ServiceDefinition::Action(action) => action.accept(visitor)?,
+        ServiceDefinition::Type(_type) => _type.accept(visitor)?,
+      };
     }
     Ok(())
   }
 }
 
 impl ServiceTerm {
-  pub fn name(&self) -> &dyn ASTTerm {
+  pub fn name(&self) -> &NameTerm {
     self.name.as_ref()
   }
 
-  pub fn definitions(&self) -> &[Box<dyn ServiceUsableTerm>] {
+  pub fn definitions(&self) -> &[ServiceDefinition] {
     self.definitions.as_ref()
   }
 
-  pub fn new_boxed(
-    name: Box<dyn ASTTerm>,
-    definitions: Vec<Box<dyn ServiceUsableTerm>>,
-  ) -> Box<ServiceTerm> {
+  pub fn new_boxed(name: Box<NameTerm>, definitions: Vec<ServiceDefinition>) -> Box<ServiceTerm> {
     Box::new(ServiceTerm::new(name, definitions))
   }
 
-  pub fn new(name: Box<dyn ASTTerm>, definitions: Vec<Box<dyn ServiceUsableTerm>>) -> ServiceTerm {
+  pub fn new(name: Box<NameTerm>, definitions: Vec<ServiceDefinition>) -> ServiceTerm {
     ServiceTerm { name, definitions }
   }
 }
