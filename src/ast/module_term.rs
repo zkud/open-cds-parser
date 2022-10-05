@@ -9,7 +9,7 @@ pub struct ModuleTerm {
 
 impl ASTTerm for ModuleTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_module(&self)?;
+    visitor.process_module(self)?;
 
     for param in self.definitions.iter() {
       param.accept(visitor)?;

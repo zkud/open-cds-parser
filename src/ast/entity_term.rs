@@ -14,7 +14,7 @@ pub struct EntityTerm {
 
 impl ASTTerm for EntityTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_entity(&self)?;
+    visitor.process_entity(self)?;
 
     for aspect in self.applied_aspects.iter() {
       aspect.accept(visitor)?;

@@ -9,7 +9,7 @@ pub struct ReturnsTerm {
 
 impl ASTTerm for ReturnsTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_returns(&self)?;
+    visitor.process_returns(self)?;
     self.type_name.accept(visitor)?;
     Ok(())
   }

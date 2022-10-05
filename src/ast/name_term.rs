@@ -8,7 +8,7 @@ pub struct NameTerm {
 
 impl ASTTerm for NameTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_name(&self)?;
+    visitor.process_name(self)?;
     Ok(())
   }
 }

@@ -18,7 +18,7 @@ impl ModuleUsableTerm for ServiceTerm {
 
 impl ASTTerm for ServiceTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_service(&self)?;
+    visitor.process_service(self)?;
     self.name.accept(visitor)?;
     for definition in self.definitions.iter() {
       definition.accept(visitor)?;

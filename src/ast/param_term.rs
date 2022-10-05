@@ -9,7 +9,7 @@ pub struct ParamTerm {
 
 impl ASTTerm for ParamTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_param(&self)?;
+    visitor.process_param(self)?;
 
     self.name.accept(visitor)?;
     self.type_name.accept(visitor)?;

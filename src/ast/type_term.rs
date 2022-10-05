@@ -25,7 +25,7 @@ pub struct TypeTerm {
 
 impl ASTTerm for TypeTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_type(&self)?;
+    visitor.process_type(self)?;
     self.name.accept(visitor)?;
     self.resolved_type_name.accept(visitor)?;
     Ok(())

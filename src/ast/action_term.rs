@@ -12,7 +12,7 @@ pub struct ActionTerm {
 
 impl ASTTerm for ActionTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_action(&self)?;
+    visitor.process_action(self)?;
 
     self.name.accept(visitor)?;
     for param in self.params.iter() {

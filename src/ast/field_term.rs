@@ -9,7 +9,7 @@ pub struct FieldTerm {
 
 impl ASTTerm for FieldTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_field(&self)?;
+    visitor.process_field(self)?;
 
     self.name.accept(visitor)?;
     self.type_name.accept(visitor)?;

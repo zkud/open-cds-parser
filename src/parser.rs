@@ -83,7 +83,7 @@ mod tests {
       )
       .unwrap();
 
-    let result = Parser::new("test_correct.cds".to_string()).parse().unwrap();
+    let _result = Parser::new("test_correct.cds".to_string()).parse().unwrap();
 
     remove_file("test_correct.cds").unwrap();
   }

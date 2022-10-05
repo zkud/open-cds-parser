@@ -12,7 +12,7 @@ pub struct FunctionTerm {
 
 impl ASTTerm for FunctionTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_function(&self)?;
+    visitor.process_function(self)?;
 
     self.name.accept(visitor)?;
     for param in self.params.iter() {

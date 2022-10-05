@@ -11,34 +11,34 @@ use super::ast::type_term::TypeTerm;
 use super::visitor_error::VisitorError;
 
 pub trait Visitor {
-  fn process_name(&mut self, term: &NameTerm) -> Result<(), VisitorError> {
+  fn process_name(&mut self, _term: &NameTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_type(&mut self, term: &TypeTerm) -> Result<(), VisitorError> {
+  fn process_type(&mut self, _term: &TypeTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_param(&mut self, term: &ParamTerm) -> Result<(), VisitorError> {
+  fn process_param(&mut self, _term: &ParamTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_returns(&mut self, term: &ReturnsTerm) -> Result<(), VisitorError> {
+  fn process_returns(&mut self, _term: &ReturnsTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_field(&mut self, term: &FieldTerm) -> Result<(), VisitorError> {
+  fn process_field(&mut self, _term: &FieldTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_function(&mut self, term: &FunctionTerm) -> Result<(), VisitorError> {
+  fn process_function(&mut self, _term: &FunctionTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_action(&mut self, term: &ActionTerm) -> Result<(), VisitorError> {
+  fn process_action(&mut self, _term: &ActionTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_entity(&mut self, term: &EntityTerm) -> Result<(), VisitorError> {
+  fn process_entity(&mut self, _term: &EntityTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_service(&mut self, term: &ServiceTerm) -> Result<(), VisitorError> {
+  fn process_service(&mut self, _term: &ServiceTerm) -> Result<(), VisitorError> {
     Ok(())
   }
-  fn process_module(&mut self, term: &ModuleTerm) -> Result<(), VisitorError> {
+  fn process_module(&mut self, _term: &ModuleTerm) -> Result<(), VisitorError> {
     Ok(())
   }
 }
