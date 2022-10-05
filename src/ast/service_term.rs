@@ -28,6 +28,14 @@ impl ASTTerm for ServiceTerm {
 }
 
 impl ServiceTerm {
+  pub fn name(&self) -> &dyn ASTTerm {
+    self.name.as_ref()
+  }
+
+  pub fn definitions(&self) -> &[Box<dyn ServiceUsableTerm>] {
+    self.definitions.as_ref()
+  }
+
   pub fn new_boxed(
     name: Box<dyn ASTTerm>,
     definitions: Vec<Box<dyn ServiceUsableTerm>>,

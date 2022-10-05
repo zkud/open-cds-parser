@@ -40,6 +40,18 @@ impl ServiceUsableTerm for EntityTerm {
 }
 
 impl EntityTerm {
+  pub fn name(&self) -> &Box<dyn ASTTerm> {
+    &self.name
+  }
+
+  pub fn applied_aspects(&self) -> &Vec<Box<dyn ASTTerm>> {
+    &self.applied_aspects
+  }
+
+  pub fn fields(&self) -> &Vec<Box<dyn ASTTerm>> {
+    &self.fields
+  }
+
   pub fn new_boxed(
     name: Box<dyn ASTTerm>,
     applied_aspects: Vec<Box<dyn ASTTerm>>,

@@ -31,6 +31,14 @@ impl ServiceUsableTerm for FunctionTerm {
 }
 
 impl FunctionTerm {
+  pub fn name(&self) -> &Box<dyn ASTTerm> {
+    &self.name
+  }
+
+  pub fn params(&self) -> &[Box<dyn ASTTerm>] {
+    &self.params
+  }
+
   pub fn new_boxed(
     name: Box<dyn ASTTerm>,
     params: Vec<Box<dyn ASTTerm>>,

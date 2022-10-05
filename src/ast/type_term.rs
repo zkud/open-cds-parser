@@ -33,6 +33,14 @@ impl ASTTerm for TypeTerm {
 }
 
 impl TypeTerm {
+  pub fn name(&self) -> &dyn ASTTerm {
+    self.name.as_ref()
+  }
+
+  pub fn resolved_type_name(&self) -> &dyn ASTTerm {
+    self.resolved_type_name.as_ref()
+  }
+
   pub fn new_boxed(name: Box<dyn ASTTerm>, resolved_type_name: Box<dyn ASTTerm>) -> Box<TypeTerm> {
     Box::new(TypeTerm::new(name, resolved_type_name))
   }

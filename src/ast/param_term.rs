@@ -19,6 +19,14 @@ impl ASTTerm for ParamTerm {
 }
 
 impl ParamTerm {
+  pub fn name(&self) -> &dyn ASTTerm {
+    self.name.as_ref()
+  }
+
+  pub fn type_name(&self) -> &dyn ASTTerm {
+    self.type_name.as_ref()
+  }
+
   pub fn new_boxed(name: Box<dyn ASTTerm>, type_name: Box<dyn ASTTerm>) -> Box<ParamTerm> {
     Box::new(ParamTerm::new(name, type_name))
   }

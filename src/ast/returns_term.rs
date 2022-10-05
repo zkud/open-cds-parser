@@ -16,6 +16,14 @@ impl ASTTerm for ReturnsTerm {
 }
 
 impl ReturnsTerm {
+  pub fn type_name(&self) -> &dyn ASTTerm {
+    self.type_name.as_ref()
+  }
+
+  pub fn is_arrayed(&self) -> bool {
+    self.is_arrayed
+  }
+
   pub fn new_boxed(type_name: Box<dyn ASTTerm>) -> Box<ReturnsTerm> {
     Box::new(ReturnsTerm::new(type_name))
   }

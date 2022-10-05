@@ -20,6 +20,10 @@ impl ASTTerm for ModuleTerm {
 }
 
 impl ModuleTerm {
+  pub fn definitions(&self) -> &[Box<dyn ModuleUsableTerm>] {
+    self.definitions.as_ref()
+  }
+
   pub fn new_boxed(definitions: Vec<Box<dyn ModuleUsableTerm>>) -> Box<ModuleTerm> {
     Box::new(ModuleTerm::new(definitions))
   }

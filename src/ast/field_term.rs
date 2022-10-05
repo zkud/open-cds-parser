@@ -19,6 +19,14 @@ impl ASTTerm for FieldTerm {
 }
 
 impl FieldTerm {
+  pub fn name(&self) -> &Box<dyn ASTTerm> {
+    &self.name
+  }
+
+  pub fn type_name(&self) -> &Box<dyn ASTTerm> {
+    &self.type_name
+  }
+
   pub fn new_boxed(name: Box<dyn ASTTerm>, type_name: Box<dyn ASTTerm>) -> Box<FieldTerm> {
     Box::new(FieldTerm::new(name, type_name))
   }

@@ -33,6 +33,18 @@ impl ServiceUsableTerm for ActionTerm {
 }
 
 impl ActionTerm {
+  pub fn name(&self) -> &Box<dyn ASTTerm> {
+    &self.name
+  }
+
+  pub fn params(&self) -> &[Box<dyn ASTTerm>] {
+    &self.params
+  }
+
+  pub fn returned_type(&self) -> &Option<Box<dyn ASTTerm>> {
+    &self.returned_type
+  }
+
   pub fn new_boxed(
     name: Box<dyn ASTTerm>,
     params: Vec<Box<dyn ASTTerm>>,

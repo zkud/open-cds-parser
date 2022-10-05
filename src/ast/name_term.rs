@@ -14,6 +14,10 @@ impl ASTTerm for NameTerm {
 }
 
 impl NameTerm {
+  pub fn value(&self) -> &str {
+    self.value.as_ref()
+  }
+
   pub fn new_boxed(value: String) -> Box<NameTerm> {
     Box::new(NameTerm::new(value))
   }
