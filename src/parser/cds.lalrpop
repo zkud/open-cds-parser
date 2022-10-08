@@ -1,13 +1,7 @@
-use crate::ast::name_term::NameTerm;
-use crate::ast::type_term::TypeTerm;
-use crate::ast::param_term::ParamTerm;
-use crate::ast::returns_term::ReturnsTerm;
-use crate::ast::field_term::FieldTerm;
-use crate::ast::function_term::FunctionTerm;
-use crate::ast::action_term::ActionTerm;
-use crate::ast::entity_term::EntityTerm;
-use crate::ast::service_term::{ServiceTerm, ServiceDefinition};
-use crate::ast::module_term::{ModuleTerm, ModuleDefinition};
+use crate::ast::{
+  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
+  ParamTerm, ReturnsTerm, ServiceDefinition, ServiceTerm, TypeTerm,
+};
 
 grammar;
 

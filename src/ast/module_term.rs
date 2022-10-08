@@ -1,5 +1,4 @@
-use super::super::visitor::Visitor;
-use super::super::visitor_error::VisitorError;
+use super::super::visitor::{Visitor, VisitorError};
 use super::ast_term::ASTTerm;
 use super::entity_term::EntityTerm;
 use super::service_term::ServiceTerm;

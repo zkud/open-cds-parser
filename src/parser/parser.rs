@@ -3,7 +3,7 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
 
-use super::ast::module_term::ModuleTerm;
+use super::super::ast::ModuleTerm;
 use super::parse_error::ParseError;
 use super::parse_error::ParseErrorType;
 
