@@ -1,0 +1,120 @@
+name: CI
+
+on: [push, pull_request]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        settings:
+          - host: macos-latest
+          - host: windows-latest
+          - host: ubuntu-latest
+
+    name: Build on ${{ matrix.settings.host }}
+    runs-on: ${{ matrix.settings.host }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build
+        run: cargo build --all-features
+
+  test:
+    needs:
+      - build
+
+    strategy:
+      matrix:
+        settings:
+          - host: macos-latest
+          - host: windows-latest
+          - host: ubuntu-latest
+
+    name: Test on ${{ matrix.settings.host }}
+    runs-on: ${{ matrix.settings.host }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Test
+        run: cargo test --verbose
+
+  lint:
+    needs:
+      - build
+      - test
+
+    name: Lint
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Install dependencies
+      run: |
+        rustup component add rustfmt
+        rustup component add clippy
+        rustfmt --version
+    - name: Formatting lint
+      run: rustfmt ./src/lib.rs --check
+    - name: Semantic lint
+      run: cargo clippy
+
+  code-cov:
+    needs:
+    - build
+    - test
+
+    name: Code Coverage
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install stable toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          override: true
+
+      - name: Run cargo-tarpaulin
+        uses: actions-rs/tarpaulin@v0.1
+        with:
+          version: '0.18.0'
+          args: '--ignore-tests --exclude-files src/main.rs,src/lib.rs,src/xml_tags/types.rs -- --test-threads 4'
+
+      - name: Upload to codecov.io
+        uses: codecov/codecov-action@v3.1.0
+        with:
+          token: ${{secrets.CODECOV_TOKEN}}
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: code-coverage-report
+          path: cobertura.xml
+
+  code-scan:
+    needs:
+    - build
+    - test
+
+    name: Code Scan
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Perform Scan
+      uses: ShiftLeftSecurity/scan-action@master
+      env:
+        WORKSPACE: ""
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SCAN_AUTO_BUILD: true
+      with:
+        output: reports
+    - name: Upload report
+      uses: github/codeql-action/upload-sarif@v2
+      with:
+        sarif_file: reports

@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "cargo"
+    directory: "/"
+    labels:
+      - "dependencies"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "zkud"
+      
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    labels:
+      - "dependencies"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "zkud"
