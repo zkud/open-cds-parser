@@ -6,6 +6,7 @@ mod function_term;
 mod module_term;
 mod name_term;
 mod param_term;
+mod reference;
 mod returns_term;
 mod service_term;
 mod type_term;
