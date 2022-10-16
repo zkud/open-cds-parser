@@ -1,5 +1,6 @@
 use super::super::visitor::{Visitor, VisitorError};
-use super::ast_term::ASTTerm;
+use super::common::ast_term::ASTTerm;
+use super::common::term_iter::TermIter;
 use super::name_term::NameTerm;
 use super::param_term::ParamTerm;
 use super::returns_term::ReturnsTerm;
@@ -16,9 +17,7 @@ impl ASTTerm for ActionTerm {
     visitor.process_action(self)?;
 
     self.name.accept(visitor)?;
-    for param in self.params.iter() {
-      param.accept(visitor)?;
-    }
+    self.params.accept(visitor)?;
     if let Some(ref returned_type) = self.returned_type {
       returned_type.accept(visitor)?;
     }
@@ -32,8 +31,8 @@ impl ActionTerm {
     &self.name
   }
 
-  pub fn params(&self) -> &[Box<ParamTerm>] {
-    &self.params
+  pub fn params<'s>(&'s self) -> TermIter<'s, ParamTerm> {
+    TermIter::new_from_deref_vec(&self.params)
   }
 
   pub fn returned_type(&self) -> &Option<Box<ReturnsTerm>> {

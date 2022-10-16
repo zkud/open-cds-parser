@@ -1,4 +1,4 @@
-use super::super::visitor::{Visitor, VisitorError};
+use super::super::super::visitor::{Visitor, VisitorError};
 use super::ast_term::ASTTerm;
 use std::fmt::Debug;
 
@@ -9,7 +9,7 @@ pub enum Reference<T: PartialEq + Eq + Debug> {
   Virtual { qualifier: String },
 }
 
-impl<T: ASTTerm> ASTTerm for Reference<T> {
+impl<T: ASTTerm + PartialEq + Eq + Debug> ASTTerm for Reference<T> {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
     if let Reference::Fulfilled(value) = self {
       value.accept(visitor)?;

@@ -1,12 +1,14 @@
 use super::super::visitor::{Visitor, VisitorError};
-use super::ast_term::ASTTerm;
+use super::common::ast_term::ASTTerm;
+use super::common::reference::Reference;
+use super::common::term_iter::TermIter;
 use super::field_term::FieldTerm;
 use super::name_term::NameTerm;
 
 #[derive(PartialEq, Eq, Debug)]
 pub struct EntityTerm {
   name: Box<NameTerm>,
-  applied_aspects: Vec<Box<NameTerm>>,
+  applied_aspects: Vec<Reference<Box<NameTerm>>>,
   fields: Vec<Box<FieldTerm>>,
 }
 
@@ -14,12 +16,8 @@ impl ASTTerm for EntityTerm {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
     visitor.process_entity(self)?;
 
-    for aspect in self.applied_aspects.iter() {
-      aspect.accept(visitor)?;
-    }
-    for field in self.fields.iter() {
-      field.accept(visitor)?;
-    }
+    self.applied_aspects.accept(visitor)?;
+    self.fields.accept(visitor)?;
 
     Ok(())
   }
@@ -30,12 +28,12 @@ impl EntityTerm {
     &self.name
   }
 
-  pub fn applied_aspects(&self) -> &[Box<NameTerm>] {
-    &self.applied_aspects
+  pub fn applied_aspects<'s>(&'s self) -> TermIter<'s, NameTerm> {
+    TermIter::new_from_referenced_deref_vec(&self.applied_aspects)
   }
 
-  pub fn fields(&self) -> &[Box<FieldTerm>] {
-    &self.fields
+  pub fn fields<'s>(&'s self) -> TermIter<'s, FieldTerm> {
+    TermIter::new_from_deref_vec(&self.fields)
   }
 
   pub fn new_boxed(
@@ -51,9 +49,13 @@ impl EntityTerm {
     applied_aspects: Vec<Box<NameTerm>>,
     fields: Vec<Box<FieldTerm>>,
   ) -> EntityTerm {
+    let aspects = applied_aspects
+      .into_iter()
+      .map(|x| Reference::new_fulfilled(x))
+      .collect();
     EntityTerm {
       name,
-      applied_aspects,
+      applied_aspects: aspects,
       fields,
     }
   }

@@ -1,18 +1,18 @@
 mod action_term;
-mod ast_term;
+mod common;
 mod entity_term;
 mod field_term;
 mod function_term;
 mod module_term;
 mod name_term;
 mod param_term;
-mod reference;
 mod returns_term;
 mod service_term;
 mod type_term;
 
 pub use action_term::ActionTerm;
-pub use ast_term::ASTTerm;
+pub use common::ast_term::ASTTerm;
+pub use common::term_iter::TermIter;
 pub use entity_term::EntityTerm;
 pub use field_term::FieldTerm;
 pub use function_term::FunctionTerm;

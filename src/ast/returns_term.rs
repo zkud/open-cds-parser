@@ -1,5 +1,5 @@
 use super::super::visitor::{Visitor, VisitorError};
-use super::ast_term::ASTTerm;
+use super::common::ast_term::ASTTerm;
 use super::name_term::NameTerm;
 
 #[derive(PartialEq, Eq, Debug)]

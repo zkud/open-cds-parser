@@ -1,5 +1,6 @@
 use super::super::visitor::{Visitor, VisitorError};
-use super::ast_term::ASTTerm;
+use super::common::ast_term::ASTTerm;
+use super::common::term_iter::TermIter;
 use super::name_term::NameTerm;
 use super::param_term::ParamTerm;
 use super::returns_term::ReturnsTerm;
@@ -30,8 +31,8 @@ impl FunctionTerm {
     &self.name
   }
 
-  pub fn params(&self) -> &[Box<ParamTerm>] {
-    &self.params
+  pub fn params<'s>(&'s self) -> TermIter<'s, ParamTerm> {
+    TermIter::new_from_deref_vec(&self.params)
   }
 
   pub fn returned_type(&self) -> &Box<ReturnsTerm> {
