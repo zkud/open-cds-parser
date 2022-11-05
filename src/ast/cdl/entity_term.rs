@@ -1,7 +1,7 @@
-use super::super::visitor::{Visitor, VisitorError};
-use super::common::ast_term::ASTTerm;
-use super::common::reference::Reference;
-use super::common::term_iter::TermIter;
+use super::super::super::visitor::{Visitor, VisitorError};
+use super::super::common::ast_term::ASTTerm;
+use super::super::common::reference::Reference;
+use super::super::common::term_iter::TermIter;
 use super::field_term::FieldTerm;
 use super::name_term::NameTerm;
 

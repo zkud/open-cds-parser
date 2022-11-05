@@ -1,6 +1,6 @@
-use super::super::visitor::{Visitor, VisitorError};
+use super::super::super::visitor::{Visitor, VisitorError};
+use super::super::common::ast_term::ASTTerm;
 use super::action_term::ActionTerm;
-use super::common::ast_term::ASTTerm;
 use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;

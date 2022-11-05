@@ -1,24 +1,5 @@
-mod action_term;
+mod cdl;
 mod common;
-mod entity_term;
-mod field_term;
-mod function_term;
-mod module_term;
-mod name_term;
-mod param_term;
-mod returns_term;
-mod service_term;
-mod type_term;
 
-pub use action_term::ActionTerm;
-pub use common::ast_term::ASTTerm;
-pub use common::term_iter::TermIter;
-pub use entity_term::EntityTerm;
-pub use field_term::FieldTerm;
-pub use function_term::FunctionTerm;
-pub use module_term::{ModuleDefinition, ModuleTerm};
-pub use name_term::NameTerm;
-pub use param_term::ParamTerm;
-pub use returns_term::ReturnsTerm;
-pub use service_term::{ServiceDefinition, ServiceTerm};
-pub use type_term::TypeTerm;
+pub use cdl::*;
+pub use common::*;

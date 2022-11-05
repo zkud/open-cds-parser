@@ -1,5 +1,5 @@
-use super::super::visitor::{Visitor, VisitorError};
-use super::common::ast_term::ASTTerm;
+use super::super::super::visitor::{Visitor, VisitorError};
+use super::super::common::ast_term::ASTTerm;
 
 #[derive(PartialEq, Eq, Debug)]
 pub struct NameTerm {
