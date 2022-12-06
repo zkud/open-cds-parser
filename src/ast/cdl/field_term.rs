@@ -5,9 +5,9 @@ use ast_term_derive::ASTTerm;
 
 #[derive(PartialEq, Eq, Debug, ASTTerm)]
 pub struct FieldTerm {
-  #[sub_term]
+  #[prop]
   name: Box<NameTerm>,
-  #[sub_term]
+  #[prop]
   type_name: Box<NameTerm>,
 }
 
