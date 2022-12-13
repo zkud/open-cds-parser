@@ -4,14 +4,11 @@ use super::super::common::term_iter::TermIter;
 use super::name_term::NameTerm;
 use super::param_term::ParamTerm;
 use super::returns_term::ReturnsTerm;
-use ast_term_derive::ASTTerm;
 
-#[derive(PartialEq, Eq, Debug, ASTTerm)]
+#[derive(PartialEq, Eq, Debug)]
 pub struct ActionTerm {
-  #[prop]
   name: Box<NameTerm>,
   params: Vec<Box<ParamTerm>>,
-  #[prop]
   returned_type: Option<Box<ReturnsTerm>>,
 }
 
@@ -30,8 +27,16 @@ impl ASTTerm for ActionTerm {
 }
 
 impl ActionTerm {
+  pub fn name(&self) -> &NameTerm {
+    &self.name
+  }
+
   pub fn params<'s>(&'s self) -> TermIter<'s, ParamTerm> {
     TermIter::new_from_deref_vec(&self.params)
+  }
+
+  pub fn returned_type(&self) -> &Option<Box<ReturnsTerm>> {
+    &self.returned_type
   }
 
   pub fn new_boxed(
