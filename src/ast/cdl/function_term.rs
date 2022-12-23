@@ -1,56 +1,15 @@
-use super::super::super::visitor::{Visitor, VisitorError};
-use super::super::common::ast_term::ASTTerm;
-use super::super::common::term_iter::TermIter;
 use super::name_term::NameTerm;
 use super::param_term::ParamTerm;
 use super::returns_term::ReturnsTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(PartialEq, Eq, Debug, ASTTerm)]
+#[ast_term(process_path = "process_function")]
 pub struct FunctionTerm {
-  #[prop]
+  #[subnode_prop]
   name: Box<NameTerm>,
+  #[subnode_prop]
   params: Vec<Box<ParamTerm>>,
-  #[prop]
+  #[subnode_prop]
   returned_type: Box<ReturnsTerm>,
-}
-
-impl ASTTerm for FunctionTerm {
-  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_function(self)?;
-
-    self.name.accept(visitor)?;
-    for param in self.params.iter() {
-      param.accept(visitor)?;
-    }
-    self.returned_type.accept(visitor)?;
-
-    Ok(())
-  }
-}
-
-impl FunctionTerm {
-  pub fn params<'s>(&'s self) -> TermIter<'s, ParamTerm> {
-    TermIter::new_from_deref_vec(&self.params)
-  }
-
-  pub fn new_boxed(
-    name: Box<NameTerm>,
-    params: Vec<Box<ParamTerm>>,
-    returned_type: Box<ReturnsTerm>,
-  ) -> Box<FunctionTerm> {
-    Box::new(FunctionTerm::new(name, params, returned_type))
-  }
-
-  pub fn new(
-    name: Box<NameTerm>,
-    params: Vec<Box<ParamTerm>>,
-    returned_type: Box<ReturnsTerm>,
-  ) -> FunctionTerm {
-    FunctionTerm {
-      name,
-      params,
-      returned_type,
-    }
-  }
 }

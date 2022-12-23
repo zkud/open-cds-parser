@@ -3,9 +3,12 @@ use super::super::common::ast_term::ASTTerm;
 use super::entity_term::EntityTerm;
 use super::service_term::ServiceTerm;
 use super::type_term::TypeTerm;
+use ast_term_derive::ASTTerm;
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, ASTTerm)]
+#[ast_term(process_path = "process_module")]
 pub struct ModuleTerm {
+  #[subnode_prop]
   definitions: Vec<ModuleDefinition>,
 }
 
@@ -16,32 +19,13 @@ pub enum ModuleDefinition {
   Service(Box<ServiceTerm>),
 }
 
-impl ASTTerm for ModuleTerm {
+impl ASTTerm for ModuleDefinition {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_module(self)?;
-
-    for param in self.definitions.iter() {
-      match param {
-        ModuleDefinition::Entity(entity) => entity.accept(visitor)?,
-        ModuleDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
-        ModuleDefinition::Service(service) => service.accept(visitor)?,
-      };
-    }
-
+    match self {
+      ModuleDefinition::Entity(entity) => entity.accept(visitor)?,
+      ModuleDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
+      ModuleDefinition::Service(service) => service.accept(visitor)?,
+    };
     Ok(())
-  }
-}
-
-impl ModuleTerm {
-  pub fn definitions(&self) -> &[ModuleDefinition] {
-    self.definitions.as_ref()
-  }
-
-  pub fn new_boxed(definitions: Vec<ModuleDefinition>) -> Box<ModuleTerm> {
-    Box::new(ModuleTerm::new(definitions))
-  }
-
-  pub fn new(definitions: Vec<ModuleDefinition>) -> ModuleTerm {
-    ModuleTerm { definitions }
   }
 }

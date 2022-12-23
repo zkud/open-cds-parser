@@ -13,6 +13,15 @@ impl<T: ASTTerm> ASTTerm for dyn Deref<Target = T> {
   }
 }
 
+impl<T: ASTTerm> ASTTerm for Option<T> {
+  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    if let Some(variant) = self {
+      variant.accept(visitor)?;
+    }
+    Ok(())
+  }
+}
+
 impl<T: ASTTerm> ASTTerm for Box<T> {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
     self.deref().accept(visitor)?;

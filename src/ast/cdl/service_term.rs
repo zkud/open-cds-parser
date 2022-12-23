@@ -8,9 +8,11 @@ use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(PartialEq, Eq, Debug, ASTTerm)]
+#[ast_term(process_path = "process_service")]
 pub struct ServiceTerm {
-  #[prop]
+  #[subnode_prop]
   name: Box<NameTerm>,
+  #[subnode_prop]
   definitions: Vec<ServiceDefinition>,
 }
 
@@ -22,32 +24,14 @@ pub enum ServiceDefinition {
   Type(Box<TypeTerm>),
 }
 
-impl ASTTerm for ServiceTerm {
+impl ASTTerm for ServiceDefinition {
   fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_service(self)?;
-    self.name.accept(visitor)?;
-    for definition in self.definitions.iter() {
-      match definition {
-        ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
-        ServiceDefinition::Function(function) => function.accept(visitor)?,
-        ServiceDefinition::Action(action) => action.accept(visitor)?,
-        ServiceDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
-      };
-    }
+    match self {
+      ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
+      ServiceDefinition::Function(function) => function.accept(visitor)?,
+      ServiceDefinition::Action(action) => action.accept(visitor)?,
+      ServiceDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
+    };
     Ok(())
-  }
-}
-
-impl ServiceTerm {
-  pub fn definitions(&self) -> &[ServiceDefinition] {
-    self.definitions.as_ref()
-  }
-
-  pub fn new_boxed(name: Box<NameTerm>, definitions: Vec<ServiceDefinition>) -> Box<ServiceTerm> {
-    Box::new(ServiceTerm::new(name, definitions))
-  }
-
-  pub fn new(name: Box<NameTerm>, definitions: Vec<ServiceDefinition>) -> ServiceTerm {
-    ServiceTerm { name, definitions }
   }
 }

@@ -1,22 +1,13 @@
-use super::super::super::visitor::{Visitor, VisitorError};
-use super::super::common::ast_term::ASTTerm;
 use super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(PartialEq, Eq, Debug, ASTTerm)]
+#[ast_term(process_path = "process_returns", generate_news = false)]
 pub struct ReturnsTerm {
-  #[prop]
+  #[subnode_prop]
   type_name: Box<NameTerm>,
   #[prop]
   is_arrayed: bool,
-}
-
-impl ASTTerm for ReturnsTerm {
-  fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
-    visitor.process_returns(self)?;
-    self.type_name.accept(visitor)?;
-    Ok(())
-  }
 }
 
 impl ReturnsTerm {

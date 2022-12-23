@@ -24,6 +24,7 @@ impl Visitor for SQLVisitor {
     let name = term.name().value().to_string();
     let fields = term
       .fields()
+      .iter()
       .map(|f| Field {
         name: f.name().value().to_string(),
         field_type: f.type_name().value().to_string(),
