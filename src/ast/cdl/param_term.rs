@@ -1,10 +1,13 @@
 use super::super::super::visitor::{Visitor, VisitorError};
 use super::super::common::ast_term::ASTTerm;
 use super::name_term::NameTerm;
+use ast_term_derive::ASTTerm;
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, ASTTerm)]
 pub struct ParamTerm {
+  #[prop]
   name: Box<NameTerm>,
+  #[prop]
   type_name: Box<NameTerm>,
 }
 
@@ -20,14 +23,6 @@ impl ASTTerm for ParamTerm {
 }
 
 impl ParamTerm {
-  pub fn name(&self) -> &NameTerm {
-    self.name.as_ref()
-  }
-
-  pub fn type_name(&self) -> &NameTerm {
-    self.type_name.as_ref()
-  }
-
   pub fn new_boxed(name: Box<NameTerm>, type_name: Box<NameTerm>) -> Box<ParamTerm> {
     Box::new(ParamTerm::new(name, type_name))
   }

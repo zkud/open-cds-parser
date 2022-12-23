@@ -5,9 +5,11 @@ use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;
 use super::type_term::TypeTerm;
+use ast_term_derive::ASTTerm;
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, ASTTerm)]
 pub struct ServiceTerm {
+  #[prop]
   name: Box<NameTerm>,
   definitions: Vec<ServiceDefinition>,
 }
@@ -37,10 +39,6 @@ impl ASTTerm for ServiceTerm {
 }
 
 impl ServiceTerm {
-  pub fn name(&self) -> &NameTerm {
-    self.name.as_ref()
-  }
-
   pub fn definitions(&self) -> &[ServiceDefinition] {
     self.definitions.as_ref()
   }

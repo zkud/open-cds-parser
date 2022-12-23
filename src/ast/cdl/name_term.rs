@@ -1,8 +1,10 @@
 use super::super::super::visitor::{Visitor, VisitorError};
 use super::super::common::ast_term::ASTTerm;
+use ast_term_derive::ASTTerm;
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, ASTTerm)]
 pub struct NameTerm {
+  #[prop]
   value: String,
 }
 
@@ -14,10 +16,6 @@ impl ASTTerm for NameTerm {
 }
 
 impl NameTerm {
-  pub fn value(&self) -> &str {
-    self.value.as_ref()
-  }
-
   pub fn new_boxed(value: String) -> Box<NameTerm> {
     Box::new(NameTerm::new(value))
   }
