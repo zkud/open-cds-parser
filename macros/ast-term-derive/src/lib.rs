@@ -7,8 +7,8 @@ use syn::{parse_macro_input, Data, DataStruct, DeriveInput, Field, Fields, Ident
 #[derive(FromDeriveInput, Default)]
 #[darling(default, attributes(ast_term))]
 struct Options {
-  process_path: Option<String>,
-  generate_news: Option<bool>,
+  visitor_path: Option<String>,
+  generate_new: Option<bool>,
 }
 
 #[proc_macro_derive(ASTTerm, attributes(ast_term, prop, subnode_prop))]
@@ -36,7 +36,7 @@ fn impl_accept_visitor_method(
   fields: &Fields,
   options: &Options,
 ) -> QuoteTokenStream {
-  if let Some(ref path) = options.process_path {
+  if let Some(ref path) = options.visitor_path {
     let name = &input.ident;
     let method_name = Ident::new(&path, Span::call_site());
     let fields_calls = impl_accept_visitor_method_for_fields(fields);
@@ -176,7 +176,7 @@ fn impl_default_new_methods(
   fields: &Fields,
   options: &Options,
 ) -> QuoteTokenStream {
-  if let Some(generate_news) = options.generate_news {
+  if let Some(generate_news) = options.generate_new {
     if !generate_news {
       return quote! {};
     }

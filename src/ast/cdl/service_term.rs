@@ -8,7 +8,7 @@ use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(PartialEq, Eq, Debug, ASTTerm)]
-#[ast_term(process_path = "process_service")]
+#[ast_term(visitor_path = "process_service")]
 pub struct ServiceTerm {
   #[subnode_prop]
   name: Box<NameTerm>,

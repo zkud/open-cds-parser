@@ -6,7 +6,7 @@ use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(PartialEq, Eq, Debug, ASTTerm)]
-#[ast_term(process_path = "process_module")]
+#[ast_term(visitor_path = "process_module")]
 pub struct ModuleTerm {
   #[subnode_prop]
   definitions: Vec<ModuleDefinition>,
