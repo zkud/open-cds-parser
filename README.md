@@ -9,6 +9,8 @@ The ```open-cds-ast``` crate was designed as the foundation for any tooling for 
 and do it efficiently. The crate itself is robustly inspired by a pretty famous project ESTree for JavaScript, which lays
 under the hood of eslint and other similar tooling.
 
+Currently the crate in it's rough unstable beta, be causious to use it in production or somehow rely on the interface.
+
 Try to implement your own handy tooling for CAP CDS :)
 
 ## Usage
