@@ -18,10 +18,10 @@ pub struct ServiceTerm {
 
 #[derive(PartialEq, Eq, Debug)]
 pub enum ServiceDefinition {
-  Entity(Box<EntityTerm>),
-  Function(Box<FunctionTerm>),
-  Action(Box<ActionTerm>),
-  Type(Box<TypeTerm>),
+  Entity(EntityTerm),
+  Function(FunctionTerm),
+  Action(ActionTerm),
+  Type(TypeTerm),
 }
 
 impl ASTTerm for ServiceDefinition {

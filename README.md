@@ -20,8 +20,8 @@ open_cds_ast="0.0.1"
 
 ## Features
 
-- Fully editable CDS Absract Syntax Tree (WIP)
-- Support of event-like usage via the visitor pattern (WIP)
+- Fully editable CDS Absract Syntax Tree 
+- Support of event-like usage via the visitor pattern 
 
 ## License
 

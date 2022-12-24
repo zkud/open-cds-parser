@@ -1,6 +1,6 @@
 use open_cds_ast::ast::{
   ASTTerm, EntityTerm, FieldTerm, ModuleDefinition, ModuleTerm, NameTerm, ServiceDefinition,
-  ServiceTerm, TermIter,
+  ServiceTerm,
 };
 use open_cds_ast::parser::Parser;
 use open_cds_ast::visitor::{Visitor, VisitorError};

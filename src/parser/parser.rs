@@ -34,7 +34,7 @@ impl Parser {
       }
     };
 
-    Ok(module)
+    Ok(Box::new(module))
   }
 }
 

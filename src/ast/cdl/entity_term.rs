@@ -8,7 +8,7 @@ pub struct EntityTerm {
   #[subnode_prop]
   name: Box<NameTerm>,
   #[subnode_prop]
-  applied_aspects: Vec<Box<NameTerm>>,
+  applied_aspects: Vec<NameTerm>,
   #[subnode_prop]
-  fields: Vec<Box<FieldTerm>>,
+  fields: Vec<FieldTerm>,
 }

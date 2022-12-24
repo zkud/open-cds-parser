@@ -14,9 +14,9 @@ pub struct ModuleTerm {
 
 #[derive(PartialEq, Eq, Debug)]
 pub enum ModuleDefinition {
-  Entity(Box<EntityTerm>),
-  Type(Box<TypeTerm>),
-  Service(Box<ServiceTerm>),
+  Entity(EntityTerm),
+  Type(TypeTerm),
+  Service(ServiceTerm),
 }
 
 impl ASTTerm for ModuleDefinition {

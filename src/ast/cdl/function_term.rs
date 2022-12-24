@@ -9,7 +9,7 @@ pub struct FunctionTerm {
   #[subnode_prop]
   name: Box<NameTerm>,
   #[subnode_prop]
-  params: Vec<Box<ParamTerm>>,
+  params: Vec<ParamTerm>,
   #[subnode_prop]
   returned_type: Box<ReturnsTerm>,
 }

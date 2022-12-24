@@ -187,13 +187,6 @@ fn impl_default_new_methods(
   let struct_fields = get_new_struct_params(fields);
   quote! {
     impl #name {
-      pub fn new_boxed(#params) -> Box<#name> {
-        Box::new(
-          #name {
-            #struct_fields
-          }
-        )
-      }
       pub fn new(#params) -> #name {
         #name {
           #struct_fields

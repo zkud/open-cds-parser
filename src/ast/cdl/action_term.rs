@@ -9,7 +9,7 @@ pub struct ActionTerm {
   #[subnode_prop]
   name: Box<NameTerm>,
   #[subnode_prop]
-  params: Vec<Box<ParamTerm>>,
+  params: Vec<ParamTerm>,
   #[subnode_prop]
   returned_type: Option<Box<ReturnsTerm>>,
 }
