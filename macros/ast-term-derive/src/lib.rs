@@ -1,8 +1,8 @@
 use darling::FromDeriveInput;
 use proc_macro::TokenStream;
-use proc_macro2::{Span, TokenStream as QuoteTokenStream};
-use quote::quote;
-use syn::{parse_macro_input, Data, DataStruct, DeriveInput, Field, Fields, Ident};
+use proc_macro2::TokenStream as QuoteTokenStream;
+use quote::{format_ident, quote};
+use syn::{parse_macro_input, Data, DataStruct, DeriveInput, Field, Fields, Type};
 
 #[derive(FromDeriveInput, Default)]
 #[darling(default, attributes(ast_term))]
@@ -38,7 +38,7 @@ fn impl_accept_visitor_method(
 ) -> QuoteTokenStream {
   if let Some(ref path) = options.visitor_path {
     let name = &input.ident;
-    let method_name = Ident::new(&path, Span::call_site());
+    let method_name = format_ident!("{}", &path);
     let fields_calls = impl_accept_visitor_method_for_fields(fields);
     quote! {
       impl crate::ast::common::ast_term::ASTTerm for #name {
@@ -123,8 +123,27 @@ fn impl_getter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
   if let Some(field_name) = &field.ident {
     let name = &input.ident;
     let field_type = &field.ty;
+    let header = format!(
+      " Returns a reference to the {} field of the {}.",
+      field_name, name
+    );
+    let self_arg = format!(" * `&self` - A reference to the {}", name);
+    let returns = format!(
+      " * `&{}` - A reference to the {} field of the struct",
+      type2str(field_type),
+      field_name
+    );
     quote! {
       impl #name {
+        #[doc=#header]
+        #[doc=""]
+        #[doc=" # Arguments"]
+        #[doc=""]
+        #[doc=#self_arg]
+        #[doc=""]
+        #[doc=" # Returns"]
+        #[doc=""]
+        #[doc=#returns]
         pub fn #field_name(&self) -> &#field_type {
           &self.#field_name
         }
@@ -137,12 +156,30 @@ fn impl_getter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
 
 fn impl_mut_getter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
   if let Some(field_name) = &field.ident {
-    let method_name = format!("{}_mut", field_name);
-    let method_name = Ident::new(&method_name, Span::call_site());
+    let method_name = format_ident!("{}_mut", field_name);
     let name = &input.ident;
     let field_type = &field.ty;
+    let header = format!(
+      " Returns a mutable reference to the {} field of the {}.",
+      field_name, name
+    );
+    let self_arg = format!(" * `&mut self` - A mutable reference to the {}", name);
+    let returns = format!(
+      " * `&mut {}` - A mutable reference to the {} field of the struct",
+      type2str(field_type),
+      field_name
+    );
     quote! {
       impl #name {
+        #[doc=#header]
+        #[doc=""]
+        #[doc=" # Arguments"]
+        #[doc=""]
+        #[doc=#self_arg]
+        #[doc=""]
+        #[doc=" # Returns"]
+        #[doc=""]
+        #[doc=#returns]
         pub fn #method_name(&mut self) -> &mut #field_type {
           &mut self.#field_name
         }
@@ -155,12 +192,24 @@ fn impl_mut_getter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
 
 fn impl_setter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
   if let Some(field_name) = &field.ident {
-    let method_name = format!("set_{}", field_name);
-    let method_name = Ident::new(&method_name, Span::call_site());
+    let method_name = format_ident!("set_{}", field_name);
     let name = &input.ident;
     let field_type = &field.ty;
+    let header = format!(" Sets the {} field of the {}.", field_name, name);
+    let self_arg = format!(" * `&mut self` - A mutable reference to the {}", name);
+    let value_arg = format!(
+      " * `{}` - A new value for the {} field",
+      type2str(field_type),
+      field_name
+    );
     quote! {
       impl #name {
+        #[doc=#header]
+        #[doc=""]
+        #[doc=" # Arguments"]
+        #[doc=""]
+        #[doc=#self_arg]
+        #[doc=#value_arg]
         pub fn #method_name(&mut self, value: #field_type) {
           self.#field_name = value;
         }
@@ -183,16 +232,53 @@ fn impl_default_new_methods(
   }
 
   let name = &input.ident;
+  let header = format!(" Creates a new instance of the {}.", name);
+  let doc_params = get_doc_params(fields);
+  let returns = format!(" * `{}` - A new instance of the {}", name, name);
   let params = get_new_params(fields);
   let struct_fields = get_new_struct_params(fields);
   quote! {
     impl #name {
+      #[doc=#header]
+      #[doc=""]
+      #[doc=" # Arguments"]
+      #[doc=""]
+      #doc_params
+      #[doc=""]
+      #[doc=" # Returns"]
+      #[doc=""]
+      #[doc=#returns]
       pub fn new(#params) -> #name {
         #name {
           #struct_fields
         }
       }
     }
+  }
+}
+
+fn get_doc_params(fields: &Fields) -> QuoteTokenStream {
+  let mut tokens = quote! {};
+  for field in fields.iter() {
+    let field_tokens = get_doc_param_def(field);
+    tokens.extend(field_tokens);
+  }
+  tokens
+}
+
+fn get_doc_param_def(field: &Field) -> QuoteTokenStream {
+  if let Some(field_name) = &field.ident {
+    let field_type = &field.ty;
+    let value_arg = format!(
+      " * `{}` - A value for the {} field",
+      type2str(field_type),
+      field_name
+    );
+    quote! {
+      #[doc=#value_arg]
+    }
+  } else {
+    quote! {}
   }
 }
 
@@ -233,4 +319,10 @@ fn get_struct_param_def(field: &Field) -> QuoteTokenStream {
   } else {
     quote! {}
   }
+}
+
+fn type2str(rust_type: &Type) -> String {
+  let rust_type = quote! {#rust_type};
+  let rust_type = format!("{}", rust_type);
+  rust_type.replace(" ", "")
 }
