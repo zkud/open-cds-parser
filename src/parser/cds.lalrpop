@@ -68,7 +68,7 @@ Using: UsingTerm = {
 }
 
 FilePath: FilePathTerm = {
-  <path:r"'(.+)(/*)([^/]+)'"> => FilePathTerm::new(path.to_string().replace("'", ""))
+  <path:r"'([^/]+)(([^/]*)(/*))*'"> => FilePathTerm::new(path.to_string().replace("'", ""))
 }
 
 UsingRefs: Vec<UsingRefTerm> = {
