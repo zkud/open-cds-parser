@@ -1,10 +1,22 @@
 use super::super::ast::{
-  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleTerm, NameTerm, ParamTerm, ReturnsTerm,
-  ServiceTerm, TypeTerm,
+  ActionTerm, EntityTerm, FieldTerm, FilePathTerm, FunctionTerm, ModuleTerm, NameTerm, ParamTerm,
+  ReturnsTerm, RootTerm, ServiceTerm, TypeTerm, UsingRefTerm, UsingTerm,
 };
 use super::VisitorError;
 
 pub trait Visitor {
+  fn process_root(&mut self, _term: &RootTerm) -> Result<(), VisitorError> {
+    Ok(())
+  }
+  fn process_using(&mut self, _term: &UsingTerm) -> Result<(), VisitorError> {
+    Ok(())
+  }
+  fn process_using_ref(&mut self, _term: &UsingRefTerm) -> Result<(), VisitorError> {
+    Ok(())
+  }
+  fn process_file_path(&mut self, _term: &FilePathTerm) -> Result<(), VisitorError> {
+    Ok(())
+  }
   fn process_name(&mut self, _term: &NameTerm) -> Result<(), VisitorError> {
     Ok(())
   }

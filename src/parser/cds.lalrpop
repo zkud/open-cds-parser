@@ -1,5 +1,5 @@
 use crate::ast::{
-  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
+  UsingTerm, FilePathTerm, UsingRefTerm, ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
   ParamTerm, ReturnsTerm, ServiceDefinition, ServiceTerm, TypeTerm,
 };
 
@@ -12,6 +12,11 @@ pub Module: ModuleTerm = {
 }
 
 ModuleDefinitions: Vec<ModuleDefinition> = {
+  <using:Using> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Using(using));
+    definitions
+  },
   <entity:Entity> => {
     let mut definitions: Vec<ModuleDefinition> = Vec::new();
     definitions.push(ModuleDefinition::Entity(entity));
@@ -26,6 +31,12 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     let mut definitions: Vec<ModuleDefinition> = Vec::new();
     definitions.push(ModuleDefinition::Type(type_definition));
     definitions
+  },
+  <definitions:ModuleDefinitions> <using:Using> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Using(using));
+    new_definitions
   },
   <definitions:ModuleDefinitions> <entity:Entity> => {
     let mut new_definitions = Vec::new();
@@ -44,6 +55,42 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     new_definitions.extend(definitions);
     new_definitions.push(ModuleDefinition::Type(type_definition));
     new_definitions
+  }
+}
+
+Using: UsingTerm = {
+  "using" "from" <path:FilePath> ";" => {
+    UsingTerm::new(Box::new(path), vec![])
+  },
+  "using" "{" <using_refs:UsingRefs> "}" "from" <path:FilePath> ";" => {
+    UsingTerm::new(Box::new(path), using_refs)
+  },
+}
+
+FilePath: FilePathTerm = {
+  <path:r"'(.+)(/*)([^/]+)'"> => FilePathTerm::new(path.to_string().replace("'", ""))
+}
+
+UsingRefs: Vec<UsingRefTerm> = {
+  <using_ref:UsingRef> => {
+    let mut using_refs: Vec<UsingRefTerm> = Vec::new();
+    using_refs.push(using_ref);
+    using_refs 
+  },
+  <using_refs:UsingRefs> <using_ref:UsingRef> => {
+    let mut new_using_refs = Vec::new();
+    new_using_refs.extend(using_refs);
+    new_using_refs.push(using_ref);
+    new_using_refs
+  },
+}
+
+UsingRef: UsingRefTerm = {
+  <name:Name> => {
+    UsingRefTerm::new(Box::new(name))
+  },
+  <name:Name> "," => {
+    UsingRefTerm::new(Box::new(name))
   }
 }
 
