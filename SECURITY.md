@@ -2,7 +2,7 @@
 
 ## Supported Versions
 
-Currently there are no stable versions, so use the library on your own risk!
+Currently there are no stable versions at all, so use the library at your own risk!
 
 ## Reporting a Vulnerability
 
