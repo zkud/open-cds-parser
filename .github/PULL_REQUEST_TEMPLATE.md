@@ -1,4 +1,7 @@
-Please go the the `Preview` tab and select the appropriate sub-template:
+### Changes proposed in this pull request:
+- 
+-
+-
 
-* [Feature](?expand=1&template=feature.md)
-* [Fix](?expand=1&template=fix.md)
+### Related Issues
+Closing #
