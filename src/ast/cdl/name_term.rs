@@ -40,7 +40,7 @@ mod tests {
   }
 
   #[test]
-  fn can_change_the_name_via_ref() {
+  fn can_change_the_value_via_ref() {
     let mut term = NameTerm::default();
 
     *term.value_mut() = String::variant_b();
