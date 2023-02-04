@@ -24,9 +24,7 @@ mod tests {
 
   #[test]
   fn new_creates_the_term() {
-    let term = NameTerm::new(
-      String::variant_a()
-    );
+    let term = NameTerm::new(String::variant_a());
     assert_eq!(term.value(), &String::variant_a());
   }
 

@@ -20,19 +20,13 @@ mod tests {
     fn variant_a() -> Self {
       let name = NameTerm::new(String::variant_a());
       let type_name = NameTerm::new(String::variant_a());
-      ParamTerm::new(
-        Box::new(name),
-        Box::new(type_name),
-      )
+      ParamTerm::new(Box::new(name), Box::new(type_name))
     }
 
     fn variant_b() -> Self {
       let name = NameTerm::new(String::variant_b());
       let type_name = NameTerm::new(String::variant_b());
-      ParamTerm::new(
-        Box::new(name),
-        Box::new(type_name),
-      )
+      ParamTerm::new(Box::new(name), Box::new(type_name))
     }
   }
 
@@ -40,10 +34,7 @@ mod tests {
   fn new_creates_the_term() {
     let name = NameTerm::new(String::variant_a());
     let type_name = NameTerm::new(String::variant_a());
-    let term = ParamTerm::new(
-      Box::new(name),
-      Box::new(type_name),
-    );
+    let term = ParamTerm::new(Box::new(name), Box::new(type_name));
     assert_eq!(term.name(), &Box::new(NameTerm::variant_a()));
     assert_eq!(term.type_name(), &Box::new(NameTerm::variant_a()));
   }
