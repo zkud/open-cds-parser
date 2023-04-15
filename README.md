@@ -1,5 +1,5 @@
 # Open CDS Abstract Syntax Tree
-**Open and Reusable AST & Parser for SAP CAP CDS for Rust Projects**
+**Open and Reusable AST & Parser for SAP CAP CDS for the Rust programming language**
 
 [![CI](https://github.com/zkud/open-cds-ast/actions/workflows/ci.yml/badge.svg)](https://github.com/zkud/open-cds-ast/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/zkud/open-cds-ast/branch/main/graph/badge.svg?token=BITDY89WY7)](https://codecov.io/gh/zkud/open-cds-ast) [![Hits-of-Code](https://hitsofcode.com/github/zkud/open-cds-ast?branch=main)](https://hitsofcode.com/github/zkud/open-cds-ast/view?branch=main) 
 
