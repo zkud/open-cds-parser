@@ -42,7 +42,7 @@ fn impl_accept_visitor_method(
     let fields_calls = impl_accept_visitor_method_for_fields(fields);
     quote! {
       impl crate::ast::common::ast_term::ASTTerm for #name {
-        #[cfg_attr(tarpaulin, skip)]
+        #[cfg(not(tarpaulin_include))]
         fn accept(&self, visitor: &mut dyn crate::visitor::Visitor) -> Result<(), crate::visitor::VisitorError> {
           visitor.#method_name(self)?;
           #fields_calls
@@ -145,7 +145,7 @@ fn impl_getter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
         #[doc=" # Returns"]
         #[doc=""]
         #[doc=#returns]
-        #[cfg_attr(tarpaulin, skip)]
+        #[cfg(not(tarpaulin_include))]
         pub fn #field_name(&self) -> &#field_type {
           &self.#field_name
         }
@@ -182,7 +182,7 @@ fn impl_mut_getter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
         #[doc=" # Returns"]
         #[doc=""]
         #[doc=#returns]
-        #[cfg_attr(tarpaulin, skip)]
+        #[cfg(not(tarpaulin_include))]
         pub fn #method_name(&mut self) -> &mut #field_type {
           &mut self.#field_name
         }
@@ -213,7 +213,7 @@ fn impl_setter(input: &DeriveInput, field: &Field) -> QuoteTokenStream {
         #[doc=""]
         #[doc=#self_arg]
         #[doc=#value_arg]
-        #[cfg_attr(tarpaulin, skip)]
+        #[cfg(not(tarpaulin_include))]
         pub fn #method_name(&mut self, value: #field_type) {
           self.#field_name = value;
         }
@@ -252,7 +252,7 @@ fn impl_default_new_methods(
       #[doc=" # Returns"]
       #[doc=""]
       #[doc=#returns]
-      #[cfg_attr(tarpaulin, skip)]
+      #[cfg(not(tarpaulin_include))]
       pub fn new(#params) -> #name {
         #name {
           #struct_fields
