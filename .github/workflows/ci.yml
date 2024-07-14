@@ -68,7 +68,6 @@ jobs:
 
     name: Code Coverage
     runs-on: ubuntu-latest
-    name: coverage
     container:
       image: xd009642/tarpaulin:develop-nightly
       options: --security-opt seccomp=unconfined
