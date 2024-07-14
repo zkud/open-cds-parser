@@ -1,7 +1,7 @@
 use super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
-#[derive(ASTTerm, PartialEq, Eq, Debug, Default)]
+#[derive(ASTTerm, PartialEq, Eq, Debug)]
 #[ast_term(visitor_path = "process_returns", generate_new = false)]
 pub struct ReturnsTerm {
   #[subnode_prop]
