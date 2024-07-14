@@ -13,4 +13,3 @@ pub struct ActionTerm {
   #[subnode_prop]
   returned_type: Option<Box<ReturnsTerm>>,
 }
-
