@@ -31,7 +31,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
         ServiceDefinition::Function(FunctionTerm::new(
           Box::new(NameTerm::new("getUserScopesCount".to_string())),
           vec![],
-          Box::new(ReturnsTerm::new(Box::new(NameTerm::new(
+          Box::new(ReturnsTerm::new_scalar(Box::new(NameTerm::new(
             "Integer".to_string(),
           )))),
         )),

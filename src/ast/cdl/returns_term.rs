@@ -2,7 +2,7 @@ use super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_returns", generate_new = false)]
+#[ast_term(visitor_path = "process_returns")]
 pub struct ReturnsTerm {
   #[subnode_prop]
   type_name: Box<NameTerm>,
@@ -11,7 +11,7 @@ pub struct ReturnsTerm {
 }
 
 impl ReturnsTerm {
-  pub fn new(type_name: Box<NameTerm>) -> ReturnsTerm {
+  pub fn new_scalar(type_name: Box<NameTerm>) -> ReturnsTerm {
     ReturnsTerm {
       type_name,
       is_arrayed: false,

@@ -8,7 +8,6 @@ use syn::{parse_macro_input, Data, DataStruct, DeriveInput, Field, Fields, Type}
 #[darling(default, attributes(ast_term))]
 struct Options {
   visitor_path: Option<String>,
-  generate_new: Option<bool>,
 }
 
 #[proc_macro_derive(ASTTerm, attributes(ast_term, prop, subnode_prop))]
@@ -229,12 +228,6 @@ fn impl_default_new_methods(
   fields: &Fields,
   options: &Options,
 ) -> QuoteTokenStream {
-  if let Some(generate_news) = options.generate_new {
-    if !generate_news {
-      return quote! {};
-    }
-  }
-
   let name = &input.ident;
   let header = format!(" Creates a new instance of the {}.", name);
   let doc_params = get_doc_params(fields);
