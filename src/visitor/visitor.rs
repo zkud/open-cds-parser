@@ -1,6 +1,6 @@
 use super::super::ast::{
-  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleTerm, NameTerm, ParamTerm, ReturnsTerm,
-  ServiceTerm, TypeTerm,
+  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, LeafTerm, ModuleTerm, NameTerm, NodeTerm,
+  ParamTerm, ReturnsTerm, ServiceTerm, TypeTerm,
 };
 use super::VisitorError;
 
@@ -33,6 +33,12 @@ pub trait Visitor {
     Ok(())
   }
   fn process_module(&mut self, _term: &ModuleTerm) -> Result<(), VisitorError> {
+    Ok(())
+  }
+  fn process_mock_leaf(&mut self, _term: &LeafTerm) -> Result<(), VisitorError> {
+    Ok(())
+  }
+  fn process_mock_node(&mut self, _term: &NodeTerm) -> Result<(), VisitorError> {
     Ok(())
   }
 }

@@ -49,7 +49,6 @@ impl<T: ASTTerm> ASTTerm for [T] {
 mod tests {
   use super::*;
   use crate::ast::NameTerm;
-  use ast_term_derive::ASTTerm;
 
   use std::sync::Arc;
 
@@ -152,37 +151,5 @@ mod tests {
 
     assert!(result.is_ok());
     assert!(visitor.visits.is_empty());
-  }
-
-  #[derive(ASTTerm)]
-  struct MockTerm {
-    #[prop]
-    value: String,
-  }
-
-  #[test]
-  fn test_value() {
-    let name_term = MockTerm::new("TestName".to_string());
-    assert_eq!(name_term.value(), "TestName");
-  }
-
-  #[test]
-  fn test_value_mut() {
-    let mut name_term = MockTerm::new("TestName".to_string());
-    *name_term.value_mut() = "UpdatedName".to_string();
-    assert_eq!(name_term.value(), "UpdatedName");
-  }
-
-  #[test]
-  fn test_set_value() {
-    let mut name_term = MockTerm::new("TestName".to_string());
-    name_term.set_value("NewName".to_string());
-    assert_eq!(name_term.value(), "NewName");
-  }
-
-  #[test]
-  fn test_new() {
-    let name_term = MockTerm::new("TestName".to_string());
-    assert_eq!(name_term.value(), "TestName");
   }
 }
