@@ -4,7 +4,10 @@ use syn::{DeriveInput, Field, Fields};
 
 use super::util::type2str;
 
-pub fn impl_getters_and_setters_for_fields(input: &DeriveInput, fields: &Fields) -> QuoteTokenStream {
+pub fn impl_getters_and_setters_for_fields(
+  input: &DeriveInput,
+  fields: &Fields,
+) -> QuoteTokenStream {
   let mut tokens = quote! {};
   for field in fields.iter() {
     let field_tokens = impl_getters_and_setters_for_field(input, field);

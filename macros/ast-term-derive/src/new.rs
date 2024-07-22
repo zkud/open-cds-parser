@@ -4,10 +4,7 @@ use syn::{DeriveInput, Field, Fields};
 
 use super::util::type2str;
 
-pub fn impl_default_new_methods(
-  input: &DeriveInput,
-  fields: &Fields,
-) -> QuoteTokenStream {
+pub fn impl_default_new_methods(input: &DeriveInput, fields: &Fields) -> QuoteTokenStream {
   let name = &input.ident;
   let header = format!(" Creates a new instance of the {}.", name);
   let doc_params = get_doc_params(fields);

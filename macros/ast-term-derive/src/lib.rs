@@ -4,16 +4,16 @@ use proc_macro2::TokenStream as QuoteTokenStream;
 use quote::quote;
 use syn::{parse_macro_input, Data, DataStruct, DeriveInput};
 
-mod visitor;
-mod options;
 mod getters_setters;
-mod util;
 mod new;
+mod options;
+mod util;
+mod visitor;
 
-use options::Options;
-use visitor::impl_accept_visitor_method;
 use getters_setters::impl_getters_and_setters_for_fields;
 use new::impl_default_new_methods;
+use options::Options;
+use visitor::impl_accept_visitor_method;
 
 #[proc_macro_derive(ASTTerm, attributes(ast_term, prop, subnode_prop))]
 pub fn ast_term(input: TokenStream) -> TokenStream {
