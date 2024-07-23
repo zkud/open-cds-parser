@@ -48,7 +48,7 @@ impl<T: ASTTerm> ASTTerm for [T] {
 #[cfg(test)]
 mod tests {
   use super::*;
-  use crate::ast::NameTerm;
+  use crate::ast::LeafTerm;
 
   use std::sync::Arc;
 
@@ -66,7 +66,7 @@ mod tests {
   struct VisitorError;
 
   impl Visitor for MockVisitor {
-    fn process_name(&mut self, term: &NameTerm) -> Result<(), crate::visitor::VisitorError> {
+    fn process_mock_leaf(&mut self, term: &LeafTerm) -> Result<(), crate::visitor::VisitorError> {
       self.visits.push(term.value().clone());
       Ok(())
     }
@@ -74,7 +74,7 @@ mod tests {
 
   #[test]
   fn test_deref_ast_term() {
-    let term = Box::new(NameTerm::new("1".to_string()));
+    let term = Box::new(LeafTerm::new("1".to_string()));
 
     let mut visitor = MockVisitor::new();
     let result = term.accept(&mut visitor);
@@ -85,7 +85,7 @@ mod tests {
 
   #[test]
   fn test_option_ast_term_some() {
-    let term = Some(NameTerm::new("2".to_string()));
+    let term = Some(LeafTerm::new("2".to_string()));
 
     let mut visitor = MockVisitor::new();
     let result = term.accept(&mut visitor);
@@ -96,7 +96,7 @@ mod tests {
 
   #[test]
   fn test_option_ast_term_none() {
-    let term: Option<NameTerm> = None;
+    let term: Option<LeafTerm> = None;
 
     let mut visitor = MockVisitor::new();
     let result = term.accept(&mut visitor);
@@ -107,7 +107,7 @@ mod tests {
 
   #[test]
   fn test_box_ast_term() {
-    let term = Box::new(NameTerm::new("3".to_string()));
+    let term = Box::new(LeafTerm::new("3".to_string()));
 
     let mut visitor = MockVisitor::new();
     let result = term.accept(&mut visitor);
@@ -118,7 +118,7 @@ mod tests {
 
   #[test]
   fn test_arc_ast_term() {
-    let term = Arc::new(NameTerm::new("4".to_string()));
+    let term = Arc::new(LeafTerm::new("4".to_string()));
 
     let mut visitor = MockVisitor::new();
     let result = term.accept(&mut visitor);
@@ -130,9 +130,9 @@ mod tests {
   #[test]
   fn test_slice_ast_term() {
     let terms = vec![
-      NameTerm::new("5".to_string()),
-      NameTerm::new("6".to_string()),
-      NameTerm::new("7".to_string()),
+      LeafTerm::new("5".to_string()),
+      LeafTerm::new("6".to_string()),
+      LeafTerm::new("7".to_string()),
     ];
 
     let mut visitor = MockVisitor::new();
@@ -144,7 +144,7 @@ mod tests {
 
   #[test]
   fn test_empty_slice_ast_term() {
-    let terms: Vec<NameTerm> = vec![];
+    let terms: Vec<LeafTerm> = vec![];
 
     let mut visitor = MockVisitor::new();
     let result = terms.as_slice().accept(&mut visitor);
