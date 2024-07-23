@@ -1,9 +1,9 @@
 use super::super::ast::{
-  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleTerm, NameTerm,
-  ParamTerm, ReturnsTerm, ServiceTerm, TypeTerm,
+  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleTerm, NameTerm, ParamTerm, ReturnsTerm,
+  ServiceTerm, TypeTerm,
 };
 #[cfg(test)]
-use super::super::ast::{NodeTerm, LeafTerm};
+use super::super::ast::{LeafTerm, NodeTerm};
 use super::VisitorError;
 
 pub trait Visitor {
