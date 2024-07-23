@@ -5,7 +5,7 @@ use super::service_term::ServiceTerm;
 use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;
 
-#[derive(PartialEq, Eq, Debug, ASTTerm)]
+#[derive(ASTTerm, PartialEq, Eq, Debug)]
 #[ast_term(visitor_path = "process_module")]
 pub struct ModuleTerm {
   #[subnode_prop]

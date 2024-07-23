@@ -169,7 +169,7 @@ Function: FunctionTerm = {
 };
 
 Returns: ReturnsTerm = {
-  <name:Name> => ReturnsTerm::new(Box::new(name)),
+  <name:Name> => ReturnsTerm::new_scalar(Box::new(name)),
   "array" "of" <name:Name> => ReturnsTerm::new_arrayed(Box::new(name)),
 }
 

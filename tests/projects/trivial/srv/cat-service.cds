@@ -3,4 +3,6 @@ service CatalogService {
     username : String;
     scope    : String;
   }
+
+  function getUserScopesCount() returns Integer;
 }
