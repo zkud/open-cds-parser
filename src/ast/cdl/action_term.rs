@@ -6,10 +6,10 @@ use ast_term_derive::ASTTerm;
 #[derive(ASTTerm, PartialEq, Eq, Debug)]
 #[ast_term(visitor_path = "process_action")]
 pub struct ActionTerm {
-  #[subnode_prop]
-  name: Box<NameTerm>,
-  #[subnode_prop]
-  params: Vec<ParamTerm>,
-  #[subnode_prop]
-  returned_type: Option<Box<ReturnsTerm>>,
+    #[subnode_prop]
+    name: Box<NameTerm>,
+    #[subnode_prop]
+    params: Vec<ParamTerm>,
+    #[subnode_prop]
+    returned_type: Option<Box<ReturnsTerm>>,
 }
