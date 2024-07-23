@@ -7,6 +7,6 @@ edition = "2021"
 lalrpop = "0.19.8"
 
 [dependencies]
-lalrpop-util = { version = "0.19.8", features = ["lexer"] }
+lalrpop-util = { version = "0.20.2", features = ["lexer"] }
 regex = "1"
 ast-term-derive = { path = "./macros/ast-term-derive" }
