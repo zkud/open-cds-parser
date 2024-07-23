@@ -1,8 +1,8 @@
-use open_cds_ast::ast::{
+use open_cds_parser::ast::{
   EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm, ReturnsTerm,
   ServiceDefinition, ServiceTerm,
 };
-use open_cds_ast::parser::Parser;
+use open_cds_parser::parser::Parser;
 
 #[test]
 fn with_correct_and_trivial_cds_it_buids_a_tree() {

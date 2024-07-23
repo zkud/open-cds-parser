@@ -1,9 +1,9 @@
-use open_cds_ast::ast::{
+use open_cds_parser::ast::{
   ASTTerm, EntityTerm, FieldTerm, ModuleDefinition, ModuleTerm, NameTerm, ServiceDefinition,
   ServiceTerm,
 };
-use open_cds_ast::parser::Parser;
-use open_cds_ast::visitor::{Visitor, VisitorError};
+use open_cds_parser::parser::Parser;
+use open_cds_parser::visitor::{Visitor, VisitorError};
 
 struct SQLVisitor {
   pub tables: Vec<Table>,
