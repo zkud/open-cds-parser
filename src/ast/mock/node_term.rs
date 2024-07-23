@@ -1,6 +1,9 @@
+#[cfg(test)]
 use super::leaf_term::LeafTerm;
+#[cfg(test)]
 use ast_term_derive::ASTTerm;
 
+#[cfg(test)]
 #[derive(ASTTerm, PartialEq, Eq, Debug)]
 #[ast_term(visitor_path = "process_mock_node")]
 pub struct NodeTerm {
