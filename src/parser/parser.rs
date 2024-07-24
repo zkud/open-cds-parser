@@ -14,7 +14,7 @@ impl Parser {
         Parser {}
     }
 
-    pub fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
+    pub fn parse_single_file(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
         let path = Path::new(path);
 
         let mut file = File::open(path)?;
@@ -81,14 +81,14 @@ mod tests {
             )
             .unwrap();
 
-        let _result = Parser::new().parse(&"test_correct.cds").unwrap();
+        let _result = Parser::new().parse_single_file(&"test_correct.cds").unwrap();
 
         remove_file("test_correct.cds").unwrap();
     }
 
     #[test]
     fn with_unexisting_file_it_fails() {
-        let result = Parser::new().parse(&"test.cds");
+        let result = Parser::new().parse_single_file(&"test.cds");
 
         assert!(result.is_err());
     }
@@ -108,7 +108,7 @@ mod tests {
             )
             .unwrap();
 
-        let result = Parser::new().parse(&"test_incorrect.cds");
+        let result = Parser::new().parse_single_file(&"test_incorrect.cds");
 
         remove_file("test_incorrect.cds").unwrap();
 
