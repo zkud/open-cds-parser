@@ -37,9 +37,9 @@ impl Visitor for SQLVisitor {
 
 #[test]
 fn with_correct_and_trivial_cds_it_buids_a_tree() {
-    let parser = Parser::new("./tests/projects/trivial/srv/cat-service.cds".to_string());
+    let parser = Parser::new();
 
-    let ast = parser.parse().unwrap();
+    let ast = parser.parse(&"./tests/projects/trivial/srv/cat-service.cds").unwrap();
     let mut sql_visitor = SQLVisitor { tables: vec![] };
     ast.accept(&mut sql_visitor).unwrap();
 }

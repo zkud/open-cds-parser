@@ -7,17 +7,15 @@ use super::super::ast::ModuleTerm;
 use super::parse_error::ParseError;
 use super::parse_error::ParseErrorType;
 
-pub struct Parser {
-    path: String,
-}
+pub struct Parser;
 
 impl Parser {
-    pub fn new(path: String) -> Parser {
-        Parser { path }
+    pub fn new() -> Parser {
+        Parser {}
     }
 
-    pub fn parse(&self) -> Result<Box<ModuleTerm>, ParseError> {
-        let path = Path::new(&self.path);
+    pub fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
+        let path = Path::new(path);
 
         let mut file = File::open(path)?;
 
@@ -83,14 +81,14 @@ mod tests {
             )
             .unwrap();
 
-        let _result = Parser::new("test_correct.cds".to_string()).parse().unwrap();
+        let _result = Parser::new().parse(&"test_correct.cds").unwrap();
 
         remove_file("test_correct.cds").unwrap();
     }
 
     #[test]
     fn with_unexisting_file_it_fails() {
-        let result = Parser::new("test.cds".to_string()).parse();
+        let result = Parser::new().parse(&"test.cds");
 
         assert!(result.is_err());
     }
@@ -110,7 +108,7 @@ mod tests {
             )
             .unwrap();
 
-        let result = Parser::new("test_incorrect.cds".to_string()).parse();
+        let result = Parser::new().parse(&"test_incorrect.cds");
 
         remove_file("test_incorrect.cds").unwrap();
 

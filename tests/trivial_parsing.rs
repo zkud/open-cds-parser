@@ -6,9 +6,9 @@ use open_cds_parser::parser::Parser;
 
 #[test]
 fn with_correct_and_trivial_cds_it_buids_a_tree() {
-    let parser = Parser::new("./tests/projects/trivial/srv/cat-service.cds".to_string());
+    let parser = Parser::new();
 
-    let ast = parser.parse().unwrap();
+    let ast = parser.parse(&"./tests/projects/trivial/srv/cat-service.cds").unwrap();
 
     let expected_ast = Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
         ServiceTerm::new(
