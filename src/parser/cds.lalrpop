@@ -1,6 +1,6 @@
 use crate::ast::{
   ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
-  ParamTerm, ReturnsTerm, ServiceDefinition, ServiceTerm, TypeTerm,
+  ParamTerm, ReturnsTerm, ServiceDefinition, ServiceTerm, TypeTerm, PathTerm, UsingTerm,
 };
 
 grammar;
@@ -27,6 +27,11 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     definitions.push(ModuleDefinition::Type(type_definition));
     definitions
   },
+  <using:Using> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Using(using));
+    definitions
+  },
   <definitions:ModuleDefinitions> <entity:Entity> => {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
@@ -43,6 +48,12 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
     new_definitions.push(ModuleDefinition::Type(type_definition));
+    new_definitions
+  },
+  <definitions:ModuleDefinitions> <using:Using> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Using(using));
     new_definitions
   }
 }
@@ -198,6 +209,17 @@ Type: TypeTerm = {
   "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
     TypeTerm::new(Box::new(name), Box::new(resolved_type_name))
   }
+}
+
+Using: UsingTerm = {
+  "using" <selector:Name> "from" <path:Path> ";" => {
+    UsingTerm::new(Box::new(selector), Box::new(path))
+  }
+}
+
+Path: PathTerm = {
+  <value:r"`[a-zA-Z0-9-/[.]]+`"> => PathTerm::new(value.to_string().trim_matches('`').to_string()),
+  <value:r"'[a-zA-Z0-9-/[.]]+'"> => PathTerm::new(value.to_string().trim_matches('\'').to_string()),
 }
 
 Name: NameTerm = {

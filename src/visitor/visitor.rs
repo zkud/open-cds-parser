@@ -1,6 +1,6 @@
 use super::super::ast::{
-    ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleTerm, NameTerm, ParamTerm, ReturnsTerm,
-    ServiceTerm, TypeTerm,
+    ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleTerm, NameTerm, ParamTerm, PathTerm,
+    ReturnsTerm, ServiceTerm, TypeTerm, UsingTerm,
 };
 #[cfg(test)]
 use super::super::ast::{LeafTerm, NodeTerm};
@@ -35,6 +35,12 @@ pub trait Visitor {
         Ok(())
     }
     fn process_module(&mut self, _term: &ModuleTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_path(&mut self, _term: &PathTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_using(&mut self, _term: &UsingTerm) -> Result<(), VisitorError> {
         Ok(())
     }
     #[cfg(test)]

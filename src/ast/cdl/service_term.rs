@@ -7,7 +7,7 @@ use super::name_term::NameTerm;
 use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;
 
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 #[ast_term(visitor_path = "process_service")]
 pub struct ServiceTerm {
     #[subnode_prop]
@@ -16,7 +16,7 @@ pub struct ServiceTerm {
     definitions: Vec<ServiceDefinition>,
 }
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ServiceDefinition {
     Entity(EntityTerm),
     Function(FunctionTerm),
