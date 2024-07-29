@@ -221,7 +221,7 @@ Import: ImportTerm = {
 }
 
 SelectionBlock: SelectionBlockTerm = {
-  <open_brace:OpenFigureBracket> <selectors:Selectors> <close_brace:CloseFigureBracket> => {
+  <open_brace:OpenCurlyBrace> <selectors:Selectors> <close_brace:CloseCurlyBrace> => {
     SelectionBlockTerm::new(Some(Box::new(open_brace)), selectors, Some(Box::new(close_brace)))
   },
   <selectors:Selectors> => {
@@ -265,12 +265,12 @@ SelectAll: SelectAllTerm = {
   <dot:Dot> <wildcart:Wildcart> => SelectAllTerm::new(Box::new(dot), Box::new(wildcart)),
 }
 
-OpenFigureBracket: OpenFigureBracketTerm = {
-  "{" => OpenFigureBracketTerm::new(),
+OpenCurlyBrace: OpenCurlyBraceTerm = {
+  "{" => OpenCurlyBraceTerm::new(),
 }
 
-CloseFigureBracket: CloseFigureBracketTerm = {
-  "}" => CloseFigureBracketTerm::new(),
+CloseCurlyBrace: CloseCurlyBraceTerm = {
+  "}" => CloseCurlyBraceTerm::new(),
 }
 
 Wildcart: WildcartTerm = {

@@ -6,7 +6,7 @@ use super::{as_term::AsTerm, NameTerm};
 #[ast_term(visitor_path = "process_alias")]
 pub struct AliasTerm {
     #[subnode_prop]
-    as_separator: Box<AsTerm>,
+    as_term: Box<AsTerm>,
     #[subnode_prop]
     new_name: Box<NameTerm>,
 }

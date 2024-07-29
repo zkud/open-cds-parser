@@ -1,17 +1,17 @@
 use super::super::super::visitor::{Visitor, VisitorError};
 use super::super::common::ast_term::ASTTerm;
-use super::{CloseFigureBracketTerm, CommaTerm, OpenFigureBracketTerm, SelectorTerm};
+use super::{CloseCurlyBraceTerm, CommaTerm, OpenCurlyBraceTerm, SelectorTerm};
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 #[ast_term(visitor_path = "process_selection_block")]
 pub struct SelectionBlockTerm {
     #[subnode_prop]
-    open_brace: Option<Box<OpenFigureBracketTerm>>,
+    open_brace: Option<Box<OpenCurlyBraceTerm>>,
     #[subnode_prop]
     selectors: Vec<SelectionBlockSegment>,
     #[subnode_prop]
-    close_brace: Option<Box<CloseFigureBracketTerm>>,
+    close_brace: Option<Box<CloseCurlyBraceTerm>>,
 }
 
 #[derive(PartialEq, Eq, Debug, Clone)]
