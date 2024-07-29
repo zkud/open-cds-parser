@@ -76,10 +76,7 @@ pub trait Visitor {
     fn process_semicolumn(&mut self, _term: &SemicolumnTerm) -> Result<(), VisitorError> {
         Ok(())
     }
-    fn process_open_curly_brace(
-        &mut self,
-        _term: &OpenCurlyBraceTerm,
-    ) -> Result<(), VisitorError> {
+    fn process_open_curly_brace(&mut self, _term: &OpenCurlyBraceTerm) -> Result<(), VisitorError> {
         Ok(())
     }
     fn process_close_curly_brace(
