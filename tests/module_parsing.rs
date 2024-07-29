@@ -1,10 +1,7 @@
 use std::collections::HashMap;
 use std::path::Path;
 
-use open_cds_parser::ast::{
-    EntityTerm, FieldTerm, ModuleDefinition, ModuleTerm, NameTerm, PathTerm, ServiceDefinition,
-    ServiceTerm, UsingTerm,
-};
+use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
 
 #[test]
@@ -42,9 +39,22 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
     expected_ast.insert(
         service_path.to_string_lossy().to_string(),
         ModuleTerm::new(vec![
-            ModuleDefinition::Using(UsingTerm::new(
-                Box::new(NameTerm::new("Books".to_string())),
+            ModuleDefinition::Import(ImportTerm::new(
+                Box::new(UsingTerm::new()),
+                Box::new(SelectionBlockTerm::new(
+                    None,
+                    vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                        Box::new(ImportIdentifierTerm::new(
+                            Box::new(NameTerm::new("Books".to_string())),
+                            None,
+                        )),
+                        None,
+                    ))],
+                    None,
+                )),
+                Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("../db/schema".to_string())),
+                Box::new(SemicolumnTerm::new()),
             )),
             ModuleDefinition::Service(ServiceTerm::new(
                 Box::new(NameTerm::new("BooksService".to_string())),

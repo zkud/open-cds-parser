@@ -1,7 +1,4 @@
-use super::super::ast::{
-    ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleTerm, NameTerm, ParamTerm, PathTerm,
-    ReturnsTerm, ServiceTerm, TypeTerm, UsingTerm,
-};
+use super::super::ast::*;
 #[cfg(test)]
 use super::super::ast::{LeafTerm, NodeTerm};
 use super::VisitorError;
@@ -38,6 +35,57 @@ pub trait Visitor {
         Ok(())
     }
     fn process_path(&mut self, _term: &PathTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_import(&mut self, _term: &ImportTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_selector(&mut self, _term: &SelectorTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_selection_block(&mut self, _term: &SelectionBlockTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_select_all(&mut self, _term: &SelectAllTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_dot(&mut self, _term: &DotTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_wildcart(&mut self, _term: &WildcartTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_import_identifier(
+        &mut self,
+        _term: &ImportIdentifierTerm,
+    ) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_comma(&mut self, _term: &CommaTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_as(&mut self, _term: &AsTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_alias(&mut self, _term: &AliasTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_from(&mut self, _term: &FromTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_semicolumn(&mut self, _term: &SemicolumnTerm) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_open_figure_bracket(
+        &mut self,
+        _term: &OpenFigureBracketTerm,
+    ) -> Result<(), VisitorError> {
+        Ok(())
+    }
+    fn process_close_figure_bracket(
+        &mut self,
+        _term: &CloseFigureBracketTerm,
+    ) -> Result<(), VisitorError> {
         Ok(())
     }
     fn process_using(&mut self, _term: &UsingTerm) -> Result<(), VisitorError> {

@@ -5,7 +5,7 @@ use std::fs;
 use std::fs::{read_dir, File};
 use std::path::{Path, PathBuf};
 
-use crate::ast::{ASTTerm, UsingTerm};
+use crate::ast::{ASTTerm, ImportTerm};
 use crate::visitor::{Visitor, VisitorError};
 
 use super::super::ast::ModuleTerm;
@@ -109,7 +109,7 @@ impl Parser {
         }
 
         impl<'a> Visitor for UsingVisitor<'a> {
-            fn process_using(&mut self, term: &UsingTerm) -> Result<(), VisitorError> {
+            fn process_import(&mut self, term: &ImportTerm) -> Result<(), VisitorError> {
                 let using_path = term.path().value();
                 let full_path = self.current_dir.join(using_path);
                 let formatted_path = &full_path.to_string_lossy().to_owned();

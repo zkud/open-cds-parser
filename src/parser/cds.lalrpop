@@ -1,7 +1,4 @@
-use crate::ast::{
-  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
-  ParamTerm, ReturnsTerm, ServiceDefinition, ServiceTerm, TypeTerm, PathTerm, UsingTerm,
-};
+use crate::ast::*;
 
 grammar;
 
@@ -27,9 +24,9 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     definitions.push(ModuleDefinition::Type(type_definition));
     definitions
   },
-  <using:Using> => {
+  <import:Import> => {
     let mut definitions: Vec<ModuleDefinition> = Vec::new();
-    definitions.push(ModuleDefinition::Using(using));
+    definitions.push(ModuleDefinition::Import(import));
     definitions
   },
   <definitions:ModuleDefinitions> <entity:Entity> => {
@@ -50,10 +47,10 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     new_definitions.push(ModuleDefinition::Type(type_definition));
     new_definitions
   },
-  <definitions:ModuleDefinitions> <using:Using> => {
+  <definitions:ModuleDefinitions> <import:Import> => {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
-    new_definitions.push(ModuleDefinition::Using(using));
+    new_definitions.push(ModuleDefinition::Import(import));
     new_definitions
   }
 }
@@ -211,10 +208,97 @@ Type: TypeTerm = {
   }
 }
 
-Using: UsingTerm = {
-  "using" <selector:Name> "from" <path:Path> ";" => {
-    UsingTerm::new(Box::new(selector), Box::new(path))
+Import: ImportTerm = {
+  <using:Using> <selection_block:SelectionBlock> <from:From> <path:Path> <semi:Semicolumn> => {
+    ImportTerm::new(
+      Box::new(using),
+      Box::new(selection_block),
+      Box::new(from),
+      Box::new(path),
+      Box::new(semi)
+    )
   }
+}
+
+SelectionBlock: SelectionBlockTerm = {
+  <open_brace:OpenFigureBracket> <selectors:Selectors> <close_brace:CloseFigureBracket> => {
+    SelectionBlockTerm::new(Some(Box::new(open_brace)), selectors, Some(Box::new(close_brace)))
+  },
+  <selectors:Selectors> => {
+    SelectionBlockTerm::new(None, selectors, None)
+  }
+}
+
+Selectors: Vec<SelectionBlockSegment> = {
+  <selector:Selector> => vec![SelectionBlockSegment::Selector(selector)],
+  <selector:Selector> <comma:Comma> => {
+    vec![
+      SelectionBlockSegment::Selector(selector),
+      SelectionBlockSegment::Comma(comma)
+    ]
+  },
+  <selector:Selector> <comma:Comma> <selectors:Selectors> => {
+    let mut new_selectors: Vec<SelectionBlockSegment> = vec![
+      SelectionBlockSegment::Selector(selector),
+      SelectionBlockSegment::Comma(comma)
+    ];
+    new_selectors.extend(selectors);
+    new_selectors
+  },
+}
+
+Selector: SelectorTerm = {
+  <import:ImportIdentifier> => SelectorTerm::new(Box::new(import), None),
+  <import:ImportIdentifier> <alias:Alias> => SelectorTerm::new(Box::new(import), Some(Box::new(alias))),
+}
+
+Alias: AliasTerm = {
+  <as_term:As> <name:Name> => AliasTerm::new(Box::new(as_term), Box::new(name)),
+}
+
+ImportIdentifier: ImportIdentifierTerm = {
+  <name:Name> => ImportIdentifierTerm::new(Box::new(name), None),
+  <name:Name> <select_all:SelectAll> => ImportIdentifierTerm::new(Box::new(name), Some(Box::new(select_all))),
+}
+
+SelectAll: SelectAllTerm = {
+  <dot:Dot> <wildcart:Wildcart> => SelectAllTerm::new(Box::new(dot), Box::new(wildcart)),
+}
+
+OpenFigureBracket: OpenFigureBracketTerm = {
+  "{" => OpenFigureBracketTerm::new(),
+}
+
+CloseFigureBracket: CloseFigureBracketTerm = {
+  "}" => CloseFigureBracketTerm::new(),
+}
+
+Wildcart: WildcartTerm = {
+  "*" => WildcartTerm::new(),
+}
+
+Dot: DotTerm = {
+  "." => DotTerm::new(),
+}
+
+Comma: CommaTerm = {
+  "," => CommaTerm::new(),
+}
+
+Semicolumn: SemicolumnTerm = {
+  ";" => SemicolumnTerm::new(),
+}
+
+As: AsTerm = {
+  "as" => AsTerm::new(),
+}
+
+From: FromTerm = {
+  "from" => FromTerm::new(),
+}
+
+Using: UsingTerm = {
+  "using" => UsingTerm::new(),
 }
 
 Path: PathTerm = {
