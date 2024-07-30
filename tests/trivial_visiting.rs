@@ -34,7 +34,7 @@ impl Visitor<()> for SQLVisitor {
 
 #[test]
 fn with_correct_and_trivial_cds_it_buids_a_tree() {
-    let parser = Parser::new();
+    let parser = Parser::new_with_native_fs();
 
     let ast = parser
         .parse_single_module(&"./tests/projects/trivial/srv/cat-service.cds")

@@ -6,7 +6,7 @@ use open_cds_parser::parser::Parser;
 
 #[test]
 fn with_correct_and_multi_module_it_builds_modules_table() {
-    let parser = Parser::new();
+    let parser = Parser::new_with_native_fs();
 
     let ast = parser
         .parse_multiple_module(vec!["./tests/projects/modules/srv".to_string()])

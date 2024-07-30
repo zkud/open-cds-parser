@@ -1,9 +1,8 @@
 use std::collections::HashMap;
-
-use std::fs;
-use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use crate::ast::{ASTTerm, ImportTerm};
+use crate::parser::fs::FileSystem;
 use crate::parser::single_module::SingleModuleParser;
 use crate::visitor::Visitor;
 
@@ -15,12 +14,17 @@ use super::MultiModuleParser;
 
 pub struct MultiModuleParserImpl {
     single_module_parser: Box<dyn SingleModuleParser>,
+    file_system: Arc<dyn FileSystem>,
 }
 
 impl MultiModuleParserImpl {
-    pub fn new(single_module_parser: Box<dyn SingleModuleParser>) -> Self {
+    pub fn new(
+        single_module_parser: Box<dyn SingleModuleParser>,
+        file_system: Arc<dyn FileSystem>,
+    ) -> Self {
         MultiModuleParserImpl {
             single_module_parser,
+            file_system,
         }
     }
 }
@@ -43,62 +47,54 @@ impl MultiModuleParserImpl {
         path: &str,
         result: &mut HashMap<String, ModuleTerm>,
     ) -> Result<(), ParseError> {
-        let path = Path::new(path);
-
-        if path.is_file() {
-            self.parse_single_file_wrapper(path, result)?;
-        } else if path.is_dir() {
-            for entry in fs::read_dir(path)? {
-                let entry = entry?;
-                let file_path = entry.path();
-                if file_path.extension().and_then(|s| s.to_str()) == Some("cds") {
-                    self.parse_single_file_wrapper(&file_path, result)?;
-                }
-            }
-        } else {
-            return Err(ParseError::new(
-                "Invalid path".to_string() + &path.to_string_lossy(),
-                ParseErrorType::FileIOError,
-            ));
+        if self.file_system.path_is_file(path) {
+            return self.parse_single_file_wrapper(path, result);
         }
 
-        Ok(())
+        if self.file_system.path_is_directory(path) {
+            let file_paths = self.file_system.get_all_cds_files_in_dir(path)?;
+            for file_path in file_paths {
+                self.parse_single_file_wrapper(&file_path, result)?;
+            }
+            return Ok(());
+        }
+
+        Err(ParseError::new(
+            "Invalid path: ".to_string() + path,
+            ParseErrorType::FileIOError,
+        ))
     }
 
     fn parse_single_file_wrapper(
         &self,
-        path: &Path,
+        path: &str,
         result: &mut HashMap<String, ModuleTerm>,
     ) -> Result<(), ParseError> {
-        let path_str = path.canonicalize()?.to_string_lossy().into_owned();
-
-        if result.contains_key(&path_str) {
+        let absolute_path = self.file_system.to_absolute(path)?;
+        if result.contains_key(&absolute_path) {
             return Ok(());
         }
 
-        let module_term = self.single_module_parser.parse(&path_str)?;
-        result.insert(path_str.clone(), (*module_term).clone());
+        let module_term = self.single_module_parser.parse(&path)?;
+        result.insert(absolute_path, (*module_term).clone());
 
-        let parent_dir = path.parent().ok_or_else(|| {
-            ParseError::new(
-                "Unable to get parent directory".to_string() + &path_str.clone(),
-                ParseErrorType::FileIOError,
-            )
-        })?;
+        let parent_dir = self.file_system.get_parent_dir(path)?;
 
         struct UsingVisitor<'a> {
             parser: &'a MultiModuleParserImpl,
             result: &'a mut HashMap<String, ModuleTerm>,
-            current_dir: PathBuf,
+            current_dir: String,
         }
 
         impl<'a> Visitor<ParseError> for UsingVisitor<'a> {
             fn process_import(&mut self, term: &ImportTerm) -> Result<(), ParseError> {
                 let using_path = term.path().value();
-                let full_path = self.current_dir.join(using_path);
-                let formatted_path = &full_path.to_string_lossy().to_owned();
+                let path_to_dependency = self
+                    .parser
+                    .file_system
+                    .join_paths(&self.current_dir, &using_path)?;
                 self.parser
-                    .parse_path(&(formatted_path.to_string() + &".cds"), self.result)?;
+                    .parse_path(&(path_to_dependency + &".cds"), self.result)?;
                 Ok(())
             }
         }
@@ -106,7 +102,7 @@ impl MultiModuleParserImpl {
         let mut using_visitor = UsingVisitor {
             parser: self,
             result,
-            current_dir: parent_dir.to_path_buf(),
+            current_dir: parent_dir,
         };
 
         module_term.accept(&mut using_visitor)

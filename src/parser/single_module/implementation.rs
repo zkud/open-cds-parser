@@ -1,39 +1,32 @@
-use std::io::prelude::*;
+use std::env::current_dir;
+use std::sync::Arc;
 
-use std::fs::File;
-use std::path::Path;
+use crate::parser::fs::FileSystem;
 
 use super::super::super::ast::ModuleTerm;
 use super::super::parse_error::ParseError;
 use super::super::parse_error::ParseErrorType;
 use super::SingleModuleParser;
 
-pub struct SingleModuleParserImpl {}
+pub struct SingleModuleParserImpl {
+    file_system: Arc<dyn FileSystem>,
+}
 
 impl SingleModuleParserImpl {
-    pub fn new() -> Self {
-        Self {}
+    pub fn new(file_system: Arc<dyn FileSystem>) -> Self {
+        Self { file_system }
     }
 }
 
 impl SingleModuleParser for SingleModuleParserImpl {
     fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
-        let path = Path::new(path);
-
-        let mut file = File::open(path)?;
-
-        let mut content = String::new();
-        file.read_to_string(&mut content)?;
+        let content = self.file_system.read_content(path)?;
 
         let module = match super::cds::ModuleParser::new().parse(&content) {
             Ok(module_ast) => module_ast,
             Err(lalrpop_auto_generated_error) => {
                 return Err(ParseError::new(
-                    format!(
-                        "File: {} Error: {}",
-                        path.to_string_lossy(),
-                        lalrpop_auto_generated_error
-                    ),
+                    format!("File: {} Error: {}", path, lalrpop_auto_generated_error),
                     ParseErrorType::SyntaxError,
                 ))
             }

@@ -1,6 +1,9 @@
 use std::fs::remove_file;
 use std::fs::File;
 use std::io::prelude::*;
+use std::sync::Arc;
+
+use crate::parser::fs::NativeFileSystem;
 
 use super::{SingleModuleParser, SingleModuleParserImpl};
 
@@ -40,8 +43,9 @@ fn with_correct_input_it_translates() {
                 ",
         )
         .unwrap();
+    let native_file_system = Arc::new(NativeFileSystem::new());
 
-    let _result = SingleModuleParserImpl::new()
+    let _result = SingleModuleParserImpl::new(native_file_system)
         .parse(&"test_correct.cds")
         .unwrap();
 
@@ -50,7 +54,9 @@ fn with_correct_input_it_translates() {
 
 #[test]
 fn with_unexisting_file_it_fails() {
-    let result = SingleModuleParserImpl::new().parse(&"test.cds");
+    let native_file_system = Arc::new(NativeFileSystem::new());
+
+    let result = SingleModuleParserImpl::new(native_file_system).parse(&"test.cds");
 
     assert!(result.is_err());
 }
@@ -69,8 +75,9 @@ fn with_syntactically_incorrect_it_fails() {
                 ",
         )
         .unwrap();
+    let native_file_system = Arc::new(NativeFileSystem::new());
 
-    let result = SingleModuleParserImpl::new().parse(&"test_incorrect.cds");
+    let result = SingleModuleParserImpl::new(native_file_system).parse(&"test_incorrect.cds");
 
     remove_file("test_incorrect.cds").unwrap();
 

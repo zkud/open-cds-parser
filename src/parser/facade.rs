@@ -1,5 +1,8 @@
 use std::collections::HashMap;
+use std::sync::Arc;
 
+use super::fs::FileSystem;
+use super::fs::NativeFileSystem;
 use super::multi_module::*;
 use super::single_module::*;
 
@@ -12,13 +15,19 @@ pub struct Parser {
 }
 
 impl Parser {
-    pub fn new() -> Self {
+    pub fn new(file_system: Arc<dyn FileSystem>) -> Self {
         Self {
-            single_module_parser: Box::new(SingleModuleParserImpl::new()),
-            multi_module_parser: Box::new(MultiModuleParserImpl::new(Box::new(
-                SingleModuleParserImpl::new(),
-            ))),
+            single_module_parser: Box::new(SingleModuleParserImpl::new(file_system.clone())),
+            multi_module_parser: Box::new(MultiModuleParserImpl::new(
+                Box::new(SingleModuleParserImpl::new(file_system.clone())),
+                file_system.clone(),
+            )),
         }
+    }
+
+    pub fn new_with_native_fs() -> Self {
+        let file_system = Arc::new(NativeFileSystem::new());
+        Parser::new(file_system)
     }
 
     pub fn parse_single_module(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
