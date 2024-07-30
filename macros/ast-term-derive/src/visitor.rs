@@ -16,7 +16,7 @@ pub fn impl_accept_visitor_method(
         quote! {
           impl crate::ast::common::ast_term::ASTTerm for #name {
             #[cfg(not(tarpaulin_include))]
-            fn accept(&self, visitor: &mut dyn crate::visitor::Visitor) -> Result<(), crate::visitor::VisitorError> {
+            fn accept<E>(&self, visitor: &mut dyn crate::visitor::Visitor<E>) -> Result<(), E> {
               visitor.#method_name(self)?;
               #fields_calls
               Ok(())

@@ -5,7 +5,7 @@ use std::path::{Path, PathBuf};
 
 use crate::ast::{ASTTerm, ImportTerm};
 use crate::parser::single_module::SingleModuleParser;
-use crate::visitor::{Visitor, VisitorError};
+use crate::visitor::Visitor;
 
 use super::super::super::ast::ModuleTerm;
 use super::super::parse_error::ParseError;
@@ -92,14 +92,13 @@ impl MultiModuleParserImpl {
             current_dir: PathBuf,
         }
 
-        impl<'a> Visitor for UsingVisitor<'a> {
-            fn process_import(&mut self, term: &ImportTerm) -> Result<(), VisitorError> {
+        impl<'a> Visitor<ParseError> for UsingVisitor<'a> {
+            fn process_import(&mut self, term: &ImportTerm) -> Result<(), ParseError> {
                 let using_path = term.path().value();
                 let full_path = self.current_dir.join(using_path);
                 let formatted_path = &full_path.to_string_lossy().to_owned();
                 self.parser
-                    .parse_path(&(formatted_path.to_string() + &".cds"), self.result)
-                    .map_err(|e| VisitorError::new(e.to_string()))?;
+                    .parse_path(&(formatted_path.to_string() + &".cds"), self.result)?;
                 Ok(())
             }
         }
@@ -110,10 +109,6 @@ impl MultiModuleParserImpl {
             current_dir: parent_dir.to_path_buf(),
         };
 
-        module_term
-            .accept(&mut using_visitor)
-            .map_err(|e| ParseError::new(e.to_string(), ParseErrorType::SyntaxError))?;
-
-        Ok(())
+        module_term.accept(&mut using_visitor)
     }
 }

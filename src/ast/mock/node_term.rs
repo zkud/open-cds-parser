@@ -73,19 +73,14 @@ mod tests {
             visited_leaf: bool,
         }
 
-        impl crate::visitor::Visitor for MockVisitor {
-            fn process_mock_node(
-                &mut self,
-                _node: &NodeTerm,
-            ) -> Result<(), crate::visitor::VisitorError> {
+        impl crate::visitor::Visitor<()> for MockVisitor {
+            // Don't suppose any error handling here
+            fn process_mock_node(&mut self, _node: &NodeTerm) -> Result<(), ()> {
                 self.visited_node = true;
                 Ok(())
             }
 
-            fn process_mock_leaf(
-                &mut self,
-                _leaf: &LeafTerm,
-            ) -> Result<(), crate::visitor::VisitorError> {
+            fn process_mock_leaf(&mut self, _leaf: &LeafTerm) -> Result<(), ()> {
                 self.visited_leaf = true;
                 Ok(())
             }

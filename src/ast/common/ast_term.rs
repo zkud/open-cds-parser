@@ -1,20 +1,20 @@
-use super::super::super::visitor::{Visitor, VisitorError};
+use super::super::super::visitor::Visitor;
 use std::ops::Deref;
 use std::sync::Arc;
 
 pub trait ASTTerm {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError>;
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E>;
 }
 
 impl<T: ASTTerm> ASTTerm for dyn Deref<Target = T> {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
         self.deref().accept(visitor)?;
         Ok(())
     }
 }
 
 impl<T: ASTTerm> ASTTerm for Option<T> {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
         if let Some(variant) = self {
             variant.accept(visitor)?;
         }
@@ -23,21 +23,21 @@ impl<T: ASTTerm> ASTTerm for Option<T> {
 }
 
 impl<T: ASTTerm> ASTTerm for Box<T> {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
         self.deref().accept(visitor)?;
         Ok(())
     }
 }
 
 impl<T: ASTTerm> ASTTerm for Arc<T> {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
         self.deref().accept(visitor)?;
         Ok(())
     }
 }
 
 impl<T: ASTTerm> ASTTerm for [T] {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
         for term in self.iter() {
             term.accept(visitor)?;
         }
@@ -65,11 +65,9 @@ mod tests {
     #[derive(Debug, PartialEq)]
     struct VisitorError;
 
-    impl Visitor for MockVisitor {
-        fn process_mock_leaf(
-            &mut self,
-            term: &LeafTerm,
-        ) -> Result<(), crate::visitor::VisitorError> {
+    impl Visitor<()> for MockVisitor {
+        // Don't suppose any errors to exist here
+        fn process_mock_leaf(&mut self, term: &LeafTerm) -> Result<(), ()> {
             self.visits.push(term.value().clone());
             Ok(())
         }

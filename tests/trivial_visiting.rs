@@ -1,9 +1,6 @@
-use open_cds_parser::ast::{
-    ASTTerm, EntityTerm, FieldTerm, ModuleDefinition, ModuleTerm, NameTerm, ServiceDefinition,
-    ServiceTerm,
-};
+use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
-use open_cds_parser::visitor::{Visitor, VisitorError};
+use open_cds_parser::visitor::Visitor;
 
 struct SQLVisitor {
     pub tables: Vec<Table>,
@@ -19,8 +16,8 @@ struct Field {
     pub field_type: String,
 }
 
-impl Visitor for SQLVisitor {
-    fn process_entity(&mut self, term: &EntityTerm) -> Result<(), VisitorError> {
+impl Visitor<()> for SQLVisitor {
+    fn process_entity(&mut self, term: &EntityTerm) -> Result<(), ()> {
         let name = term.name().value().to_string();
         let fields = term
             .fields()

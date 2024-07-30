@@ -1,4 +1,4 @@
-use super::super::super::visitor::{Visitor, VisitorError};
+use super::super::super::visitor::Visitor;
 use super::super::common::ast_term::ASTTerm;
 use super::{CloseCurlyBraceTerm, CommaTerm, OpenCurlyBraceTerm, SelectorTerm};
 use ast_term_derive::ASTTerm;
@@ -21,7 +21,7 @@ pub enum SelectionBlockSegment {
 }
 
 impl ASTTerm for SelectionBlockSegment {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
         match self {
             Self::Selector(selector) => selector.accept(visitor)?,
             Self::Comma(comma) => comma.accept(visitor)?,

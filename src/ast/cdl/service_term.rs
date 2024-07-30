@@ -1,4 +1,4 @@
-use super::super::super::visitor::{Visitor, VisitorError};
+use super::super::super::visitor::Visitor;
 use super::super::common::ast_term::ASTTerm;
 use super::action_term::ActionTerm;
 use super::entity_term::EntityTerm;
@@ -25,7 +25,7 @@ pub enum ServiceDefinition {
 }
 
 impl ASTTerm for ServiceDefinition {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
         match self {
             ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
             ServiceDefinition::Function(function) => function.accept(visitor)?,
