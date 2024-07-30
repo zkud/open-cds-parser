@@ -6,10 +6,18 @@ use std::path::Path;
 use super::super::super::super::ast::ModuleTerm;
 use super::super::super::parse_error::ParseError;
 use super::super::super::parse_error::ParseErrorType;
-use super::super::Parser;
+use super::SingleModuleParser;
 
-impl Parser {
-    pub fn parse_single_file(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
+pub struct SingleModuleParserImpl {}
+
+impl SingleModuleParserImpl {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
+impl SingleModuleParser for SingleModuleParserImpl {
+    fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
         let path = Path::new(path);
 
         let mut file = File::open(path)?;

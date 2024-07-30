@@ -1,9 +1,8 @@
-
 use std::fs::remove_file;
 use std::fs::File;
 use std::io::prelude::*;
 
-use super::super::Parser;
+use super::{SingleModuleParser, SingleModuleParserImpl};
 
 #[test]
 fn with_correct_input_it_translates() {
@@ -42,8 +41,8 @@ fn with_correct_input_it_translates() {
         )
         .unwrap();
 
-    let _result = Parser::new()
-        .parse_single_file(&"test_correct.cds")
+    let _result = SingleModuleParserImpl::new()
+        .parse(&"test_correct.cds")
         .unwrap();
 
     remove_file("test_correct.cds").unwrap();
@@ -51,7 +50,7 @@ fn with_correct_input_it_translates() {
 
 #[test]
 fn with_unexisting_file_it_fails() {
-    let result = Parser::new().parse_single_file(&"test.cds");
+    let result = SingleModuleParserImpl::new().parse(&"test.cds");
 
     assert!(result.is_err());
 }
@@ -71,7 +70,7 @@ fn with_syntactically_incorrect_it_fails() {
         )
         .unwrap();
 
-    let result = Parser::new().parse_single_file(&"test_incorrect.cds");
+    let result = SingleModuleParserImpl::new().parse(&"test_incorrect.cds");
 
     remove_file("test_incorrect.cds").unwrap();
 

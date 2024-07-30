@@ -4,16 +4,29 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use crate::ast::{ASTTerm, ImportTerm};
+use crate::parser::parser::single_module::SingleModuleParser;
 use crate::visitor::{Visitor, VisitorError};
 
 use super::super::super::super::ast::ModuleTerm;
 use super::super::super::parse_error::ParseError;
 use super::super::super::parse_error::ParseErrorType;
 
-use super::super::Parser;
+use super::MultiModuleParser;
 
-impl Parser {
-    pub fn parse(&self, paths: Vec<String>) -> Result<HashMap<String, ModuleTerm>, ParseError> {
+pub struct MultiModuleParserImpl {
+    single_module_parser: Box<dyn SingleModuleParser>,
+}
+
+impl MultiModuleParserImpl {
+    pub fn new(single_module_parser: Box<dyn SingleModuleParser>) -> Self {
+        MultiModuleParserImpl {
+            single_module_parser,
+        }
+    }
+}
+
+impl MultiModuleParser for MultiModuleParserImpl {
+    fn parse(&self, paths: Vec<String>) -> Result<HashMap<String, ModuleTerm>, ParseError> {
         let mut result = HashMap::new();
 
         for path in paths {
@@ -22,7 +35,9 @@ impl Parser {
 
         Ok(result)
     }
+}
 
+impl MultiModuleParserImpl {
     fn parse_path(
         &self,
         path: &str,
@@ -61,7 +76,7 @@ impl Parser {
             return Ok(());
         }
 
-        let module_term = self.parse_single_file(&path_str)?;
+        let module_term = self.single_module_parser.parse(&path_str)?;
         result.insert(path_str.clone(), (*module_term).clone());
 
         let parent_dir = path.parent().ok_or_else(|| {
@@ -72,7 +87,7 @@ impl Parser {
         })?;
 
         struct UsingVisitor<'a> {
-            parser: &'a Parser,
+            parser: &'a MultiModuleParserImpl,
             result: &'a mut HashMap<String, ModuleTerm>,
             current_dir: PathBuf,
         }

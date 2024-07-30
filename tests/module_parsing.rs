@@ -9,7 +9,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
     let parser = Parser::new();
 
     let ast = parser
-        .parse(vec!["./tests/projects/modules/srv".to_string()])
+        .parse_multiple_module(vec!["./tests/projects/modules/srv".to_string()])
         .unwrap();
 
     let mut expected_ast = HashMap::new();

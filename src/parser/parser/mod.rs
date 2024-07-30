@@ -1,5 +1,5 @@
-mod declaration;
+mod facade;
 mod multi_module;
 mod single_module;
 
-pub use declaration::Parser;
+pub use facade::Parser;
