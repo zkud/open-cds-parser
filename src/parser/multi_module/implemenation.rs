@@ -4,12 +4,12 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use crate::ast::{ASTTerm, ImportTerm};
-use crate::parser::parser::single_module::SingleModuleParser;
+use crate::parser::single_module::SingleModuleParser;
 use crate::visitor::{Visitor, VisitorError};
 
-use super::super::super::super::ast::ModuleTerm;
-use super::super::super::parse_error::ParseError;
-use super::super::super::parse_error::ParseErrorType;
+use super::super::super::ast::ModuleTerm;
+use super::super::parse_error::ParseError;
+use super::super::parse_error::ParseErrorType;
 
 use super::MultiModuleParser;
 

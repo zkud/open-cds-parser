@@ -3,9 +3,9 @@ use std::io::prelude::*;
 use std::fs::File;
 use std::path::Path;
 
-use super::super::super::super::ast::ModuleTerm;
-use super::super::super::parse_error::ParseError;
-use super::super::super::parse_error::ParseErrorType;
+use super::super::super::ast::ModuleTerm;
+use super::super::parse_error::ParseError;
+use super::super::parse_error::ParseErrorType;
 use super::SingleModuleParser;
 
 pub struct SingleModuleParserImpl {}

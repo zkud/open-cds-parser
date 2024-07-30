@@ -1,6 +1,6 @@
 mod implementation;
 use lalrpop_util::lalrpop_mod;
-lalrpop_mod!(cds, "/parser/parser/single_module/cds.rs");
+lalrpop_mod!(cds, "/parser/single_module/cds.rs");
 mod interface;
 #[cfg(test)]
 mod tests;

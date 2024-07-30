@@ -1,5 +1,7 @@
+mod facade;
+mod multi_module;
 mod parse_error;
-mod parser;
+mod single_module;
 
+pub use facade::Parser;
 pub use parse_error::{ParseError, ParseErrorType};
-pub use parser::Parser;
