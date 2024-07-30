@@ -1,15 +1,16 @@
-    use std::fs::remove_file;
-    use std::fs::File;
-    use std::io::prelude::*;
 
-    use super::super::Parser;
+use std::fs::remove_file;
+use std::fs::File;
+use std::io::prelude::*;
 
-    #[test]
-    fn with_correct_input_it_translates() {
-        let mut test_file = File::create("test_correct.cds").unwrap();
-        test_file
-            .write_all(
-                b"
+use super::super::Parser;
+
+#[test]
+fn with_correct_input_it_translates() {
+    let mut test_file = File::create("test_correct.cds").unwrap();
+    test_file
+        .write_all(
+            b"
                 type test : Testtype;
 
                 entity Test {
@@ -38,41 +39,41 @@
                     function ftest2(arg1: Test) returns array of Test;
                 }
                 ",
-            )
-            .unwrap();
+        )
+        .unwrap();
 
-        let _result = Parser::new()
-            .parse_single_file(&"test_correct.cds")
-            .unwrap();
+    let _result = Parser::new()
+        .parse_single_file(&"test_correct.cds")
+        .unwrap();
 
-        remove_file("test_correct.cds").unwrap();
-    }
+    remove_file("test_correct.cds").unwrap();
+}
 
-    #[test]
-    fn with_unexisting_file_it_fails() {
-        let result = Parser::new().parse_single_file(&"test.cds");
+#[test]
+fn with_unexisting_file_it_fails() {
+    let result = Parser::new().parse_single_file(&"test.cds");
 
-        assert!(result.is_err());
-    }
+    assert!(result.is_err());
+}
 
-    #[test]
-    fn with_syntactically_incorrect_it_fails() {
-        let mut test_file = File::create("test_incorrect.cds").unwrap();
-        test_file
-            .write_all(
-                b"
+#[test]
+fn with_syntactically_incorrect_it_fails() {
+    let mut test_file = File::create("test_incorrect.cds").unwrap();
+    test_file
+        .write_all(
+            b"
                     service TestService {
                         function ftest0() returns Test;
                         function ftest1(turns Test;
                         function ftest2(arg1: Test) returns array of Test;
                     }
                 ",
-            )
-            .unwrap();
+        )
+        .unwrap();
 
-        let result = Parser::new().parse_single_file(&"test_incorrect.cds");
+    let result = Parser::new().parse_single_file(&"test_incorrect.cds");
 
-        remove_file("test_incorrect.cds").unwrap();
+    remove_file("test_incorrect.cds").unwrap();
 
-        assert!(result.is_err());
-    }
+    assert!(result.is_err());
+}
