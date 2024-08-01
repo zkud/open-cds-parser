@@ -1,4 +1,3 @@
-use std::env::current_dir;
 use std::sync::Arc;
 
 use crate::parser::fs::FileSystem;
