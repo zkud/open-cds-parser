@@ -124,6 +124,50 @@ fn with_name_import_it_parses() {
 }
 
 #[test]
+fn with_name_with_comma_import_it_parses() {
+    let mut files = HashMap::new();
+    files.insert(
+        "/import.cds".to_string(),
+        " using { name, } from 'path'; ".to_string(),
+    );
+
+    let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
+    let parser = SingleModuleParserImpl::new(file_system);
+
+    let result = parser.parse("/import.cds");
+
+    assert!(result.is_ok());
+    let parsed_module = result.unwrap();
+    assert_eq!(
+        parsed_module,
+        Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
+            ImportTerm::new(
+                Box::new(UsingTerm::new()),
+                Box::new(SelectionBlockTerm::new(
+                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    vec![
+                        SelectionBlockSegment::Selector(SelectorTerm::new(
+                            Box::new(ImportIdentifierTerm::new(Box::new(
+                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                                    "name".to_string()
+                                )))
+                            ))),
+                            None,
+                            None
+                        )),
+                        SelectionBlockSegment::Comma(CommaTerm::new())
+                    ],
+                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                )),
+                Box::new(FromTerm::new()),
+                Box::new(PathTerm::new("path".to_string())),
+                Box::new(SemicolumnTerm::new())
+            )
+        ),]))
+    );
+}
+
+#[test]
 fn with_name_with_alias_import_it_parses() {
     let mut files = HashMap::new();
     files.insert(
