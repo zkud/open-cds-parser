@@ -1,9 +1,10 @@
 use ast_term_derive::ASTTerm;
 
-use super::{alias_term::AliasTerm, import_identifier_term::ImportIdentifierTerm};
+use super::super::{AsTerm, ImportIdentifierTerm, NameTerm};
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct SelectorTerm {
     import_identifier: Box<ImportIdentifierTerm>,
-    alias: Option<Box<AliasTerm>>,
+    as_term: Option<Box<AsTerm>>,
+    alias: Option<Box<NameTerm>>,
 }

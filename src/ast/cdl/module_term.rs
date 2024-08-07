@@ -1,8 +1,8 @@
 use crate::ast::Visitable;
 
 use super::super::super::visitor::Visitor;
+use super::super::import::ImportTerm;
 use super::entity_term::EntityTerm;
-use super::import_term::ImportTerm;
 use super::service_term::ServiceTerm;
 use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;

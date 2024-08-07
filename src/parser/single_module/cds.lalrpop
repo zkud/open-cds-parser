@@ -248,21 +248,34 @@ Selectors: Vec<SelectionBlockSegment> = {
 }
 
 Selector: SelectorTerm = {
-  <import:ImportIdentifier> => SelectorTerm::new(Box::new(import), None),
-  <import:ImportIdentifier> <alias:Alias> => SelectorTerm::new(Box::new(import), Some(Box::new(alias))),
-}
-
-Alias: AliasTerm = {
-  <as_term:As> <name:Name> => AliasTerm::new(Box::new(as_term), Box::new(name)),
+  <import:ImportIdentifier> => SelectorTerm::new(Box::new(import), None, None),
+  <import:ImportIdentifier> <as_term:As> <alias:Name> => SelectorTerm::new(Box::new(import), Some(Box::new(as_term)), Some(Box::new(alias))),
 }
 
 ImportIdentifier: ImportIdentifierTerm = {
-  <name:Name> => ImportIdentifierTerm::new(Box::new(name), None),
-  <name:Name> <select_all:SelectAll> => ImportIdentifierTerm::new(Box::new(name), Some(Box::new(select_all))),
-}
-
-SelectAll: SelectAllTerm = {
-  <dot:Dot> <wildcart:Wildcart> => SelectAllTerm::new(Box::new(dot), Box::new(wildcart)),
+  <name:Name> => {
+    ImportIdentifierTerm::new(Box::new(
+      ImportIdentifierVariant::NameOnly(
+        Box::new(name)
+      )
+    ))
+  },
+  <name:Name> <dot:Dot> <wildcart:Wildcart> => {
+    ImportIdentifierTerm::new(Box::new(
+      ImportIdentifierVariant::NameWithWildcart {
+        name: Box::new(name),
+        dot: Box::new(dot),
+        wildcart: Box::new(wildcart)
+      }
+    ))
+  },
+  <wildcart:Wildcart> => {
+    ImportIdentifierTerm::new(Box::new(
+      ImportIdentifierVariant::SelectAll(
+        Box::new(wildcart),
+      )
+    ))
+  },
 }
 
 OpenCurlyBrace: OpenCurlyBraceTerm = {

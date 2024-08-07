@@ -1,8 +1,8 @@
-use crate::ast::{ASTTermEnum, Visitable};
+use crate::ast::Visitable;
 
 use super::super::super::visitor::Visitor;
 use super::super::common::ast_term::ASTTerm;
-use super::{CloseCurlyBraceTerm, CommaTerm, OpenCurlyBraceTerm, SelectorTerm};
+use super::super::{CloseCurlyBraceTerm, CommaTerm, OpenCurlyBraceTerm, SelectorTerm};
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]

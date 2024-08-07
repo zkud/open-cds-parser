@@ -5,7 +5,7 @@ use std::sync::Arc;
 
 use crate::parser::fs::NativeFileSystem;
 
-use super::{SingleModuleParser, SingleModuleParserImpl};
+use super::super::{SingleModuleParser, SingleModuleParserImpl};
 
 #[test]
 fn with_correct_input_it_translates() {

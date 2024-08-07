@@ -18,10 +18,12 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Box::new(ImportIdentifierTerm::new(
-                                Box::new(NameTerm::new("Books".to_string())),
-                                None,
-                            )),
+                            Box::new(ImportIdentifierTerm::new(Box::new(
+                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                                    "Books".to_string(),
+                                ))),
+                            ))),
+                            None,
                             None,
                         ))],
                         None,

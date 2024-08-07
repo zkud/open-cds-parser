@@ -44,10 +44,12 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                 Box::new(SelectionBlockTerm::new(
                     None,
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                        Box::new(ImportIdentifierTerm::new(
-                            Box::new(NameTerm::new("Books".to_string())),
-                            None,
-                        )),
+                        Box::new(ImportIdentifierTerm::new(Box::new(
+                            ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                                "Books".to_string(),
+                            ))),
+                        ))),
+                        None,
                         None,
                     ))],
                     None,

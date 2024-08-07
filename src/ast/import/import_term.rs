@@ -1,4 +1,4 @@
-use super::{FromTerm, PathTerm, SelectionBlockTerm, SemicolumnTerm, UsingTerm};
+use super::super::{FromTerm, PathTerm, SelectionBlockTerm, SemicolumnTerm, UsingTerm};
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
