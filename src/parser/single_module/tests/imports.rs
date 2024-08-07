@@ -9,10 +9,7 @@ fn with_straight_wildcart_import_it_parses() {
     let mut files = HashMap::new();
     files.insert(
         "/import.cds".to_string(),
-        "
-        using * from 'path';
-    "
-        .to_string(),
+        "using * from 'path';".to_string(),
     );
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
@@ -37,6 +34,223 @@ fn with_straight_wildcart_import_it_parses() {
                         None
                     ))],
                     None
+                )),
+                Box::new(FromTerm::new()),
+                Box::new(PathTerm::new("path".to_string())),
+                Box::new(SemicolumnTerm::new())
+            )
+        ),]))
+    );
+}
+
+#[test]
+fn with_straigh_wildcart_import_with_braces_it_parses() {
+    let mut files = HashMap::new();
+    files.insert(
+        "/import.cds".to_string(),
+        "using { * } from 'path';".to_string(),
+    );
+
+    let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
+    let parser = SingleModuleParserImpl::new(file_system);
+
+    let result = parser.parse("/import.cds");
+
+    assert!(result.is_ok());
+    let parsed_module = result.unwrap();
+    assert_eq!(
+        parsed_module,
+        Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
+            ImportTerm::new(
+                Box::new(UsingTerm::new()),
+                Box::new(SelectionBlockTerm::new(
+                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                        Box::new(ImportIdentifierTerm::new(Box::new(
+                            ImportIdentifierVariant::SelectAll(Box::new(WildcartTerm::new()))
+                        ))),
+                        None,
+                        None
+                    ))],
+                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                )),
+                Box::new(FromTerm::new()),
+                Box::new(PathTerm::new("path".to_string())),
+                Box::new(SemicolumnTerm::new())
+            )
+        ),]))
+    );
+}
+
+#[test]
+fn with_name_import_it_parses() {
+    let mut files = HashMap::new();
+    files.insert(
+        "/import.cds".to_string(),
+        " using { name } from 'path'; ".to_string(),
+    );
+
+    let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
+    let parser = SingleModuleParserImpl::new(file_system);
+
+    let result = parser.parse("/import.cds");
+
+    assert!(result.is_ok());
+    let parsed_module = result.unwrap();
+    assert_eq!(
+        parsed_module,
+        Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
+            ImportTerm::new(
+                Box::new(UsingTerm::new()),
+                Box::new(SelectionBlockTerm::new(
+                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                        Box::new(ImportIdentifierTerm::new(Box::new(
+                            ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                                "name".to_string()
+                            )))
+                        ))),
+                        None,
+                        None
+                    ))],
+                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                )),
+                Box::new(FromTerm::new()),
+                Box::new(PathTerm::new("path".to_string())),
+                Box::new(SemicolumnTerm::new())
+            )
+        ),]))
+    );
+}
+
+#[test]
+fn with_name_with_alias_import_it_parses() {
+    let mut files = HashMap::new();
+    files.insert(
+        "/import.cds".to_string(),
+        " using { name as name2 } from 'path'; ".to_string(),
+    );
+
+    let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
+    let parser = SingleModuleParserImpl::new(file_system);
+
+    let result = parser.parse("/import.cds");
+
+    assert!(result.is_ok());
+    let parsed_module = result.unwrap();
+    assert_eq!(
+        parsed_module,
+        Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
+            ImportTerm::new(
+                Box::new(UsingTerm::new()),
+                Box::new(SelectionBlockTerm::new(
+                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                        Box::new(ImportIdentifierTerm::new(Box::new(
+                            ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                                "name".to_string()
+                            )),)
+                        ))),
+                        Some(Box::new(AsTerm::new())),
+                        Some(Box::new(NameTerm::new("name2".to_string())))
+                    ))],
+                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                )),
+                Box::new(FromTerm::new()),
+                Box::new(PathTerm::new("path".to_string())),
+                Box::new(SemicolumnTerm::new())
+            )
+        ),]))
+    );
+}
+
+#[test]
+fn with_name_with_wildcart_import_it_parses() {
+    let mut files = HashMap::new();
+    files.insert(
+        "/import.cds".to_string(),
+        " using { name.* } from 'path'; ".to_string(),
+    );
+
+    let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
+    let parser = SingleModuleParserImpl::new(file_system);
+
+    let result = parser.parse("/import.cds");
+
+    assert!(result.is_ok());
+    let parsed_module = result.unwrap();
+    assert_eq!(
+        parsed_module,
+        Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
+            ImportTerm::new(
+                Box::new(UsingTerm::new()),
+                Box::new(SelectionBlockTerm::new(
+                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                        Box::new(ImportIdentifierTerm::new(Box::new(
+                            ImportIdentifierVariant::NameWithWildcart {
+                                name: Box::new(NameTerm::new("name".to_string())),
+                                dot: Box::new(DotTerm::new()),
+                                wildcart: Box::new(WildcartTerm::new()),
+                            }
+                        ))),
+                        None,
+                        None
+                    ))],
+                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                )),
+                Box::new(FromTerm::new()),
+                Box::new(PathTerm::new("path".to_string())),
+                Box::new(SemicolumnTerm::new())
+            )
+        ),]))
+    );
+}
+
+#[test]
+fn with_multiple_imports_it_parses() {
+    let mut files = HashMap::new();
+    files.insert(
+        "/import.cds".to_string(),
+        " using { name1, name2 } from 'path'; ".to_string(),
+    );
+
+    let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
+    let parser = SingleModuleParserImpl::new(file_system);
+
+    let result = parser.parse("/import.cds");
+
+    assert!(result.is_ok());
+    let parsed_module = result.unwrap();
+    assert_eq!(
+        parsed_module,
+        Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
+            ImportTerm::new(
+                Box::new(UsingTerm::new()),
+                Box::new(SelectionBlockTerm::new(
+                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    vec![
+                        SelectionBlockSegment::Selector(SelectorTerm::new(
+                            Box::new(ImportIdentifierTerm::new(Box::new(
+                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                                    "name1".to_string()
+                                )))
+                            ))),
+                            None,
+                            None
+                        )),
+                        SelectionBlockSegment::Comma(CommaTerm::new()),
+                        SelectionBlockSegment::Selector(SelectorTerm::new(
+                            Box::new(ImportIdentifierTerm::new(Box::new(
+                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                                    "name2".to_string()
+                                )))
+                            ))),
+                            None,
+                            None
+                        ))
+                    ],
+                    Some(Box::new(CloseCurlyBraceTerm::new())),
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
