@@ -4,7 +4,6 @@ use super::returns_term::ReturnsTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-#[ast_term(visitor_path = "process_action")]
 pub struct ActionTerm {
     #[subnode_prop]
     name: Box<NameTerm>,

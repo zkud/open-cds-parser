@@ -2,8 +2,7 @@
 use ast_term_derive::ASTTerm;
 
 #[cfg(test)]
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_mock_leaf")]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct LeafTerm {
     #[prop]
     value: String,

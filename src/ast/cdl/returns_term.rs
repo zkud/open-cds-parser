@@ -2,7 +2,6 @@ use super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-#[ast_term(visitor_path = "process_returns")]
 pub struct ReturnsTerm {
     #[subnode_prop]
     type_name: Box<NameTerm>,

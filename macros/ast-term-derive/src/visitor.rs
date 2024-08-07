@@ -1,30 +1,33 @@
 use proc_macro2::TokenStream as QuoteTokenStream;
-use quote::{format_ident, quote};
+use quote::quote;
 use syn::{DeriveInput, Field, Fields};
-
-use super::options::Options;
 
 pub fn impl_accept_visitor_method(
     input: &DeriveInput,
     fields: &Fields,
-    options: &Options,
 ) -> QuoteTokenStream {
-    if let Some(ref path) = options.visitor_path {
-        let name = &input.ident;
-        let method_name = format_ident!("{}", &path);
-        let fields_calls = impl_accept_visitor_method_for_fields(fields);
-        quote! {
-          impl crate::ast::common::ast_term::ASTTerm for #name {
+    let name = &input.ident;
+    let fields_calls = impl_accept_visitor_method_for_fields(fields);
+    quote! {
+        use crate::ast::common::*;
+        impl ASTTerm for #name {}
+
+        impl Visitable for #name {
             #[cfg(not(tarpaulin_include))]
-            fn accept<E>(&self, visitor: &mut dyn crate::visitor::Visitor<E>) -> Result<(), E> {
-              visitor.#method_name(self)?;
-              #fields_calls
-              Ok(())
+            fn accept<V: crate::visitor::Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
+                visitor.process(self)?;
+                #fields_calls
+                Ok(())
             }
-          }
         }
-    } else {
-        quote! {}
+
+        impl Convertable for #name {
+            #[cfg(not(tarpaulin_include))]
+            fn try_convert<T: Convertable>(&self) -> Option<T> {
+                let self_any = self as &dyn std::any::Any;
+                self_any.downcast_ref::<T>().cloned()
+            }
+        }
     }
 }
 

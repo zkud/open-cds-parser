@@ -3,7 +3,6 @@ use super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-#[ast_term(visitor_path = "process_entity")]
 pub struct EntityTerm {
     #[subnode_prop]
     name: Box<NameTerm>,

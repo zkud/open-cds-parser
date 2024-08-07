@@ -16,18 +16,22 @@ struct Field {
     pub field_type: String,
 }
 
-impl Visitor<()> for SQLVisitor {
-    fn process_entity(&mut self, term: &EntityTerm) -> Result<(), ()> {
-        let name = term.name().value().to_string();
-        let fields = term
-            .fields()
-            .iter()
-            .map(|f| Field {
-                name: f.name().value().to_string(),
-                field_type: f.type_name().value().to_string(),
-            })
-            .collect();
-        self.tables.push(Table { name, fields });
+impl Visitor for SQLVisitor {
+    type Error = ();
+
+    fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ()> {
+        if let Some(term) = term.try_convert::<EntityTerm>() {
+            let name = term.name().value().to_string();
+            let fields = term
+                .fields()
+                .iter()
+                .map(|f| Field {
+                    name: f.name().value().to_string(),
+                    field_type: f.type_name().value().to_string(),
+                })
+                .collect();
+            self.tables.push(Table { name, fields });
+        }
         Ok(())
     }
 }

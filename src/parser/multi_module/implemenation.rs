@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 use std::sync::Arc;
 
-use crate::ast::{ASTTerm, ImportTerm};
+use crate::ast::*;
 use crate::parser::fs::FileSystem;
 use crate::parser::single_module::SingleModuleParser;
 use crate::visitor::Visitor;
@@ -86,15 +86,19 @@ impl MultiModuleParserImpl {
             current_dir: String,
         }
 
-        impl<'a> Visitor<ParseError> for UsingVisitor<'a> {
-            fn process_import(&mut self, term: &ImportTerm) -> Result<(), ParseError> {
-                let using_path = term.path().value();
-                let path_to_dependency = self
-                    .parser
-                    .file_system
-                    .join_paths(&self.current_dir, &using_path)?;
-                self.parser
-                    .parse_path(&(path_to_dependency + &".cds"), self.result)?;
+        impl<'a> Visitor for UsingVisitor<'a> {
+            type Error = ParseError;
+
+            fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ParseError> {
+                if let Some(term) = term.try_convert::<ImportTerm>() {
+                    let using_path = term.path().value();
+                    let path_to_dependency = self
+                        .parser
+                        .file_system
+                        .join_paths(&self.current_dir, &using_path)?;
+                    self.parser
+                        .parse_path(&(path_to_dependency + &".cds"), self.result)?;
+                }
                 Ok(())
             }
         }

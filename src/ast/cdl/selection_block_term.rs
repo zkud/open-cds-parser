@@ -1,10 +1,11 @@
+use crate::ast::{ASTTermEnum, Visitable};
+
 use super::super::super::visitor::Visitor;
 use super::super::common::ast_term::ASTTerm;
 use super::{CloseCurlyBraceTerm, CommaTerm, OpenCurlyBraceTerm, SelectorTerm};
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-#[ast_term(visitor_path = "process_selection_block")]
 pub struct SelectionBlockTerm {
     #[subnode_prop]
     open_brace: Option<Box<OpenCurlyBraceTerm>>,
@@ -20,8 +21,8 @@ pub enum SelectionBlockSegment {
     Comma(CommaTerm),
 }
 
-impl ASTTerm for SelectionBlockSegment {
-    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
+impl Visitable for SelectionBlockSegment {
+    fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
             Self::Selector(selector) => selector.accept(visitor)?,
             Self::Comma(comma) => comma.accept(visitor)?,

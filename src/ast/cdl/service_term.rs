@@ -1,3 +1,5 @@
+use crate::ast::{ASTTermEnum, Visitable};
+
 use super::super::super::visitor::Visitor;
 use super::super::common::ast_term::ASTTerm;
 use super::action_term::ActionTerm;
@@ -8,7 +10,6 @@ use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-#[ast_term(visitor_path = "process_service")]
 pub struct ServiceTerm {
     #[subnode_prop]
     name: Box<NameTerm>,
@@ -24,8 +25,8 @@ pub enum ServiceDefinition {
     Type(TypeTerm),
 }
 
-impl ASTTerm for ServiceDefinition {
-    fn accept<E>(&self, visitor: &mut dyn Visitor<E>) -> Result<(), E> {
+impl Visitable for ServiceDefinition {
+    fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
             ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
             ServiceDefinition::Function(function) => function.accept(visitor)?,
