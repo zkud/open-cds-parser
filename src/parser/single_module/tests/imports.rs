@@ -1,6 +1,7 @@
 use crate::ast::*;
 use crate::parser::fs::MockInMemoryFileSystem;
 use crate::parser::single_module::{SingleModuleParser, SingleModuleParserImpl};
+use crate::visitor::Visitor;
 use std::collections::HashMap;
 use std::sync::Arc;
 
@@ -302,4 +303,39 @@ fn with_multiple_imports_it_parses() {
             )
         ),]))
     );
+}
+
+struct EmtpyVisitor;
+
+impl Visitor for EmtpyVisitor {
+    type Error = ();
+
+    fn process<T: ASTTerm>(&mut self, _: &T) -> Result<(), Self::Error> {
+        Ok(())
+    }
+}
+
+#[test]
+fn with_various_scenarios_it_visits_successfully() {
+    let mut files = HashMap::new();
+    files.insert(
+        "/import.cds".to_string(),
+        "
+        using { name1, name2 } from 'path';
+        using { name3 as name4, name5 as name6 } from 'path2';
+        using { name3 as name4, name5 as name6 } from 'path3';
+        using { * } from 'path4';
+        using { name7.* } from 'path5';
+        "
+        .to_string(),
+    );
+    let file_system = Arc::new(MockInMemoryFileSystem::new(HashMap::new(), files));
+    let parser = SingleModuleParserImpl::new(file_system);
+    let mut visitor = EmtpyVisitor {};
+
+    let result = parser.parse("/import.cds");
+    let parsed_module = result.unwrap();
+    let visit_result = parsed_module.accept(&mut visitor);
+
+    assert!(visit_result.is_ok());
 }
