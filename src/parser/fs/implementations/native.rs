@@ -62,4 +62,9 @@ impl FileSystem for NativeFileSystem {
         let path = Path::new(path);
         Ok(path.canonicalize()?.to_string_lossy().to_string())
     }
+
+    fn file_exists(&self, path: &str) -> bool {
+        let path = Path::new(path);
+        path.exists()
+    }
 }

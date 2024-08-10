@@ -52,4 +52,8 @@ impl FileSystem for MockInMemoryFileSystem {
     fn to_absolute(&self, path: &str) -> Result<String, FileSystemError> {
         Ok(path.to_owned()) // paths always absolute
     }
+
+    fn file_exists(&self, path: &str) -> bool {
+        self.files.contains_key(path)
+    }
 }

@@ -95,8 +95,26 @@ impl MultiModuleParserImpl {
                         .parser
                         .file_system
                         .join_paths(&self.current_dir, &using_path)?;
-                    self.parser
-                        .parse_path(&(path_to_dependency + &".cds"), self.result)?;
+                    let direct_dependency = path_to_dependency.clone() + &".cds";
+                    let module_dependency = path_to_dependency.clone() + &"/index.cds";
+                    let direct_exists = self.parser.file_system.file_exists(&direct_dependency);
+                    let module_exists = self.parser.file_system.file_exists(&module_dependency);
+                    return match (direct_exists, module_exists) {
+                        (true, false) => self
+                            .parser
+                            .parse_single_file_wrapper(&direct_dependency, self.result),
+                        (false, true) => self
+                            .parser
+                            .parse_single_file_wrapper(&module_dependency, self.result),
+                        (true, true) => Err(ParseError::new(
+                            format!("Unexpected duplication {}, both file and dir/index.cds are present", path_to_dependency),
+                            ParseErrorType::FileIOError,
+                        )),
+                        _ => Err(ParseError::new(
+                            format!("Cannot find import {}", path_to_dependency),
+                            ParseErrorType::FileIOError,
+                        )),
+                    };
                 }
                 Ok(())
             }

@@ -2,6 +2,7 @@ use super::FileSystemError;
 
 pub trait FileSystem {
     fn read_content(&self, path: &str) -> Result<String, FileSystemError>;
+    fn file_exists(&self, path: &str) -> bool;
     fn path_is_file(&self, path: &str) -> bool;
     fn path_is_directory(&self, path: &str) -> bool;
     fn get_all_cds_files_in_dir(&self, dir_path: &str) -> Result<Vec<String>, FileSystemError>;
