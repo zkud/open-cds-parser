@@ -2,7 +2,7 @@ use proc_macro2::TokenStream as QuoteTokenStream;
 use quote::quote;
 use syn::{DeriveInput, Field, Fields};
 
-pub fn impl_accept_visitor_method(
+pub fn impl_ast_traits(
     input: &DeriveInput,
     fields: &Fields,
 ) -> QuoteTokenStream {
