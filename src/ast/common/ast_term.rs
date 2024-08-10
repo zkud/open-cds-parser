@@ -5,7 +5,7 @@ pub trait ASTTerm: Visitable + Convertable {}
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{ast::LeafTerm, visitor::Visitor};
+    use crate::ast::*;
 
     use std::sync::Arc;
 

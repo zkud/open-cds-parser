@@ -15,7 +15,7 @@ pub struct NodeTerm {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ast::common::ast_term::ASTTerm;
+    use crate::ast::*;
 
     // Helper function to create a mock LeafTerm
     fn create_mock_leaf_term() -> LeafTerm {
@@ -72,7 +72,7 @@ mod tests {
             visited_leaf: bool,
         }
 
-        impl crate::visitor::Visitor for MockVisitor {
+        impl Visitor for MockVisitor {
             type Error = ();
             // Don't suppose any error handling here
             fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ()> {

@@ -1,4 +1,4 @@
-use super::super::ast::*;
+use super::*;
 
 pub trait Visitor {
     type Error;

@@ -9,12 +9,14 @@ pub fn impl_ast_traits(
     let name = &input.ident;
     let fields_calls = impl_accept_visitor_method_for_fields(fields);
     quote! {
-        use crate::ast::common::*;
+        use crate::ast::*;
+        use std::any::*;
+
         impl ASTTerm for #name {}
 
         impl Visitable for #name {
             #[cfg(not(tarpaulin_include))]
-            fn accept<V: crate::visitor::Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
+            fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
                 visitor.process(self)?;
                 #fields_calls
                 Ok(())
@@ -24,7 +26,7 @@ pub fn impl_ast_traits(
         impl Convertable for #name {
             #[cfg(not(tarpaulin_include))]
             fn try_convert<T: Convertable>(&self) -> Option<T> {
-                let self_any = self as &dyn std::any::Any;
+                let self_any = self as &dyn Any;
                 self_any.downcast_ref::<T>().cloned()
             }
         }

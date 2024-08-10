@@ -1,6 +1,5 @@
 use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
-use open_cds_parser::visitor::Visitor;
 
 struct SQLVisitor {
     pub tables: Vec<Table>,

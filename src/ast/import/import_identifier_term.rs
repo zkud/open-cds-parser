@@ -1,6 +1,6 @@
 use ast_term_derive::ASTTerm;
 
-use crate::visitor::Visitor;
+use crate::ast::*;
 
 use super::super::{DotTerm, NameTerm, WildcartTerm};
 

@@ -4,7 +4,6 @@ use std::sync::Arc;
 use crate::ast::*;
 use crate::parser::fs::FileSystem;
 use crate::parser::single_module::SingleModuleParser;
-use crate::visitor::Visitor;
 
 use super::super::super::ast::ModuleTerm;
 use super::super::parse_error::ParseError;

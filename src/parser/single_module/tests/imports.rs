@@ -1,7 +1,6 @@
 use crate::ast::*;
 use crate::parser::fs::MockInMemoryFileSystem;
 use crate::parser::single_module::{SingleModuleParser, SingleModuleParserImpl};
-use crate::visitor::Visitor;
 use std::collections::HashMap;
 use std::sync::Arc;
 

@@ -1,7 +1,5 @@
-use crate::ast::{ASTTermEnum, Visitable};
+use crate::ast::*;
 
-use super::super::super::visitor::Visitor;
-use super::super::common::ast_term::ASTTerm;
 use super::action_term::ActionTerm;
 use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;

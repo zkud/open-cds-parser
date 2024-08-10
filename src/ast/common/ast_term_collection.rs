@@ -5,10 +5,7 @@ pub trait ASTTermCollection: Visitable {}
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::{
-        ast::{ASTTerm, LeafTerm},
-        visitor::Visitor,
-    };
+    use crate::ast::*;
 
     struct MockVisitor {
         pub visits: Vec<String>,

@@ -1,6 +1,6 @@
 use std::{ops::Deref, sync::Arc};
 
-use super::super::super::visitor::Visitor;
+use super::Visitor;
 
 pub trait Visitable {
     fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error>;
