@@ -78,54 +78,72 @@ impl MultiModuleParserImpl {
         result.insert(absolute_path, (*module_term).clone());
 
         let parent_dir = self.file_system.get_parent_dir(path)?;
+        let mut using_visitor = PathCollectorVisitor::new(self.file_system.clone(), &parent_dir);
+        module_term.accept(&mut using_visitor)?;
 
-        struct UsingVisitor<'a> {
-            parser: &'a MultiModuleParserImpl,
-            result: &'a mut HashMap<String, ModuleTerm>,
-            current_dir: String,
+        for module in using_visitor.modules_to_parse().into_iter() {
+            self.parse_single_file_wrapper(&module, result)?;
         }
 
-        impl<'a> Visitor for UsingVisitor<'a> {
-            type Error = ParseError;
+        Ok(())
+    }
+}
 
-            fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ParseError> {
-                if let Some(term) = term.try_convert::<ImportTerm>() {
-                    let using_path = term.path().value();
-                    let path_to_dependency = self
-                        .parser
-                        .file_system
-                        .join_paths(&self.current_dir, &using_path)?;
-                    let direct_dependency = path_to_dependency.clone() + &".cds";
-                    let module_dependency = path_to_dependency.clone() + &"/index.cds";
-                    let direct_exists = self.parser.file_system.file_exists(&direct_dependency);
-                    let module_exists = self.parser.file_system.file_exists(&module_dependency);
-                    return match (direct_exists, module_exists) {
-                        (true, false) => self
-                            .parser
-                            .parse_single_file_wrapper(&direct_dependency, self.result),
-                        (false, true) => self
-                            .parser
-                            .parse_single_file_wrapper(&module_dependency, self.result),
-                        (true, true) => Err(ParseError::new(
-                            format!("Unexpected duplication {}, both file and dir/index.cds are present", path_to_dependency),
-                            ParseErrorType::FileIOError,
-                        )),
-                        _ => Err(ParseError::new(
-                            format!("Cannot find import {}", path_to_dependency),
-                            ParseErrorType::FileIOError,
-                        )),
-                    };
+struct PathCollectorVisitor {
+    file_system: Arc<dyn FileSystem>,
+    current_dir: String,
+    modules_to_parse: Vec<String>,
+}
+
+impl PathCollectorVisitor {
+    pub fn new(file_system: Arc<dyn FileSystem>, current_dir: &str) -> Self {
+        Self {
+            file_system: file_system,
+            current_dir: current_dir.to_string(),
+            modules_to_parse: vec![],
+        }
+    }
+
+    pub fn modules_to_parse(self) -> Vec<String> {
+        self.modules_to_parse
+    }
+}
+
+impl Visitor for PathCollectorVisitor {
+    type Error = ParseError;
+
+    fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ParseError> {
+        if let Some(term) = term.try_convert::<ImportTerm>() {
+            let using_path = term.path().value();
+            let path_to_dependency = self
+                .file_system
+                .join_paths(&self.current_dir, &using_path)?;
+            let direct_dependency = path_to_dependency.clone() + &".cds";
+            let module_dependency = path_to_dependency.clone() + &"/index.cds";
+            let direct_exists = self.file_system.file_exists(&direct_dependency);
+            let module_exists = self.file_system.file_exists(&module_dependency);
+            return match (direct_exists, module_exists) {
+                (true, false) => {
+                    self.modules_to_parse.push(direct_dependency);
+                    Ok(())
                 }
-                Ok(())
-            }
+                (false, true) => {
+                    self.modules_to_parse.push(module_dependency);
+                    Ok(())
+                }
+                (true, true) => Err(ParseError::new(
+                    format!(
+                        "Unexpected duplication {}, both file and dir/index.cds are present",
+                        path_to_dependency
+                    ),
+                    ParseErrorType::FileIOError,
+                )),
+                _ => Err(ParseError::new(
+                    format!("Cannot find import {}", path_to_dependency),
+                    ParseErrorType::FileIOError,
+                )),
+            };
         }
-
-        let mut using_visitor = UsingVisitor {
-            parser: self,
-            result,
-            current_dir: parent_dir,
-        };
-
-        module_term.accept(&mut using_visitor)
+        Ok(())
     }
 }
