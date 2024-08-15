@@ -35,7 +35,7 @@ impl Parser {
         self.single_module_parser.parse(path)
     }
 
-    pub fn parse_multiple_module(
+    pub fn parse_multiple_modules(
         &self,
         paths: Vec<String>,
     ) -> Result<HashMap<String, ModuleTerm>, ParseError> {
