@@ -25,9 +25,9 @@ pub fn impl_ast_traits(
 
         impl Convertable for #name {
             #[cfg(not(tarpaulin_include))]
-            fn try_convert<T: Convertable>(&self) -> Option<T> {
+            fn try_convert<'c, T: Convertable>(&'c self) -> Option<&'c T> {
                 let self_any = self as &dyn Any;
-                self_any.downcast_ref::<T>().cloned()
+                self_any.downcast_ref::<T>()
             }
         }
     }
