@@ -4,8 +4,7 @@ use super::leaf_term::LeafTerm;
 use ast_term_derive::ASTTerm;
 
 #[cfg(test)]
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_mock_node")]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct NodeTerm {
     #[subnode_prop]
     subnode: Box<LeafTerm>,
@@ -16,7 +15,7 @@ pub struct NodeTerm {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ast::common::ast_term::ASTTerm;
+    use crate::ast::*;
 
     // Helper function to create a mock LeafTerm
     fn create_mock_leaf_term() -> LeafTerm {
@@ -73,20 +72,16 @@ mod tests {
             visited_leaf: bool,
         }
 
-        impl crate::visitor::Visitor for MockVisitor {
-            fn process_mock_node(
-                &mut self,
-                _node: &NodeTerm,
-            ) -> Result<(), crate::visitor::VisitorError> {
-                self.visited_node = true;
-                Ok(())
-            }
-
-            fn process_mock_leaf(
-                &mut self,
-                _leaf: &LeafTerm,
-            ) -> Result<(), crate::visitor::VisitorError> {
-                self.visited_leaf = true;
+        impl Visitor for MockVisitor {
+            type Error = ();
+            // Don't suppose any error handling here
+            fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ()> {
+                if let Some(_) = term.try_convert::<NodeTerm>() {
+                    self.visited_node = true;
+                }
+                if let Some(_) = term.try_convert::<LeafTerm>() {
+                    self.visited_leaf = true;
+                }
                 Ok(())
             }
         }

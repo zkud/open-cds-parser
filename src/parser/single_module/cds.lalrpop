@@ -1,7 +1,4 @@
-use crate::ast::{
-  ActionTerm, EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
-  ParamTerm, ReturnsTerm, ServiceDefinition, ServiceTerm, TypeTerm,
-};
+use crate::ast::*;
 
 grammar;
 
@@ -27,6 +24,11 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     definitions.push(ModuleDefinition::Type(type_definition));
     definitions
   },
+  <import:Import> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Import(import));
+    definitions
+  },
   <definitions:ModuleDefinitions> <entity:Entity> => {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
@@ -43,6 +45,12 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
     new_definitions.push(ModuleDefinition::Type(type_definition));
+    new_definitions
+  },
+  <definitions:ModuleDefinitions> <import:Import> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Import(import));
     new_definitions
   }
 }
@@ -198,6 +206,117 @@ Type: TypeTerm = {
   "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
     TypeTerm::new(Box::new(name), Box::new(resolved_type_name))
   }
+}
+
+Import: ImportTerm = {
+  <using:Using> <selection_block:SelectionBlock> <from:From> <path:Path> <semi:Semicolumn> => {
+    ImportTerm::new(
+      Box::new(using),
+      Box::new(selection_block),
+      Box::new(from),
+      Box::new(path),
+      Box::new(semi)
+    )
+  }
+}
+
+SelectionBlock: SelectionBlockTerm = {
+  <open_brace:OpenCurlyBrace> <selectors:Selectors> <close_brace:CloseCurlyBrace> => {
+    SelectionBlockTerm::new(Some(Box::new(open_brace)), selectors, Some(Box::new(close_brace)))
+  },
+  <selectors:Selectors> => {
+    SelectionBlockTerm::new(None, selectors, None)
+  }
+}
+
+Selectors: Vec<SelectionBlockSegment> = {
+  <selector:Selector> => vec![SelectionBlockSegment::Selector(selector)],
+  <selector:Selector> <comma:Comma> => {
+    vec![
+      SelectionBlockSegment::Selector(selector),
+      SelectionBlockSegment::Comma(comma)
+    ]
+  },
+  <selector:Selector> <comma:Comma> <selectors:Selectors> => {
+    let mut new_selectors: Vec<SelectionBlockSegment> = vec![
+      SelectionBlockSegment::Selector(selector),
+      SelectionBlockSegment::Comma(comma)
+    ];
+    new_selectors.extend(selectors);
+    new_selectors
+  },
+}
+
+Selector: SelectorTerm = {
+  <import:ImportIdentifier> => SelectorTerm::new(Box::new(import), None, None),
+  <import:ImportIdentifier> <as_term:As> <alias:Name> => SelectorTerm::new(Box::new(import), Some(Box::new(as_term)), Some(Box::new(alias))),
+}
+
+ImportIdentifier: ImportIdentifierTerm = {
+  <name:Name> => {
+    ImportIdentifierTerm::new(Box::new(
+      ImportIdentifierVariant::NameOnly(
+        Box::new(name)
+      )
+    ))
+  },
+  <name:Name> <dot:Dot> <wildcart:Wildcart> => {
+    ImportIdentifierTerm::new(Box::new(
+      ImportIdentifierVariant::NameWithWildcart {
+        name: Box::new(name),
+        dot: Box::new(dot),
+        wildcart: Box::new(wildcart)
+      }
+    ))
+  },
+  <wildcart:Wildcart> => {
+    ImportIdentifierTerm::new(Box::new(
+      ImportIdentifierVariant::SelectAll(
+        Box::new(wildcart),
+      )
+    ))
+  },
+}
+
+OpenCurlyBrace: OpenCurlyBraceTerm = {
+  "{" => OpenCurlyBraceTerm::new(),
+}
+
+CloseCurlyBrace: CloseCurlyBraceTerm = {
+  "}" => CloseCurlyBraceTerm::new(),
+}
+
+Wildcart: WildcartTerm = {
+  "*" => WildcartTerm::new(),
+}
+
+Dot: DotTerm = {
+  "." => DotTerm::new(),
+}
+
+Comma: CommaTerm = {
+  "," => CommaTerm::new(),
+}
+
+Semicolumn: SemicolumnTerm = {
+  ";" => SemicolumnTerm::new(),
+}
+
+As: AsTerm = {
+  "as" => AsTerm::new(),
+}
+
+From: FromTerm = {
+  "from" => FromTerm::new(),
+}
+
+Using: UsingTerm = {
+  "using" => UsingTerm::new(),
+}
+
+Path: PathTerm = {
+  <value:r"`[a-zA-Z0-9-/[.]]+`"> => PathTerm::new(value.to_string().trim_matches('`').to_string()),
+  <value:r"'[a-zA-Z0-9-/[.]]+'"> => PathTerm::new(value.to_string().trim_matches('\'').to_string()),
 }
 
 Name: NameTerm = {

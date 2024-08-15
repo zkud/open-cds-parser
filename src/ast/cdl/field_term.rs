@@ -1,8 +1,7 @@
 use super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_field")]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct FieldTerm {
     #[subnode_prop]
     name: Box<NameTerm>,

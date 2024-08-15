@@ -1,5 +1,5 @@
-use super::super::super::visitor::{Visitor, VisitorError};
-use super::super::common::ast_term::ASTTerm;
+use crate::ast::*;
+
 use super::action_term::ActionTerm;
 use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
@@ -7,8 +7,7 @@ use super::name_term::NameTerm;
 use super::type_term::TypeTerm;
 use ast_term_derive::ASTTerm;
 
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_service")]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ServiceTerm {
     #[subnode_prop]
     name: Box<NameTerm>,
@@ -16,7 +15,7 @@ pub struct ServiceTerm {
     definitions: Vec<ServiceDefinition>,
 }
 
-#[derive(PartialEq, Eq, Debug)]
+#[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ServiceDefinition {
     Entity(EntityTerm),
     Function(FunctionTerm),
@@ -24,8 +23,8 @@ pub enum ServiceDefinition {
     Type(TypeTerm),
 }
 
-impl ASTTerm for ServiceDefinition {
-    fn accept(&self, visitor: &mut dyn Visitor) -> Result<(), VisitorError> {
+impl Visitable for ServiceDefinition {
+    fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
             ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
             ServiceDefinition::Function(function) => function.accept(visitor)?,

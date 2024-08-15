@@ -1,7 +1,9 @@
+mod facade;
+mod fs;
+mod multi_module;
 mod parse_error;
-mod parser;
-use lalrpop_util::lalrpop_mod;
-lalrpop_mod!(cds, "/parser/cds.rs");
+mod single_module;
 
+pub use facade::Parser;
+pub use fs::{FileSystem, FileSystemError};
 pub use parse_error::{ParseError, ParseErrorType};
-pub use parser::Parser;

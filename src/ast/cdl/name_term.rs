@@ -1,7 +1,6 @@
 use ast_term_derive::ASTTerm;
 
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_name")]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct NameTerm {
     #[prop]
     value: String,

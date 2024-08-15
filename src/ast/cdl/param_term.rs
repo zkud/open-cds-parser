@@ -1,8 +1,7 @@
 use super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_param")]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ParamTerm {
     #[subnode_prop]
     name: Box<NameTerm>,

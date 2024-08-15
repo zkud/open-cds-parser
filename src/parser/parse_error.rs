@@ -1,5 +1,6 @@
 use std::fmt;
-use std::io;
+
+use super::fs::FileSystemError;
 
 #[derive(fmt::Debug)]
 pub struct ParseError {
@@ -49,8 +50,8 @@ impl fmt::Display for ParseError {
     }
 }
 
-impl From<io::Error> for ParseError {
-    fn from(error: io::Error) -> ParseError {
+impl From<FileSystemError> for ParseError {
+    fn from(error: FileSystemError) -> ParseError {
         ParseError::new(format!("{}", error), ParseErrorType::FileIOError)
     }
 }

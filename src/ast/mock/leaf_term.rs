@@ -2,8 +2,7 @@
 use ast_term_derive::ASTTerm;
 
 #[cfg(test)]
-#[derive(ASTTerm, PartialEq, Eq, Debug)]
-#[ast_term(visitor_path = "process_mock_leaf")]
+#[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct LeafTerm {
     #[prop]
     value: String,
@@ -12,6 +11,10 @@ pub struct LeafTerm {
 #[cfg(test)]
 mod tests {
     use super::LeafTerm;
+    use ast_term_derive::ASTTerm;
+
+    #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
+    struct AnotherTerm {}
 
     #[test]
     fn test_value() {
@@ -37,5 +40,23 @@ mod tests {
     fn test_new() {
         let name_term = LeafTerm::new("TestName".to_string());
         assert_eq!(name_term.value(), "TestName");
+    }
+
+    #[test]
+    fn with_the_same_type_convert_returns_term() {
+        let term = LeafTerm::new("any value".to_string());
+
+        let term = term.try_convert::<LeafTerm>();
+
+        assert!(term.is_some());
+    }
+
+    #[test]
+    fn with_another_type_convert_returns_none() {
+        let term = LeafTerm::new("any value".to_string());
+
+        let term = term.try_convert::<AnotherTerm>();
+
+        assert!(term.is_none());
     }
 }
