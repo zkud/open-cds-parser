@@ -10,16 +10,17 @@ use super::super::ast::ModuleTerm;
 use super::parse_error::ParseError;
 
 pub struct Parser {
-    single_module_parser: Box<dyn SingleModuleParser>,
-    multi_module_parser: Box<dyn MultiModuleParser>,
+    single_module_parser: Arc<dyn SingleModuleParser>,
+    multi_module_parser: Arc<dyn MultiModuleParser>,
 }
 
 impl Parser {
     pub fn new(file_system: Arc<dyn FileSystem>) -> Self {
+        let single_module_parser = Arc::new(SingleModuleParserImpl::new(file_system.clone()));
         Self {
-            single_module_parser: Box::new(SingleModuleParserImpl::new(file_system.clone())),
-            multi_module_parser: Box::new(MultiModuleParserImpl::new(
-                Box::new(SingleModuleParserImpl::new(file_system.clone())),
+            single_module_parser: single_module_parser.clone(),
+            multi_module_parser: Arc::new(MultiModuleParserImpl::new(
+                single_module_parser.clone(),
                 file_system.clone(),
             )),
         }

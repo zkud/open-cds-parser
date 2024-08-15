@@ -124,7 +124,7 @@ fn test_parse_single_file() {
     files.insert("/file2.cds".to_string(), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
-    let single_module_parser = Box::new(MockSingleModuleParser);
+    let single_module_parser = Arc::new(MockSingleModuleParser);
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
@@ -154,7 +154,7 @@ fn test_parse_directory() {
     files.insert("/subdir/file3.cds".to_string(), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
-    let single_module_parser = Box::new(MockSingleModuleParser);
+    let single_module_parser = Arc::new(MockSingleModuleParser);
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
@@ -174,7 +174,7 @@ fn test_parse_invalid_path() {
     let files = HashMap::new();
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
-    let single_module_parser = Box::new(MockSingleModuleParser);
+    let single_module_parser = Arc::new(MockSingleModuleParser);
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
@@ -197,7 +197,7 @@ fn test_parse_with_imports() {
     files.insert("/subdir/file3.cds".to_string(), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
-    let single_module_parser = Box::new(MockSingleModuleParser);
+    let single_module_parser = Arc::new(MockSingleModuleParser);
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
@@ -227,7 +227,7 @@ fn test_parse_with_imports_but_import_is_dir() {
     files.insert("/subdir/subdir/index.cds".to_string(), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
-    let single_module_parser = Box::new(MockSingleModuleParser);
+    let single_module_parser = Arc::new(MockSingleModuleParser);
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
@@ -252,7 +252,7 @@ fn test_parse_invalid_path_in_import() {
     files.insert("/failure_no_file_present.cds".to_string(), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
-    let single_module_parser = Box::new(MockSingleModuleParser);
+    let single_module_parser = Arc::new(MockSingleModuleParser);
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
@@ -328,7 +328,7 @@ fn test_parse_duplication() {
     files.insert("/file2/index.cds".to_string(), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
-    let single_module_parser = Box::new(MockSingleModuleParserForDuplication);
+    let single_module_parser = Arc::new(MockSingleModuleParserForDuplication);
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 

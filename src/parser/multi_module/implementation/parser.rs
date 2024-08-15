@@ -13,13 +13,13 @@ use super::super::MultiModuleParser;
 use super::PathCollectorVisitor;
 
 pub struct MultiModuleParserImpl {
-    single_module_parser: Box<dyn SingleModuleParser>,
+    single_module_parser: Arc<dyn SingleModuleParser>,
     file_system: Arc<dyn FileSystem>,
 }
 
 impl MultiModuleParserImpl {
     pub fn new(
-        single_module_parser: Box<dyn SingleModuleParser>,
+        single_module_parser: Arc<dyn SingleModuleParser>,
         file_system: Arc<dyn FileSystem>,
     ) -> Self {
         MultiModuleParserImpl {
