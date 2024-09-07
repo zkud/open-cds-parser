@@ -1,6 +1,6 @@
 use crate::ast::*;
 
-grammar;
+grammar(filepath: &str);
 
 pub Module: ModuleTerm = {
   <definitions:ModuleDefinitions> => {
@@ -311,7 +311,10 @@ From: FromTerm = {
 }
 
 Using: UsingTerm = {
-  "using" => UsingTerm::new(),
+  <start: @L> "using" <end: @R> => {
+    let location = Location::new(start, end, filepath.to_string());
+    UsingTerm::new(location)
+  },
 }
 
 Path: PathTerm = {
