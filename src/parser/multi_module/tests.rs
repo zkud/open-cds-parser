@@ -14,7 +14,7 @@ impl SingleModuleParser for MockSingleModuleParser {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, "".to_string()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -51,7 +51,7 @@ impl SingleModuleParser for MockSingleModuleParser {
             )]))),
             "/subdir/file4.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, "".to_string()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -84,7 +84,7 @@ impl SingleModuleParser for MockSingleModuleParser {
             }
             "/failure_no_file_present.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, "".to_string()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -270,7 +270,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, "".to_string()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(

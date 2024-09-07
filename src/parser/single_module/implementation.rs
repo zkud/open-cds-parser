@@ -21,7 +21,7 @@ impl SingleModuleParser for SingleModuleParserImpl {
     fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
         let content = self.file_system.read_content(path)?;
 
-        let module = match super::cds::ModuleParser::new().parse(&content) {
+        let module = match super::cds::ModuleParser::new().parse(path, &content) {
             Ok(module_ast) => module_ast,
             Err(lalrpop_auto_generated_error) => {
                 return Err(ParseError::new(

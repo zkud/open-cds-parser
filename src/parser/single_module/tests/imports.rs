@@ -23,7 +23,11 @@ fn with_straight_wildcart_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
-                Box::new(UsingTerm::new()),
+                Box::new(UsingTerm::new(Location::new(
+                    0,
+                    5,
+                    "/import.cds".to_string()
+                ))),
                 Box::new(SelectionBlockTerm::new(
                     None,
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -62,7 +66,11 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
-                Box::new(UsingTerm::new()),
+                Box::new(UsingTerm::new(Location::new(
+                    0,
+                    5,
+                    "/import.cds".to_string()
+                ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -101,7 +109,11 @@ fn with_name_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
-                Box::new(UsingTerm::new()),
+                Box::new(UsingTerm::new(Location::new(
+                    1,
+                    6,
+                    "/import.cds".to_string()
+                ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -142,7 +154,11 @@ fn with_name_with_comma_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
-                Box::new(UsingTerm::new()),
+                Box::new(UsingTerm::new(Location::new(
+                    1,
+                    6,
+                    "/import.cds".to_string()
+                ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
                     vec![
@@ -186,7 +202,11 @@ fn with_name_with_alias_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
-                Box::new(UsingTerm::new()),
+                Box::new(UsingTerm::new(Location::new(
+                    1,
+                    6,
+                    "/import.cds".to_string()
+                ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -227,7 +247,11 @@ fn with_name_with_wildcart_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
-                Box::new(UsingTerm::new()),
+                Box::new(UsingTerm::new(Location::new(
+                    1,
+                    6,
+                    "/import.cds".to_string()
+                ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -270,7 +294,11 @@ fn with_multiple_imports_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
-                Box::new(UsingTerm::new()),
+                Box::new(UsingTerm::new(Location::new(
+                    1,
+                    6,
+                    "/import.cds".to_string()
+                ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
                     vec![
