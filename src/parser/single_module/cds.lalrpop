@@ -305,7 +305,10 @@ Dot: DotTerm = {
 }
 
 Comma: CommaTerm = {
-  "," => CommaTerm::new(),
+  <start: @L> "," <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    CommaTerm::new(location)
+  },
 }
 
 Semicolumn: SemicolumnTerm = {

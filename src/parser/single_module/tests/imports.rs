@@ -200,7 +200,11 @@ fn with_name_with_comma_import_it_parses() {
                             None,
                             None
                         )),
-                        SelectionBlockSegment::Comma(CommaTerm::new())
+                        SelectionBlockSegment::Comma(CommaTerm::new(Location::new(
+                            13,
+                            14,
+                            &Path::new("/import.cds")
+                        )))
                     ],
                     Some(Box::new(CloseCurlyBraceTerm::new())),
                 )),
@@ -372,7 +376,11 @@ fn with_multiple_imports_it_parses() {
                             None,
                             None
                         )),
-                        SelectionBlockSegment::Comma(CommaTerm::new()),
+                        SelectionBlockSegment::Comma(CommaTerm::new(Location::new(
+                            14,
+                            15,
+                            &Path::new("/import.cds")
+                        ))),
                         SelectionBlockSegment::Selector(SelectorTerm::new(
                             Box::new(ImportIdentifierTerm::new(Box::new(
                                 ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
