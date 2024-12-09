@@ -288,7 +288,10 @@ CloseCurlyBrace: CloseCurlyBraceTerm = {
 }
 
 Wildcart: WildcartTerm = {
-  "*" => WildcartTerm::new(),
+  <start: @L> "*" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    WildcartTerm::new(location)
+  },
 }
 
 Dot: DotTerm = {

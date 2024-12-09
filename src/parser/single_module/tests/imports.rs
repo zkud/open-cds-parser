@@ -33,7 +33,9 @@ fn with_straight_wildcart_import_it_parses() {
                     None,
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(Box::new(
-                            ImportIdentifierVariant::SelectAll(Box::new(WildcartTerm::new()))
+                            ImportIdentifierVariant::SelectAll(Box::new(WildcartTerm::new(
+                                Location::new(6, 7, &Path::new("/import.cds"))
+                            )))
                         ))),
                         None,
                         None
@@ -76,7 +78,9 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     Some(Box::new(OpenCurlyBraceTerm::new())),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(Box::new(
-                            ImportIdentifierVariant::SelectAll(Box::new(WildcartTerm::new()))
+                            ImportIdentifierVariant::SelectAll(Box::new(WildcartTerm::new(
+                                Location::new(8, 9, &Path::new("/import.cds"))
+                            )))
                         ))),
                         None,
                         None
@@ -260,7 +264,11 @@ fn with_name_with_wildcart_import_it_parses() {
                             ImportIdentifierVariant::NameWithWildcart {
                                 name: Box::new(NameTerm::new("name".to_string())),
                                 dot: Box::new(DotTerm::new()),
-                                wildcart: Box::new(WildcartTerm::new()),
+                                wildcart: Box::new(WildcartTerm::new(Location::new(
+                                    14,
+                                    15,
+                                    &Path::new("/import.cds")
+                                ))),
                             }
                         ))),
                         None,
