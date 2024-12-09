@@ -5,6 +5,7 @@ use crate::parser::parse_error::ParseError;
 use crate::parser::single_module::SingleModuleParser;
 use crate::parser::ParseErrorType;
 use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 struct MockSingleModuleParser;
@@ -14,7 +15,7 @@ impl SingleModuleParser for MockSingleModuleParser {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -30,7 +31,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/subdir/file3".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),
@@ -51,7 +52,7 @@ impl SingleModuleParser for MockSingleModuleParser {
             )]))),
             "/subdir/file4.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -67,7 +68,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/subdir/subdir".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),
@@ -84,7 +85,7 @@ impl SingleModuleParser for MockSingleModuleParser {
             }
             "/failure_no_file_present.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -100,7 +101,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/no_file_present".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),
@@ -270,7 +271,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
-                    Box::new(UsingTerm::new()),
+                    Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
                     Box::new(SelectionBlockTerm::new(
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
@@ -286,7 +287,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/file2".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),
