@@ -303,7 +303,11 @@ fn with_name_with_wildcart_import_it_parses() {
                         Box::new(ImportIdentifierTerm::new(Box::new(
                             ImportIdentifierVariant::NameWithWildcart {
                                 name: Box::new(NameTerm::new("name".to_string())),
-                                dot: Box::new(DotTerm::new()),
+                                dot: Box::new(DotTerm::new(Location::new(
+                                    13,
+                                    14,
+                                    &Path::new("/import.cds")
+                                ))),
                                 wildcart: Box::new(WildcartTerm::new(Location::new(
                                     14,
                                     15,

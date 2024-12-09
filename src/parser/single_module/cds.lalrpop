@@ -298,7 +298,10 @@ Wildcart: WildcartTerm = {
 }
 
 Dot: DotTerm = {
-  "." => DotTerm::new(),
+  <start: @L> "." <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    DotTerm::new(location)
+  },
 }
 
 Comma: CommaTerm = {
