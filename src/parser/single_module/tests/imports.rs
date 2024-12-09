@@ -2,6 +2,7 @@ use crate::ast::*;
 use crate::parser::fs::MockInMemoryFileSystem;
 use crate::parser::single_module::{SingleModuleParser, SingleModuleParserImpl};
 use std::collections::HashMap;
+use std::path::Path;
 use std::sync::Arc;
 
 #[test]
@@ -26,7 +27,7 @@ fn with_straight_wildcart_import_it_parses() {
                 Box::new(UsingTerm::new(Location::new(
                     0,
                     5,
-                    "/import.cds".to_string()
+                    &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     None,
@@ -69,7 +70,7 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                 Box::new(UsingTerm::new(Location::new(
                     0,
                     5,
-                    "/import.cds".to_string()
+                    &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
@@ -112,7 +113,7 @@ fn with_name_import_it_parses() {
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
-                    "/import.cds".to_string()
+                    &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
@@ -157,7 +158,7 @@ fn with_name_with_comma_import_it_parses() {
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
-                    "/import.cds".to_string()
+                    &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
@@ -205,7 +206,7 @@ fn with_name_with_alias_import_it_parses() {
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
-                    "/import.cds".to_string()
+                    &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
@@ -250,7 +251,7 @@ fn with_name_with_wildcart_import_it_parses() {
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
-                    "/import.cds".to_string()
+                    &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),
@@ -297,7 +298,7 @@ fn with_multiple_imports_it_parses() {
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
-                    "/import.cds".to_string()
+                    &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     Some(Box::new(OpenCurlyBraceTerm::new())),

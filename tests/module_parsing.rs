@@ -43,7 +43,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                 Box::new(UsingTerm::new(Location::new(
                     0,
                     5,
-                    "./tests/projects/modules/srv/books.cds".to_string(),
+                    &Path::new("./tests/projects/modules/srv/books.cds"),
                 ))),
                 Box::new(SelectionBlockTerm::new(
                     None,

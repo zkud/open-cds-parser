@@ -1,17 +1,19 @@
+use std::path::{Path, PathBuf};
+
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub struct Location {
     start: usize,
     end: usize,
-    filepath: String,
+    filepath: PathBuf,
 }
 
 impl Location {
     /// Creates a new [`Location`].
-    pub fn new(start: usize, end: usize, filepath: String) -> Self {
+    pub fn new(start: usize, end: usize, filepath: &Path) -> Self {
         Self {
             start,
             end,
-            filepath,
+            filepath: PathBuf::from(filepath),
         }
     }
 
@@ -23,7 +25,7 @@ impl Location {
         self.end
     }
 
-    pub fn filepath(&self) -> &str {
+    pub fn filepath(&self) -> &Path {
         &self.filepath
     }
 }
