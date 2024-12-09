@@ -287,7 +287,10 @@ OpenCurlyBrace: OpenCurlyBraceTerm = {
 }
 
 CloseCurlyBrace: CloseCurlyBraceTerm = {
-  "}" => CloseCurlyBraceTerm::new(),
+  <start: @L> "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    CloseCurlyBraceTerm::new(location)
+  },
 }
 
 Wildcart: WildcartTerm = {

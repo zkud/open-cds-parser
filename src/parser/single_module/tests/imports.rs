@@ -93,7 +93,11 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                         None,
                         None
                     ))],
-                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                    Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
+                        10,
+                        11,
+                        &Path::new("/import.cds")
+                    )))),
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
@@ -146,7 +150,11 @@ fn with_name_import_it_parses() {
                         None,
                         None
                     ))],
-                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                    Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
+                        14,
+                        15,
+                        &Path::new("/import.cds")
+                    )))),
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
@@ -206,7 +214,11 @@ fn with_name_with_comma_import_it_parses() {
                             &Path::new("/import.cds")
                         )))
                     ],
-                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                    Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
+                        15,
+                        16,
+                        &Path::new("/import.cds")
+                    )))),
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
@@ -259,7 +271,11 @@ fn with_name_with_alias_import_it_parses() {
                         Some(Box::new(AsTerm::new())),
                         Some(Box::new(NameTerm::new("name2".to_string())))
                     ))],
-                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                    Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
+                        23,
+                        24,
+                        &Path::new("/import.cds")
+                    )))),
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
@@ -322,7 +338,11 @@ fn with_name_with_wildcart_import_it_parses() {
                         None,
                         None
                     ))],
-                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                    Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
+                        16,
+                        17,
+                        &Path::new("/import.cds")
+                    )))),
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
@@ -391,7 +411,11 @@ fn with_multiple_imports_it_parses() {
                             None
                         ))
                     ],
-                    Some(Box::new(CloseCurlyBraceTerm::new())),
+                    Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
+                        22,
+                        23,
+                        &Path::new("/import.cds")
+                    )))),
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
