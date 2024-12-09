@@ -60,7 +60,11 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("../db/schema".to_string())),
-                Box::new(SemicolumnTerm::new()),
+                Box::new(SemicolumnTerm::new(Location::new(
+                    31,
+                    32,
+                    &Path::new("./tests/projects/modules/srv/books.cds"),
+                ))),
             )),
             ModuleDefinition::Service(ServiceTerm::new(
                 Box::new(NameTerm::new("BooksService".to_string())),

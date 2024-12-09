@@ -31,7 +31,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/subdir/file3".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),
@@ -68,7 +68,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/subdir/subdir".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),
@@ -101,7 +101,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/no_file_present".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),
@@ -287,7 +287,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                     )),
                     Box::new(FromTerm::new()),
                     Box::new(PathTerm::new("/file2".to_string())),
-                    Box::new(SemicolumnTerm::new()),
+                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
                     Box::new(NameTerm::new("BooksService".to_string())),

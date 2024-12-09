@@ -303,7 +303,10 @@ Comma: CommaTerm = {
 }
 
 Semicolumn: SemicolumnTerm = {
-  ";" => SemicolumnTerm::new(),
+  <start: @L> ";" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SemicolumnTerm::new(location)
+  },
 }
 
 As: AsTerm = {

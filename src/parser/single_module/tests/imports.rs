@@ -44,7 +44,11 @@ fn with_straight_wildcart_import_it_parses() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
-                Box::new(SemicolumnTerm::new())
+                Box::new(SemicolumnTerm::new(Location::new(
+                    19,
+                    20,
+                    &Path::new("/import.cds")
+                )))
             )
         ),]))
     );
@@ -89,7 +93,11 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
-                Box::new(SemicolumnTerm::new())
+                Box::new(SemicolumnTerm::new(Location::new(
+                    23,
+                    24,
+                    &Path::new("/import.cds")
+                )))
             )
         ),]))
     );
@@ -134,7 +142,11 @@ fn with_name_import_it_parses() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
-                Box::new(SemicolumnTerm::new())
+                Box::new(SemicolumnTerm::new(Location::new(
+                    27,
+                    28,
+                    &Path::new("/import.cds")
+                )))
             )
         ),]))
     );
@@ -182,7 +194,11 @@ fn with_name_with_comma_import_it_parses() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
-                Box::new(SemicolumnTerm::new())
+                Box::new(SemicolumnTerm::new(Location::new(
+                    28,
+                    29,
+                    &Path::new("/import.cds")
+                )))
             )
         ),]))
     );
@@ -227,7 +243,11 @@ fn with_name_with_alias_import_it_parses() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
-                Box::new(SemicolumnTerm::new())
+                Box::new(SemicolumnTerm::new(Location::new(
+                    36,
+                    37,
+                    &Path::new("/import.cds")
+                )))
             )
         ),]))
     );
@@ -278,7 +298,11 @@ fn with_name_with_wildcart_import_it_parses() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
-                Box::new(SemicolumnTerm::new())
+                Box::new(SemicolumnTerm::new(Location::new(
+                    29,
+                    30,
+                    &Path::new("/import.cds")
+                )))
             )
         ),]))
     );
@@ -335,7 +359,11 @@ fn with_multiple_imports_it_parses() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new("path".to_string())),
-                Box::new(SemicolumnTerm::new())
+                Box::new(SemicolumnTerm::new(Location::new(
+                    35,
+                    36,
+                    &Path::new("/import.cds")
+                )))
             )
         ),]))
     );
