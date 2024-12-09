@@ -79,7 +79,11 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
-                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
+                        6,
+                        7,
+                        &Path::new("/import.cds")
+                    )))),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(Box::new(
                             ImportIdentifierVariant::SelectAll(Box::new(WildcartTerm::new(
@@ -128,7 +132,11 @@ fn with_name_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
-                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
+                        7,
+                        8,
+                        &Path::new("/import.cds")
+                    )))),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(Box::new(
                             ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
@@ -177,7 +185,11 @@ fn with_name_with_comma_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
-                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
+                        7,
+                        8,
+                        &Path::new("/import.cds")
+                    )))),
                     vec![
                         SelectionBlockSegment::Selector(SelectorTerm::new(
                             Box::new(ImportIdentifierTerm::new(Box::new(
@@ -229,7 +241,11 @@ fn with_name_with_alias_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
-                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
+                        7,
+                        8,
+                        &Path::new("/import.cds")
+                    )))),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(Box::new(
                             ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
@@ -278,7 +294,11 @@ fn with_name_with_wildcart_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
-                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
+                        7,
+                        8,
+                        &Path::new("/import.cds")
+                    )))),
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(Box::new(
                             ImportIdentifierVariant::NameWithWildcart {
@@ -333,7 +353,11 @@ fn with_multiple_imports_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
-                    Some(Box::new(OpenCurlyBraceTerm::new())),
+                    Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
+                        7,
+                        8,
+                        &Path::new("/import.cds")
+                    )))),
                     vec![
                         SelectionBlockSegment::Selector(SelectorTerm::new(
                             Box::new(ImportIdentifierTerm::new(Box::new(

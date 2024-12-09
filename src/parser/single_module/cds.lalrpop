@@ -280,7 +280,10 @@ ImportIdentifier: ImportIdentifierTerm = {
 }
 
 OpenCurlyBrace: OpenCurlyBraceTerm = {
-  "{" => OpenCurlyBraceTerm::new(),
+  <start: @L> "{" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    OpenCurlyBraceTerm::new(location)
+  },
 }
 
 CloseCurlyBrace: CloseCurlyBraceTerm = {
