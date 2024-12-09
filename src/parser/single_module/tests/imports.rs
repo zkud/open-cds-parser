@@ -268,7 +268,11 @@ fn with_name_with_alias_import_it_parses() {
                                 "name".to_string()
                             )),)
                         ))),
-                        Some(Box::new(AsTerm::new())),
+                        Some(Box::new(AsTerm::new(Location::new(
+                            14,
+                            16,
+                            &Path::new("/import.cds")
+                        )))),
                         Some(Box::new(NameTerm::new("name2".to_string())))
                     ))],
                     Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
