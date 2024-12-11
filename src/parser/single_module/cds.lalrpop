@@ -254,28 +254,40 @@ Selector: SelectorTerm = {
 }
 
 ImportIdentifier: ImportIdentifierTerm = {
-  <name:Name> => {
-    ImportIdentifierTerm::new(Box::new(
-      ImportIdentifierVariant::NameOnly(
-        Box::new(name)
+  <start: @L> <name:Name> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ImportIdentifierTerm::new(
+      location,
+      Box::new(
+        ImportIdentifierVariant::NameOnly(
+          Box::new(name)
+        )
       )
-    ))
+    )
   },
-  <name:Name> <dot:Dot> <wildcart:Wildcart> => {
-    ImportIdentifierTerm::new(Box::new(
-      ImportIdentifierVariant::NameWithWildcart {
-        name: Box::new(name),
-        dot: Box::new(dot),
-        wildcart: Box::new(wildcart)
-      }
-    ))
-  },
-  <wildcart:Wildcart> => {
-    ImportIdentifierTerm::new(Box::new(
-      ImportIdentifierVariant::SelectAll(
-        Box::new(wildcart),
+  <start: @L> <name:Name> <dot:Dot> <wildcart:Wildcart> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ImportIdentifierTerm::new(
+      location,
+      Box::new(
+        ImportIdentifierVariant::NameWithWildcart {
+          name: Box::new(name),
+          dot: Box::new(dot),
+          wildcart: Box::new(wildcart)
+        }
       )
-    ))
+    )
+  },
+  <start: @L> <wildcart:Wildcart> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ImportIdentifierTerm::new(
+      location,
+      Box::new(
+        ImportIdentifierVariant::SelectAll(
+          Box::new(wildcart),
+        )
+      )
+    )
   },
 }
 
