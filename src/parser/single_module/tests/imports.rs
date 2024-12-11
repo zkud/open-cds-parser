@@ -24,6 +24,7 @@ fn with_straight_wildcart_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
+                Location::new(0, 20, &Path::new("/import.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     0,
                     5,
@@ -74,6 +75,7 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
+                Location::new(0, 24, &Path::new("/import.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     0,
                     5,
@@ -132,6 +134,7 @@ fn with_name_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
+                Location::new(1, 28, &Path::new("/import.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
@@ -190,6 +193,7 @@ fn with_name_with_comma_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
+                Location::new(1, 29, &Path::new("/import.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
@@ -255,6 +259,7 @@ fn with_name_with_alias_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
+                Location::new(1, 37, &Path::new("/import.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
@@ -317,6 +322,7 @@ fn with_name_with_wildcart_import_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
+                Location::new(1, 30, &Path::new("/import.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,
@@ -385,6 +391,7 @@ fn with_multiple_imports_it_parses() {
         parsed_module,
         Box::new(ModuleTerm::new(vec![ModuleDefinition::Import(
             ImportTerm::new(
+                Location::new(1, 36, &Path::new("/import.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     1,
                     6,

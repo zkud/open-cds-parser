@@ -210,8 +210,10 @@ Type: TypeTerm = {
 }
 
 Import: ImportTerm = {
-  <using:Using> <selection_block:SelectionBlock> <from:From> <path:Path> <semi:Semicolumn> => {
+  <start: @L> <using:Using> <selection_block:SelectionBlock> <from:From> <path:Path> <semi:Semicolumn> <end: @R> => {
+    let location = Location::new(start, end, filepath);
     ImportTerm::new(
+      location,
       Box::new(using),
       Box::new(selection_block),
       Box::new(from),

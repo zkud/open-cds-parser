@@ -15,6 +15,7 @@ impl SingleModuleParser for MockSingleModuleParser {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
@@ -53,6 +54,7 @@ impl SingleModuleParser for MockSingleModuleParser {
             )]))),
             "/subdir/file4.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
@@ -87,6 +89,7 @@ impl SingleModuleParser for MockSingleModuleParser {
             }
             "/failure_no_file_present.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
                         None,
@@ -274,6 +277,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
                     Box::new(SelectionBlockTerm::new(
                         None,
