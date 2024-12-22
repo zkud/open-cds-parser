@@ -15,15 +15,23 @@ impl SingleModuleParser for MockSingleModuleParser {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Box::new(ImportIdentifierTerm::new(Box::new(
-                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
-                                    "Books".to_string(),
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
+                            Box::new(ImportIdentifierTerm::new(
+                                Location::new(0, 0, &PathBuf::new()),
+                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                    NameTerm::new("Books".to_string()),
                                 ))),
-                            ))),
+                            )),
                             None,
                             None,
                         ))],
@@ -52,15 +60,23 @@ impl SingleModuleParser for MockSingleModuleParser {
             )]))),
             "/subdir/file4.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Box::new(ImportIdentifierTerm::new(Box::new(
-                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
-                                    "Books".to_string(),
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
+                            Box::new(ImportIdentifierTerm::new(
+                                Location::new(0, 0, &PathBuf::new()),
+                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                    NameTerm::new("Books".to_string()),
                                 ))),
-                            ))),
+                            )),
                             None,
                             None,
                         ))],
@@ -85,15 +101,23 @@ impl SingleModuleParser for MockSingleModuleParser {
             }
             "/failure_no_file_present.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Box::new(ImportIdentifierTerm::new(Box::new(
-                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
-                                    "Books".to_string(),
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
+                            Box::new(ImportIdentifierTerm::new(
+                                Location::new(0, 0, &PathBuf::new()),
+                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                    NameTerm::new("Books".to_string()),
                                 ))),
-                            ))),
+                            )),
                             None,
                             None,
                         ))],
@@ -271,15 +295,23 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
         match path {
             "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Box::new(ImportIdentifierTerm::new(Box::new(
-                                ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
-                                    "Books".to_string(),
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
+                            Box::new(ImportIdentifierTerm::new(
+                                Location::new(0, 0, &PathBuf::new()),
+                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                    NameTerm::new("Books".to_string()),
                                 ))),
-                            ))),
+                            )),
                             None,
                             None,
                         ))],

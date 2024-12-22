@@ -40,19 +40,27 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
         service_path.to_string_lossy().to_string(),
         ModuleTerm::new(vec![
             ModuleDefinition::Import(ImportTerm::new(
+                Location::new(0, 32, &Path::new("./tests/projects/modules/srv/books.cds")),
                 Box::new(UsingTerm::new(Location::new(
                     0,
                     5,
                     &Path::new("./tests/projects/modules/srv/books.cds"),
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     None,
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                        Box::new(ImportIdentifierTerm::new(Box::new(
-                            ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
+                        Box::new(ImportIdentifierTerm::new(
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
+                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
                                 "Books".to_string(),
-                            ))),
-                        ))),
+                            )))),
+                        )),
                         None,
                         None,
                     ))],

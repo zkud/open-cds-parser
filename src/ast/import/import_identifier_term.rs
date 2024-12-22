@@ -6,6 +6,7 @@ use super::super::{DotTerm, NameTerm, WildcartTerm};
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ImportIdentifierTerm {
+    location: Location,
     #[subnode_prop]
     variant: Box<ImportIdentifierVariant>,
 }

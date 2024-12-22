@@ -3,6 +3,7 @@ use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ImportTerm {
+    location: Location,
     #[subnode_prop]
     using: Box<UsingTerm>,
     #[subnode_prop]
