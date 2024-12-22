@@ -113,17 +113,41 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
 }
 
 Entity: EntityTerm = {
-  "entity" <name:Name> "{" "}" => {
-    EntityTerm::new(Box::new(name), Vec::new(), Vec::new())
+  <start: @L> "entity" <name:Name> "{" "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(
+      location,
+      Box::new(name),
+      Vec::new(),
+      Vec::new()
+    )
   },
-  "entity" <name:Name> "{" <fields:Fields> "}" => {
-    EntityTerm::new(Box::new(name), Vec::new(), fields)
+  <start: @L> "entity" <name:Name> "{" <fields:Fields> "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(
+      location,
+      Box::new(name),
+      Vec::new(),
+      fields
+    )
   },
-  "entity" <name:Name> ":" <aspects:AspectNames> "{" "}" => {
-    EntityTerm::new(Box::new(name), aspects, Vec::new())
+  <start: @L> "entity" <name:Name> ":" <aspects:AspectNames> "{" "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(
+      location,
+      Box::new(name),
+      aspects,
+      Vec::new()
+    )
   },
-  "entity" <name:Name> ":" <aspects:AspectNames> "{" <fields:Fields> "}" => {
-    EntityTerm::new(Box::new(name), aspects, fields)
+  <start: @L> "entity" <name:Name> ":" <aspects:AspectNames> "{" <fields:Fields> "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(
+      location,
+      Box::new(name),
+      aspects,
+      fields
+    )
   }
 }
 
@@ -160,11 +184,23 @@ Field: FieldTerm = {
 }
 
 Action: ActionTerm = {
-  "action" <name:Name> "(" <params:Params> ")" ";" => {
-    ActionTerm::new(Box::new(name), params, None)
+  <start: @L> "action" <name:Name> "(" <params:Params> ")" ";" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ActionTerm::new(
+      location,
+      Box::new(name),
+      params,
+      None
+    )
   },
-  "action" <name:Name> "(" <params:Params> ")" "returns" <returns:Returns> ";" => {
-    ActionTerm::new(Box::new(name), params, Some(Box::new(returns)))
+  <start: @L> "action" <name:Name> "(" <params:Params> ")" "returns" <returns:Returns> ";" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ActionTerm::new(
+      location,
+      Box::new(name),
+      params,
+      Some(Box::new(returns))
+    )
   }
 };
 

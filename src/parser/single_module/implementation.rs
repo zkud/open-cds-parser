@@ -20,17 +20,20 @@ impl SingleModuleParserImpl {
 
 impl SingleModuleParser for SingleModuleParserImpl {
     fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
-        let content = self.file_system.read_content(path)?;
+        let absolute_path = self.file_system.to_absolute(path)?;
 
-        let module = match super::cds::ModuleParser::new().parse(&PathBuf::from(path), &content) {
-            Ok(module_ast) => module_ast,
-            Err(lalrpop_auto_generated_error) => {
-                return Err(ParseError::new(
-                    format!("File: {} Error: {}", path, lalrpop_auto_generated_error),
-                    ParseErrorType::SyntaxError,
-                ))
-            }
-        };
+        let content = self.file_system.read_content(&absolute_path)?;
+
+        let module =
+            match super::cds::ModuleParser::new().parse(&PathBuf::from(absolute_path), &content) {
+                Ok(module_ast) => module_ast,
+                Err(lalrpop_auto_generated_error) => {
+                    return Err(ParseError::new(
+                        format!("File: {} Error: {}", path, lalrpop_auto_generated_error),
+                        ParseErrorType::SyntaxError,
+                    ))
+                }
+            };
 
         Ok(Box::new(module))
     }

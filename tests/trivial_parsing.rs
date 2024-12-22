@@ -1,12 +1,18 @@
+use std::path::Path;
+
 use open_cds_parser::ast::{
-    EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm, ReturnsTerm,
-    ServiceDefinition, ServiceTerm,
+    EntityTerm, FieldTerm, FunctionTerm, Location, ModuleDefinition, ModuleTerm, NameTerm,
+    ReturnsTerm, ServiceDefinition, ServiceTerm,
 };
 use open_cds_parser::parser::Parser;
 
 #[test]
 fn with_correct_and_trivial_cds_it_buids_a_tree() {
     let parser = Parser::new_with_native_fs();
+
+    let service_path = Path::new("./tests/projects/trivial/srv/cat-service.cds")
+        .canonicalize()
+        .unwrap();
 
     let ast = parser
         .parse_single_module(&"./tests/projects/trivial/srv/cat-service.cds")
@@ -17,6 +23,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
             Box::new(NameTerm::new("CatalogService".to_string())),
             vec![
                 ServiceDefinition::Entity(EntityTerm::new(
+                    Location::new(27, 96, &service_path),
                     Box::new(NameTerm::new("UserScopes".to_string())),
                     vec![],
                     vec![
