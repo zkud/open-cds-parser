@@ -21,6 +21,11 @@ impl SingleModuleParser for MockSingleModuleParser {
                         Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
                                 Box::new(ImportIdentifierVariant::NameOnly(Box::new(
@@ -61,6 +66,11 @@ impl SingleModuleParser for MockSingleModuleParser {
                         Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
                                 Box::new(ImportIdentifierVariant::NameOnly(Box::new(
@@ -97,6 +107,11 @@ impl SingleModuleParser for MockSingleModuleParser {
                         Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
                                 Box::new(ImportIdentifierVariant::NameOnly(Box::new(
@@ -286,6 +301,11 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                         Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                            Location::new(
+                                6,
+                                11,
+                                &Path::new("./tests/projects/modules/srv/books.cds"),
+                            ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
                                 Box::new(ImportIdentifierVariant::NameOnly(Box::new(

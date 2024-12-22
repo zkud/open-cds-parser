@@ -253,8 +253,24 @@ Selectors: Vec<SelectionBlockSegment> = {
 }
 
 Selector: SelectorTerm = {
-  <import:ImportIdentifier> => SelectorTerm::new(Box::new(import), None, None),
-  <import:ImportIdentifier> <as_term:As> <alias:Name> => SelectorTerm::new(Box::new(import), Some(Box::new(as_term)), Some(Box::new(alias))),
+  <start: @L> <import:ImportIdentifier> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectorTerm::new(
+      location,
+      Box::new(import),
+      None,
+      None
+    )
+  },
+  <start: @L> <import:ImportIdentifier> <as_term:As> <alias:Name> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectorTerm::new(
+      location,
+      Box::new(import),
+      Some(Box::new(as_term)),
+      Some(Box::new(alias))
+    )
+  },
 }
 
 ImportIdentifier: ImportIdentifierTerm = {
