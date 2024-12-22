@@ -224,11 +224,13 @@ Import: ImportTerm = {
 }
 
 SelectionBlock: SelectionBlockTerm = {
-  <open_brace:OpenCurlyBrace> <selectors:Selectors> <close_brace:CloseCurlyBrace> => {
-    SelectionBlockTerm::new(Some(Box::new(open_brace)), selectors, Some(Box::new(close_brace)))
+  <start: @L> <open_brace:OpenCurlyBrace> <selectors:Selectors> <close_brace:CloseCurlyBrace> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectionBlockTerm::new(location, Some(Box::new(open_brace)), selectors, Some(Box::new(close_brace)))
   },
-  <selectors:Selectors> => {
-    SelectionBlockTerm::new(None, selectors, None)
+  <start: @L> <selectors:Selectors> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectionBlockTerm::new(location, None, selectors, None)
   }
 }
 

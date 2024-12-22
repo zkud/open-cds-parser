@@ -6,6 +6,7 @@ use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct SelectionBlockTerm {
+    location: Location,
     #[subnode_prop]
     open_brace: Option<Box<OpenCurlyBraceTerm>>,
     #[subnode_prop]

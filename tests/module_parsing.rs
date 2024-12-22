@@ -47,6 +47,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                     &Path::new("./tests/projects/modules/srv/books.cds"),
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     None,
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(

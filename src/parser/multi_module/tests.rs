@@ -18,6 +18,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                             Box::new(ImportIdentifierTerm::new(
@@ -57,6 +58,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                             Box::new(ImportIdentifierTerm::new(
@@ -92,6 +94,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                             Box::new(ImportIdentifierTerm::new(
@@ -280,6 +283,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
                     Box::new(SelectionBlockTerm::new(
+                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                         None,
                         vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                             Box::new(ImportIdentifierTerm::new(

@@ -31,6 +31,7 @@ fn with_straight_wildcart_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(6, 7, &Path::new("/import.cds")),
                     None,
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Box::new(ImportIdentifierTerm::new(
@@ -82,6 +83,7 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(6, 11, &Path::new("/import.cds")),
                     Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
                         6,
                         7,
@@ -141,6 +143,7 @@ fn with_name_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(7, 15, &Path::new("/import.cds")),
                     Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
                         7,
                         8,
@@ -200,6 +203,7 @@ fn with_name_with_comma_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(7, 16, &Path::new("/import.cds")),
                     Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
                         7,
                         8,
@@ -266,6 +270,7 @@ fn with_name_with_alias_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(7, 24, &Path::new("/import.cds")),
                     Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
                         7,
                         8,
@@ -329,6 +334,7 @@ fn with_name_with_wildcart_import_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(7, 17, &Path::new("/import.cds")),
                     Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
                         7,
                         8,
@@ -398,6 +404,7 @@ fn with_multiple_imports_it_parses() {
                     &Path::new("/import.cds")
                 ))),
                 Box::new(SelectionBlockTerm::new(
+                    Location::new(7, 23, &Path::new("/import.cds")),
                     Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
                         7,
                         8,
