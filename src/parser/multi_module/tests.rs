@@ -146,7 +146,7 @@ fn test_parse_single_file() {
     directories.insert("/".to_string(), vec!["/file2.cds".to_string()]);
 
     let mut files = HashMap::new();
-    files.insert("/file2.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file2.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -174,9 +174,9 @@ fn test_parse_directory() {
     );
 
     let mut files = HashMap::new();
-    files.insert("/file1.cds".to_string(), "".to_string());
-    files.insert("/file2.cds".to_string(), "".to_string());
-    files.insert("/subdir/file3.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file1.cds"), "".to_string());
+    files.insert(PathBuf::from("/file2.cds"), "".to_string());
+    files.insert(PathBuf::from("/subdir/file3.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -218,8 +218,8 @@ fn test_parse_with_imports() {
     );
 
     let mut files = HashMap::new();
-    files.insert("/file1.cds".to_string(), "".to_string());
-    files.insert("/subdir/file3.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file1.cds"), "".to_string());
+    files.insert(PathBuf::from("/subdir/file3.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -248,8 +248,8 @@ fn test_parse_with_imports_but_import_is_dir() {
     );
 
     let mut files = HashMap::new();
-    files.insert("/subdir/file4.cds".to_string(), "".to_string());
-    files.insert("/subdir/subdir/index.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/subdir/file4.cds"), "".to_string());
+    files.insert(PathBuf::from("/subdir/subdir/index.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -274,7 +274,10 @@ fn test_parse_invalid_path_in_import() {
     );
 
     let mut files = HashMap::new();
-    files.insert("/failure_no_file_present.cds".to_string(), "".to_string());
+    files.insert(
+        PathBuf::from("/failure_no_file_present.cds"),
+        "".to_string(),
+    );
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -356,9 +359,9 @@ fn test_parse_duplication() {
     directories.insert("/file2/".to_string(), vec!["/file2/index.cds".to_string()]);
 
     let mut files = HashMap::new();
-    files.insert("/file1.cds".to_string(), "".to_string());
-    files.insert("/file2.cds".to_string(), "".to_string());
-    files.insert("/file2/index.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file1.cds"), "".to_string());
+    files.insert(PathBuf::from("/file2.cds"), "".to_string());
+    files.insert(PathBuf::from("/file2/index.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParserForDuplication);

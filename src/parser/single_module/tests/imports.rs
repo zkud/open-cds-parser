@@ -2,14 +2,14 @@ use crate::ast::*;
 use crate::parser::fs::MockInMemoryFileSystem;
 use crate::parser::single_module::{SingleModuleParser, SingleModuleParserImpl};
 use std::collections::HashMap;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 #[test]
 fn with_straight_wildcart_import_it_parses() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         "using * from 'path';".to_string(),
     );
 
@@ -62,7 +62,7 @@ fn with_straight_wildcart_import_it_parses() {
 fn with_straigh_wildcart_import_with_braces_it_parses() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         "using { * } from 'path';".to_string(),
     );
 
@@ -123,7 +123,7 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
 fn with_name_import_it_parses() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         " using { name } from 'path'; ".to_string(),
     );
 
@@ -184,7 +184,7 @@ fn with_name_import_it_parses() {
 fn with_name_with_comma_import_it_parses() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         " using { name, } from 'path'; ".to_string(),
     );
 
@@ -252,7 +252,7 @@ fn with_name_with_comma_import_it_parses() {
 fn with_name_with_alias_import_it_parses() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         " using { name as name2 } from 'path'; ".to_string(),
     );
 
@@ -317,7 +317,7 @@ fn with_name_with_alias_import_it_parses() {
 fn with_name_with_wildcart_import_it_parses() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         " using { name.* } from 'path'; ".to_string(),
     );
 
@@ -388,7 +388,7 @@ fn with_name_with_wildcart_import_it_parses() {
 fn with_multiple_imports_it_parses() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         " using { name1, name2 } from 'path'; ".to_string(),
     );
 
@@ -477,7 +477,7 @@ impl Visitor for EmtpyVisitor {
 fn with_various_scenarios_it_visits_successfully() {
     let mut files = HashMap::new();
     files.insert(
-        "/import.cds".to_string(),
+        PathBuf::from("/import.cds"),
         "
         using { name1, name2 } from 'path';
         using { name3 as name4, name5 as name6 } from 'path2';

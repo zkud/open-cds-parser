@@ -13,8 +13,7 @@ impl NativeFileSystem {
 }
 
 impl FileSystem for NativeFileSystem {
-    fn read_content(&self, path: &str) -> Result<String, FileSystemError> {
-        let path = Path::new(path);
+    fn read_content(&self, path: &Path) -> Result<String, FileSystemError> {
         Ok(fs::read_to_string(path)?)
     }
 

@@ -1,7 +1,9 @@
+use std::path::Path;
+
 use super::FileSystemError;
 
 pub trait FileSystem {
-    fn read_content(&self, path: &str) -> Result<String, FileSystemError>;
+    fn read_content(&self, path: &Path) -> Result<String, FileSystemError>;
     fn file_exists(&self, path: &str) -> bool;
     fn path_is_file(&self, path: &str) -> bool;
     fn path_is_directory(&self, path: &str) -> bool;

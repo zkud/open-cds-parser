@@ -1,3 +1,4 @@
+use std::path::Path;
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -20,7 +21,7 @@ impl SingleModuleParserImpl {
 
 impl SingleModuleParser for SingleModuleParserImpl {
     fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
-        let content = self.file_system.read_content(path)?;
+        let content = self.file_system.read_content(&Path::new(path))?;
 
         let module = match super::cds::ModuleParser::new().parse(&PathBuf::from(path), &content) {
             Ok(module_ast) => module_ast,

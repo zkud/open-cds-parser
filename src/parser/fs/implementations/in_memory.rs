@@ -1,24 +1,25 @@
 use std::collections::HashMap;
+use std::path::{Path, PathBuf};
 
 use super::super::{FileSystem, FileSystemError};
 
 pub struct MockInMemoryFileSystem {
     directories: HashMap<String, Vec<String>>,
-    files: HashMap<String, String>,
+    files: HashMap<PathBuf, String>,
 }
 
 impl MockInMemoryFileSystem {
-    pub fn new(directories: HashMap<String, Vec<String>>, files: HashMap<String, String>) -> Self {
+    pub fn new(directories: HashMap<String, Vec<String>>, files: HashMap<PathBuf, String>) -> Self {
         Self { directories, files }
     }
 }
 
 impl FileSystem for MockInMemoryFileSystem {
-    fn read_content(&self, path: &str) -> Result<String, FileSystemError> {
+    fn read_content(&self, path: &Path) -> Result<String, FileSystemError> {
         self.files
             .get(path)
             .cloned()
-            .ok_or_else(|| FileSystemError::new(format!("{} not found", path)))
+            .ok_or_else(|| FileSystemError::new(format!("{} not found", path.to_string_lossy())))
     }
 
     fn path_is_file(&self, path: &str) -> bool {
@@ -54,6 +55,6 @@ impl FileSystem for MockInMemoryFileSystem {
     }
 
     fn file_exists(&self, path: &str) -> bool {
-        self.files.contains_key(path)
+        self.files.contains_key(Path::new(path))
     }
 }
