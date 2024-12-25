@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::path::PathBuf;
 use std::sync::Arc;
 
 use crate::ast::*;
@@ -111,9 +112,11 @@ impl MultiModuleParserImpl {
 
         for path in abstract_paths {
             let direct_dependency = path.clone() + &".cds";
-            let direct_exists = self.file_system.file_exists(&direct_dependency);
+            let direct_dependency_path = PathBuf::from(path.clone() + &".cds");
+            let direct_exists = self.file_system.file_exists(&direct_dependency_path);
             let module_dependency = path.clone() + &"/index.cds";
-            let module_exists = self.file_system.file_exists(&module_dependency);
+            let module_dependency_path = PathBuf::from(path.clone() + &"/index.cds");
+            let module_exists = self.file_system.file_exists(&module_dependency_path);
             match (direct_exists, module_exists) {
                 (true, false) => {
                     concrete_paths.push(direct_dependency);

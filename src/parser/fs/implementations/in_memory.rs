@@ -54,7 +54,7 @@ impl FileSystem for MockInMemoryFileSystem {
         Ok(path.to_owned()) // paths always absolute
     }
 
-    fn file_exists(&self, path: &str) -> bool {
-        self.files.contains_key(Path::new(path))
+    fn file_exists(&self, path: &Path) -> bool {
+        self.files.contains_key(path)
     }
 }
