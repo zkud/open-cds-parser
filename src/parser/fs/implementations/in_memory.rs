@@ -22,12 +22,12 @@ impl FileSystem for MockInMemoryFileSystem {
             .ok_or_else(|| FileSystemError::new(format!("{} not found", path.to_string_lossy())))
     }
 
-    fn path_is_file(&self, path: &str) -> bool {
+    fn path_is_file(&self, path: &Path) -> bool {
         !self.path_is_directory(path)
     }
 
-    fn path_is_directory(&self, path: &str) -> bool {
-        path.ends_with('/')
+    fn path_is_directory(&self, path: &Path) -> bool {
+        path.ends_with("/")
     }
 
     fn get_all_cds_files_in_dir(&self, dir_path: &str) -> Result<Vec<String>, FileSystemError> {

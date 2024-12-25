@@ -17,13 +17,11 @@ impl FileSystem for NativeFileSystem {
         Ok(fs::read_to_string(path)?)
     }
 
-    fn path_is_file(&self, path: &str) -> bool {
-        let path = Path::new(path);
+    fn path_is_file(&self, path: &Path) -> bool {
         path.is_file()
     }
 
-    fn path_is_directory(&self, path: &str) -> bool {
-        let path = Path::new(path);
+    fn path_is_directory(&self, path: &Path) -> bool {
         path.is_dir()
     }
 

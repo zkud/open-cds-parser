@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::path::Path;
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -48,11 +49,11 @@ impl MultiModuleParserImpl {
         path: &str,
         result: &mut HashMap<String, ModuleTerm>,
     ) -> Result<(), ParseError> {
-        if self.file_system.path_is_file(path) {
+        if self.file_system.path_is_file(&Path::new(path)) {
             return self.parse_single_file(path, result);
         }
 
-        if self.file_system.path_is_directory(path) {
+        if self.file_system.path_is_directory(&Path::new(path)) {
             return self.parse_directory(path, result);
         }
 
