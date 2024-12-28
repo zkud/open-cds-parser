@@ -143,7 +143,7 @@ impl SingleModuleParser for MockSingleModuleParser {
 #[test]
 fn test_parse_single_file() {
     let mut directories = HashMap::new();
-    directories.insert("/".to_string(), vec!["/file2.cds".to_string()]);
+    directories.insert(PathBuf::from("/"), vec![PathBuf::from("/file2.cds")]);
 
     let mut files = HashMap::new();
     files.insert(PathBuf::from("/file2.cds"), "".to_string());
@@ -165,12 +165,12 @@ fn test_parse_single_file() {
 fn test_parse_directory() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/".to_string(),
-        vec!["/file1.cds".to_string(), "/file2.cds".to_string()],
+        PathBuf::from("/"),
+        vec![PathBuf::from("/file1.cds"), PathBuf::from("/file2.cds")],
     );
     directories.insert(
-        "/subdir/".to_string(),
-        vec!["/subdir/file3.cds".to_string()],
+        PathBuf::from("/subdir/"),
+        vec![PathBuf::from("/subdir/file3.cds")],
     );
 
     let mut files = HashMap::new();
@@ -211,10 +211,10 @@ fn test_parse_invalid_path() {
 #[test]
 fn test_parse_with_imports() {
     let mut directories = HashMap::new();
-    directories.insert("/".to_string(), vec!["/file1.cds".to_string()]);
+    directories.insert(PathBuf::from("/"), vec![PathBuf::from("/file1.cds")]);
     directories.insert(
-        "/subdir/".to_string(),
-        vec!["/subdir/file3.cds".to_string()],
+        PathBuf::from("/subdir/"),
+        vec![PathBuf::from("/subdir/file3.cds")],
     );
 
     let mut files = HashMap::new();
@@ -239,12 +239,12 @@ fn test_parse_with_imports() {
 fn test_parse_with_imports_but_import_is_dir() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/subdir/".to_string(),
-        vec!["/subdir/file4.cds".to_string()],
+        PathBuf::from("/subdir/"),
+        vec![PathBuf::from("/subdir/file4.cds")],
     );
     directories.insert(
-        "/subdir/subdir/".to_string(),
-        vec!["/subdir/subdir/index.cds".to_string()],
+        PathBuf::from("/subdir/subdir/"),
+        vec![PathBuf::from("/subdir/subdir/index.cds")],
     );
 
     let mut files = HashMap::new();
@@ -269,8 +269,8 @@ fn test_parse_with_imports_but_import_is_dir() {
 fn test_parse_invalid_path_in_import() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/".to_string(),
-        vec!["/failure_no_file_present.cds".to_string()],
+        PathBuf::from("/"),
+        vec![PathBuf::from("/failure_no_file_present.cds")],
     );
 
     let mut files = HashMap::new();
@@ -353,10 +353,13 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
 fn test_parse_duplication() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/".to_string(),
-        vec!["/file1.cds".to_string(), "/file2.cds".to_string()],
+        PathBuf::from("/"),
+        vec![PathBuf::from("/file1.cds"), PathBuf::from("/file2.cds")],
     );
-    directories.insert("/file2/".to_string(), vec!["/file2/index.cds".to_string()]);
+    directories.insert(
+        PathBuf::from("/file2/"),
+        vec![PathBuf::from("/file2/index.cds")],
+    );
 
     let mut files = HashMap::new();
     files.insert(PathBuf::from("/file1.cds"), "".to_string());

@@ -1,3 +1,4 @@
+use std::path::Path;
 use std::sync::Arc;
 
 use crate::ast::*;
@@ -29,8 +30,11 @@ impl Visitor for PathCollectorVisitor {
     fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ParseError> {
         if let Some(term) = term.try_convert::<ImportTerm>() {
             let path = term.path().value();
-            let full_path = self.file_system.join_paths(&self.current_dir, &path)?;
-            self.modules_to_parse.push(full_path);
+            let full_path = self
+                .file_system
+                .join_paths(&Path::new(&self.current_dir), &Path::new(&path))?;
+            self.modules_to_parse
+                .push(full_path.to_string_lossy().to_string());
         }
         Ok(())
     }

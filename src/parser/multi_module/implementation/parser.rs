@@ -49,23 +49,25 @@ impl MultiModuleParserImpl {
         path: &str,
         result: &mut HashMap<String, ModuleTerm>,
     ) -> Result<(), ParseError> {
-        if self.file_system.path_is_file(&Path::new(path)) {
+        let path = Path::new(path);
+
+        if self.file_system.path_is_file(path) {
             return self.parse_single_file(path, result);
         }
 
-        if self.file_system.path_is_directory(&Path::new(path)) {
+        if self.file_system.path_is_directory(path) {
             return self.parse_directory(path, result);
         }
 
         Err(ParseError::new(
-            "Invalid path: ".to_string() + path,
+            "Invalid path: ".to_string() + &path.to_string_lossy(),
             ParseErrorType::FileIOError,
         ))
     }
 
     fn parse_directory(
         &self,
-        path: &str,
+        path: &Path,
         result: &mut HashMap<String, ModuleTerm>,
     ) -> Result<(), ParseError> {
         let file_paths = self.file_system.get_all_cds_files_in_dir(path)?;
@@ -77,21 +79,24 @@ impl MultiModuleParserImpl {
 
     fn parse_single_file(
         &self,
-        path: &str,
+        path: &Path,
         result: &mut HashMap<String, ModuleTerm>,
     ) -> Result<(), ParseError> {
         let absolute_path = self.file_system.to_absolute(path)?;
-        if result.contains_key(&absolute_path) {
+        let absolute_path_string = absolute_path.to_string_lossy().to_string();
+        if result.contains_key(&absolute_path_string) {
             return Ok(());
         }
 
-        let module_term = self.single_module_parser.parse(&path)?;
-        result.insert(absolute_path, (*module_term).clone());
+        let module_term = self
+            .single_module_parser
+            .parse(&path.to_string_lossy().to_string())?;
+        result.insert(absolute_path_string, (*module_term).clone());
 
         let abstract_paths = self.collect_abstract_paths(path, &module_term)?;
         let concrete_paths = self.resolve_paths(&abstract_paths)?;
         for path in concrete_paths {
-            self.parse_single_file(&path, result)?;
+            self.parse_single_file(&Path::new(&path), result)?;
         }
 
         Ok(())
@@ -99,11 +104,14 @@ impl MultiModuleParserImpl {
 
     fn collect_abstract_paths(
         &self,
-        path: &str,
+        path: &Path,
         module_term: &ModuleTerm,
     ) -> Result<Vec<String>, ParseError> {
         let parent_dir = self.file_system.get_parent_dir(path)?;
-        let mut using_visitor = PathCollectorVisitor::new(self.file_system.clone(), &parent_dir);
+        let mut using_visitor = PathCollectorVisitor::new(
+            self.file_system.clone(),
+            &parent_dir.to_string_lossy().to_string(),
+        );
         module_term.accept(&mut using_visitor)?;
         Ok(using_visitor.modules_to_parse())
     }
