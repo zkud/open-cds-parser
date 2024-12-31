@@ -1,6 +1,7 @@
 use std::fs::remove_file;
 use std::fs::File;
 use std::io::prelude::*;
+use std::path::Path;
 use std::sync::Arc;
 
 use crate::parser::fs::NativeFileSystem;
@@ -9,7 +10,8 @@ use super::super::{SingleModuleParser, SingleModuleParserImpl};
 
 #[test]
 fn with_correct_input_it_translates() {
-    let mut test_file = File::create("test_correct.cds").unwrap();
+    let path = Path::new("test_correct.cds");
+    let mut test_file = File::create(path).unwrap();
     test_file
         .write_all(
             b"
@@ -46,24 +48,26 @@ fn with_correct_input_it_translates() {
     let native_file_system = Arc::new(NativeFileSystem::new());
 
     let _result = SingleModuleParserImpl::new(native_file_system)
-        .parse(&"test_correct.cds")
+        .parse(path)
         .unwrap();
 
-    remove_file("test_correct.cds").unwrap();
+    remove_file(path).unwrap();
 }
 
 #[test]
 fn with_unexisting_file_it_fails() {
     let native_file_system = Arc::new(NativeFileSystem::new());
+    let path = Path::new("test.cds");
 
-    let result = SingleModuleParserImpl::new(native_file_system).parse(&"test.cds");
+    let result = SingleModuleParserImpl::new(native_file_system).parse(path);
 
     assert!(result.is_err());
 }
 
 #[test]
 fn with_syntactically_incorrect_it_fails() {
-    let mut test_file = File::create("test_incorrect.cds").unwrap();
+    let path = Path::new("test_incorrect.cds");
+    let mut test_file = File::create(path).unwrap();
     test_file
         .write_all(
             b"
@@ -77,9 +81,9 @@ fn with_syntactically_incorrect_it_fails() {
         .unwrap();
     let native_file_system = Arc::new(NativeFileSystem::new());
 
-    let result = SingleModuleParserImpl::new(native_file_system).parse(&"test_incorrect.cds");
+    let result = SingleModuleParserImpl::new(native_file_system).parse(path);
 
-    remove_file("test_incorrect.cds").unwrap();
+    remove_file(path).unwrap();
 
     assert!(result.is_err());
 }

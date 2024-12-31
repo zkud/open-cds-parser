@@ -8,12 +8,42 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
+#[inline]
+fn get_file_1_path() -> PathBuf {
+    PathBuf::from("/file1.cds")
+}
+
+#[inline]
+fn get_file_2_path() -> PathBuf {
+    PathBuf::from("/file2.cds")
+}
+
+#[inline]
+fn get_subdir_file_3_path() -> PathBuf {
+    PathBuf::from("/subdir/file3.cds")
+}
+
+#[inline]
+fn get_subdir_file_4_path() -> PathBuf {
+    PathBuf::from("/subdir/file4.cds")
+}
+
+#[inline]
+fn get_subdir_subdir_index_path() -> PathBuf {
+    PathBuf::from("/subdir/subdir/index.cds")
+}
+
+#[inline]
+fn get_failure_no_file_present_path() -> PathBuf {
+    PathBuf::from("/failure_no_file_present.cds")
+}
+
 struct MockSingleModuleParser;
 
 impl SingleModuleParser for MockSingleModuleParser {
-    fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
-        match path {
-            "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
+    fn parse(&self, path: &Path) -> Result<Box<ModuleTerm>, ParseError> {
+        if path == get_file_1_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
@@ -45,20 +75,26 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            "/file2.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            ])));
+        }
+        if path == get_file_2_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService1".to_string())),
                     vec![],
                 ),
-            )]))),
-            "/subdir/file3.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            )])));
+        }
+        if path == get_subdir_file_3_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService2".to_string())),
                     vec![],
                 ),
-            )]))),
-            "/subdir/file4.cds" => Ok(Box::new(ModuleTerm::new(vec![
+            )])));
+        }
+        if path == get_subdir_file_4_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
@@ -90,16 +126,18 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            "/subdir/subdir/index.cds" => {
-                Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-                    ServiceTerm::new(
-                        Box::new(NameTerm::new("AuthorsService2".to_string())),
-                        vec![],
-                    ),
-                )])))
-            }
-            "/failure_no_file_present.cds" => Ok(Box::new(ModuleTerm::new(vec![
+            ])));
+        }
+        if path == get_subdir_subdir_index_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+                ServiceTerm::new(
+                    Box::new(NameTerm::new("AuthorsService2".to_string())),
+                    vec![],
+                ),
+            )])));
+        }
+        if path == get_failure_no_file_present_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
@@ -131,12 +169,12 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            _ => Err(ParseError::new(
-                "Unexpected file".to_string(),
-                ParseErrorType::FileIOError,
-            )),
+            ])));
         }
+        return Err(ParseError::new(
+            "Unexpected file".to_string(),
+            ParseErrorType::FileIOError,
+        ));
     }
 }
 
@@ -294,9 +332,9 @@ fn test_parse_invalid_path_in_import() {
 struct MockSingleModuleParserForDuplication;
 
 impl SingleModuleParser for MockSingleModuleParserForDuplication {
-    fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
-        match path {
-            "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
+    fn parse(&self, path: &Path) -> Result<Box<ModuleTerm>, ParseError> {
+        if path == Path::new("/file1.cds") {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
@@ -328,24 +366,28 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            "/file2.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            ])));
+        }
+        if path == Path::new("/file2.cds") {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService1".to_string())),
                     vec![],
                 ),
-            )]))),
-            "/file2/index.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            )])));
+        }
+        if path == Path::new("/file2/index.cds") {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService2".to_string())),
                     vec![],
                 ),
-            )]))),
-            _ => Err(ParseError::new(
-                "Unexpected file".to_string(),
-                ParseErrorType::FileIOError,
-            )),
+            )])));
         }
+        Err(ParseError::new(
+            "Unexpected file".to_string(),
+            ParseErrorType::FileIOError,
+        ))
     }
 }
 

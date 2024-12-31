@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::path::Path;
 use std::sync::Arc;
 
 use super::fs::FileSystem;
@@ -31,7 +32,7 @@ impl Parser {
         Parser::new(file_system)
     }
 
-    pub fn parse_single_module(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
+    pub fn parse_single_module(&self, path: &Path) -> Result<Box<ModuleTerm>, ParseError> {
         self.single_module_parser.parse(path)
     }
 
