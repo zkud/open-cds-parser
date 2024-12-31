@@ -8,12 +8,42 @@ use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
+#[inline]
+fn get_file_1_path() -> PathBuf {
+    PathBuf::from("/file1.cds")
+}
+
+#[inline]
+fn get_file_2_path() -> PathBuf {
+    PathBuf::from("/file2.cds")
+}
+
+#[inline]
+fn get_subdir_file_3_path() -> PathBuf {
+    PathBuf::from("/subdir/file3.cds")
+}
+
+#[inline]
+fn get_subdir_file_4_path() -> PathBuf {
+    PathBuf::from("/subdir/file4.cds")
+}
+
+#[inline]
+fn get_subdir_subdir_index_path() -> PathBuf {
+    PathBuf::from("/subdir/subdir/index.cds")
+}
+
+#[inline]
+fn get_failure_no_file_present_path() -> PathBuf {
+    PathBuf::from("/failure_no_file_present.cds")
+}
+
 struct MockSingleModuleParser;
 
 impl SingleModuleParser for MockSingleModuleParser {
-    fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
-        match path {
-            "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
+    fn parse(&self, path: &Path) -> Result<Box<ModuleTerm>, ParseError> {
+        if path == get_file_1_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
@@ -45,20 +75,26 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            "/file2.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            ])));
+        }
+        if path == get_file_2_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService1".to_string())),
                     vec![],
                 ),
-            )]))),
-            "/subdir/file3.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            )])));
+        }
+        if path == get_subdir_file_3_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService2".to_string())),
                     vec![],
                 ),
-            )]))),
-            "/subdir/file4.cds" => Ok(Box::new(ModuleTerm::new(vec![
+            )])));
+        }
+        if path == get_subdir_file_4_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
@@ -90,16 +126,18 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            "/subdir/subdir/index.cds" => {
-                Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-                    ServiceTerm::new(
-                        Box::new(NameTerm::new("AuthorsService2".to_string())),
-                        vec![],
-                    ),
-                )])))
-            }
-            "/failure_no_file_present.cds" => Ok(Box::new(ModuleTerm::new(vec![
+            ])));
+        }
+        if path == get_subdir_subdir_index_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+                ServiceTerm::new(
+                    Box::new(NameTerm::new("AuthorsService2".to_string())),
+                    vec![],
+                ),
+            )])));
+        }
+        if path == get_failure_no_file_present_path() {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
@@ -131,22 +169,22 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            _ => Err(ParseError::new(
-                "Unexpected file".to_string(),
-                ParseErrorType::FileIOError,
-            )),
+            ])));
         }
+        return Err(ParseError::new(
+            "Unexpected file".to_string(),
+            ParseErrorType::FileIOError,
+        ));
     }
 }
 
 #[test]
 fn test_parse_single_file() {
     let mut directories = HashMap::new();
-    directories.insert("/".to_string(), vec!["/file2.cds".to_string()]);
+    directories.insert(PathBuf::from("/"), vec![PathBuf::from("/file2.cds")]);
 
     let mut files = HashMap::new();
-    files.insert("/file2.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file2.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -165,18 +203,18 @@ fn test_parse_single_file() {
 fn test_parse_directory() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/".to_string(),
-        vec!["/file1.cds".to_string(), "/file2.cds".to_string()],
+        PathBuf::from("/"),
+        vec![PathBuf::from("/file1.cds"), PathBuf::from("/file2.cds")],
     );
     directories.insert(
-        "/subdir/".to_string(),
-        vec!["/subdir/file3.cds".to_string()],
+        PathBuf::from("/subdir/"),
+        vec![PathBuf::from("/subdir/file3.cds")],
     );
 
     let mut files = HashMap::new();
-    files.insert("/file1.cds".to_string(), "".to_string());
-    files.insert("/file2.cds".to_string(), "".to_string());
-    files.insert("/subdir/file3.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file1.cds"), "".to_string());
+    files.insert(PathBuf::from("/file2.cds"), "".to_string());
+    files.insert(PathBuf::from("/subdir/file3.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -211,15 +249,15 @@ fn test_parse_invalid_path() {
 #[test]
 fn test_parse_with_imports() {
     let mut directories = HashMap::new();
-    directories.insert("/".to_string(), vec!["/file1.cds".to_string()]);
+    directories.insert(PathBuf::from("/"), vec![PathBuf::from("/file1.cds")]);
     directories.insert(
-        "/subdir/".to_string(),
-        vec!["/subdir/file3.cds".to_string()],
+        PathBuf::from("/subdir/"),
+        vec![PathBuf::from("/subdir/file3.cds")],
     );
 
     let mut files = HashMap::new();
-    files.insert("/file1.cds".to_string(), "".to_string());
-    files.insert("/subdir/file3.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file1.cds"), "".to_string());
+    files.insert(PathBuf::from("/subdir/file3.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -239,17 +277,17 @@ fn test_parse_with_imports() {
 fn test_parse_with_imports_but_import_is_dir() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/subdir/".to_string(),
-        vec!["/subdir/file4.cds".to_string()],
+        PathBuf::from("/subdir/"),
+        vec![PathBuf::from("/subdir/file4.cds")],
     );
     directories.insert(
-        "/subdir/subdir/".to_string(),
-        vec!["/subdir/subdir/index.cds".to_string()],
+        PathBuf::from("/subdir/subdir/"),
+        vec![PathBuf::from("/subdir/subdir/index.cds")],
     );
 
     let mut files = HashMap::new();
-    files.insert("/subdir/file4.cds".to_string(), "".to_string());
-    files.insert("/subdir/subdir/index.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/subdir/file4.cds"), "".to_string());
+    files.insert(PathBuf::from("/subdir/subdir/index.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -269,12 +307,15 @@ fn test_parse_with_imports_but_import_is_dir() {
 fn test_parse_invalid_path_in_import() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/".to_string(),
-        vec!["/failure_no_file_present.cds".to_string()],
+        PathBuf::from("/"),
+        vec![PathBuf::from("/failure_no_file_present.cds")],
     );
 
     let mut files = HashMap::new();
-    files.insert("/failure_no_file_present.cds".to_string(), "".to_string());
+    files.insert(
+        PathBuf::from("/failure_no_file_present.cds"),
+        "".to_string(),
+    );
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParser);
@@ -291,9 +332,9 @@ fn test_parse_invalid_path_in_import() {
 struct MockSingleModuleParserForDuplication;
 
 impl SingleModuleParser for MockSingleModuleParserForDuplication {
-    fn parse(&self, path: &str) -> Result<Box<ModuleTerm>, ParseError> {
-        match path {
-            "/file1.cds" => Ok(Box::new(ModuleTerm::new(vec![
+    fn parse(&self, path: &Path) -> Result<Box<ModuleTerm>, ParseError> {
+        if path == Path::new("/file1.cds") {
+            return Ok(Box::new(ModuleTerm::new(vec![
                 ModuleDefinition::Import(ImportTerm::new(
                     Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
                     Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
@@ -325,24 +366,28 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                     Box::new(NameTerm::new("BooksService".to_string())),
                     vec![],
                 )),
-            ]))),
-            "/file2.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            ])));
+        }
+        if path == Path::new("/file2.cds") {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService1".to_string())),
                     vec![],
                 ),
-            )]))),
-            "/file2/index.cds" => Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
+            )])));
+        }
+        if path == Path::new("/file2/index.cds") {
+            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
                     Box::new(NameTerm::new("AuthorsService2".to_string())),
                     vec![],
                 ),
-            )]))),
-            _ => Err(ParseError::new(
-                "Unexpected file".to_string(),
-                ParseErrorType::FileIOError,
-            )),
+            )])));
         }
+        Err(ParseError::new(
+            "Unexpected file".to_string(),
+            ParseErrorType::FileIOError,
+        ))
     }
 }
 
@@ -350,15 +395,18 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
 fn test_parse_duplication() {
     let mut directories = HashMap::new();
     directories.insert(
-        "/".to_string(),
-        vec!["/file1.cds".to_string(), "/file2.cds".to_string()],
+        PathBuf::from("/"),
+        vec![PathBuf::from("/file1.cds"), PathBuf::from("/file2.cds")],
     );
-    directories.insert("/file2/".to_string(), vec!["/file2/index.cds".to_string()]);
+    directories.insert(
+        PathBuf::from("/file2/"),
+        vec![PathBuf::from("/file2/index.cds")],
+    );
 
     let mut files = HashMap::new();
-    files.insert("/file1.cds".to_string(), "".to_string());
-    files.insert("/file2.cds".to_string(), "".to_string());
-    files.insert("/file2/index.cds".to_string(), "".to_string());
+    files.insert(PathBuf::from("/file1.cds"), "".to_string());
+    files.insert(PathBuf::from("/file2.cds"), "".to_string());
+    files.insert(PathBuf::from("/file2/index.cds"), "".to_string());
 
     let file_system = Arc::new(MockInMemoryFileSystem::new(directories, files));
     let single_module_parser = Arc::new(MockSingleModuleParserForDuplication);
