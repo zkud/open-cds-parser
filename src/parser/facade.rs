@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::path::Path;
+use std::path::PathBuf;
 use std::sync::Arc;
 
 use super::fs::FileSystem;
@@ -38,8 +39,8 @@ impl Parser {
 
     pub fn parse_multiple_modules(
         &self,
-        paths: Vec<String>,
-    ) -> Result<HashMap<String, ModuleTerm>, ParseError> {
+        paths: Vec<PathBuf>,
+    ) -> Result<HashMap<PathBuf, ModuleTerm>, ParseError> {
         self.multi_module_parser.parse(paths)
     }
 }

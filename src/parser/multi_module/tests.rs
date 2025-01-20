@@ -191,12 +191,12 @@ fn test_parse_single_file() {
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
-    let result = parser.parse(vec!["/file2.cds".to_string()]);
+    let result = parser.parse(vec![get_file_2_path()]);
 
     assert!(result.is_ok());
     let parsed_modules = result.unwrap();
     assert_eq!(parsed_modules.len(), 1);
-    assert!(parsed_modules.contains_key("/file2.cds"));
+    assert!(parsed_modules.contains_key(&get_file_2_path()));
 }
 
 #[test]
@@ -221,14 +221,13 @@ fn test_parse_directory() {
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
-    let result = parser.parse(vec!["/".to_string()]);
+    let result = parser.parse(vec![PathBuf::from("/")]);
 
     assert!(result.is_ok());
     let parsed_modules = result.unwrap();
-    println!("{:?}", parsed_modules.keys());
     assert_eq!(parsed_modules.len(), 3);
-    assert!(parsed_modules.contains_key("/file1.cds"));
-    assert!(parsed_modules.contains_key("/file2.cds"));
+    assert!(parsed_modules.contains_key(&get_file_1_path()));
+    assert!(parsed_modules.contains_key(&get_file_2_path()));
 }
 
 #[test]
@@ -241,7 +240,7 @@ fn test_parse_invalid_path() {
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
-    let result = parser.parse(vec!["invalid_path".to_string()]);
+    let result = parser.parse(vec![PathBuf::from("invalid")]);
 
     assert!(result.is_err());
 }
@@ -264,13 +263,13 @@ fn test_parse_with_imports() {
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
-    let result = parser.parse(vec!["/file1.cds".to_string()]);
+    let result = parser.parse(vec![get_file_1_path()]);
 
     assert!(result.is_ok());
     let parsed_modules = result.unwrap();
     assert_eq!(parsed_modules.len(), 2);
-    assert!(parsed_modules.contains_key("/file1.cds"));
-    assert!(parsed_modules.contains_key("/subdir/file3.cds"));
+    assert!(parsed_modules.contains_key(&get_file_1_path()));
+    assert!(parsed_modules.contains_key(&get_subdir_file_3_path()));
 }
 
 #[test]
@@ -294,13 +293,13 @@ fn test_parse_with_imports_but_import_is_dir() {
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
-    let result = parser.parse(vec!["/subdir/file4.cds".to_string()]);
+    let result = parser.parse(vec![get_subdir_file_4_path()]);
 
     assert!(result.is_ok());
     let parsed_modules = result.unwrap();
     assert_eq!(parsed_modules.len(), 2);
-    assert!(parsed_modules.contains_key("/subdir/file4.cds"));
-    assert!(parsed_modules.contains_key("/subdir/subdir/index.cds"));
+    assert!(parsed_modules.contains_key(&get_subdir_file_4_path()));
+    assert!(parsed_modules.contains_key(&get_subdir_subdir_index_path()));
 }
 
 #[test]
@@ -322,7 +321,7 @@ fn test_parse_invalid_path_in_import() {
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
-    let result = parser.parse(vec!["/failure_no_file_present.cds".to_string()]);
+    let result = parser.parse(vec![get_failure_no_file_present_path()]);
 
     assert!(result.is_err());
     let parse_error = result.err().unwrap();
@@ -413,7 +412,7 @@ fn test_parse_duplication() {
 
     let parser = MultiModuleParserImpl::new(single_module_parser, file_system);
 
-    let result = parser.parse(vec!["/file1.cds".to_string()]);
+    let result = parser.parse(vec![get_file_1_path()]);
 
     assert!(result.is_err());
     let parse_error = result.err().unwrap();

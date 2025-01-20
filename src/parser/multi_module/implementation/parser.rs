@@ -32,7 +32,7 @@ impl MultiModuleParserImpl {
 }
 
 impl MultiModuleParser for MultiModuleParserImpl {
-    fn parse(&self, paths: Vec<String>) -> Result<HashMap<String, ModuleTerm>, ParseError> {
+    fn parse(&self, paths: Vec<PathBuf>) -> Result<HashMap<PathBuf, ModuleTerm>, ParseError> {
         let mut result = HashMap::new();
 
         for path in paths {
@@ -46,11 +46,9 @@ impl MultiModuleParser for MultiModuleParserImpl {
 impl MultiModuleParserImpl {
     fn parse_path(
         &self,
-        path: &str,
-        result: &mut HashMap<String, ModuleTerm>,
+        path: &Path,
+        result: &mut HashMap<PathBuf, ModuleTerm>,
     ) -> Result<(), ParseError> {
-        let path = Path::new(path);
-
         if self.file_system.path_is_file(path) {
             return self.parse_single_file(path, result);
         }
@@ -68,7 +66,7 @@ impl MultiModuleParserImpl {
     fn parse_directory(
         &self,
         path: &Path,
-        result: &mut HashMap<String, ModuleTerm>,
+        result: &mut HashMap<PathBuf, ModuleTerm>,
     ) -> Result<(), ParseError> {
         let file_paths = self.file_system.get_all_cds_files_in_dir(path)?;
         for file_path in file_paths {
@@ -80,21 +78,20 @@ impl MultiModuleParserImpl {
     fn parse_single_file(
         &self,
         path: &Path,
-        result: &mut HashMap<String, ModuleTerm>,
+        result: &mut HashMap<PathBuf, ModuleTerm>,
     ) -> Result<(), ParseError> {
         let absolute_path = self.file_system.to_absolute(path)?;
-        let absolute_path_string = absolute_path.to_string_lossy().to_string();
-        if result.contains_key(&absolute_path_string) {
+        if result.contains_key(&absolute_path) {
             return Ok(());
         }
 
         let module_term = self.single_module_parser.parse(path)?;
-        result.insert(absolute_path_string, (*module_term).clone());
+        result.insert(absolute_path, (*module_term).clone());
 
         let abstract_paths = self.collect_abstract_paths(path, &module_term)?;
         let concrete_paths = self.resolve_paths(&abstract_paths)?;
         for path in concrete_paths {
-            self.parse_single_file(&Path::new(&path), result)?;
+            self.parse_single_file(&path, result)?;
         }
 
         Ok(())
@@ -104,26 +101,22 @@ impl MultiModuleParserImpl {
         &self,
         path: &Path,
         module_term: &ModuleTerm,
-    ) -> Result<Vec<String>, ParseError> {
+    ) -> Result<Vec<PathBuf>, ParseError> {
         let parent_dir = self.file_system.get_parent_dir(path)?;
-        let mut using_visitor = PathCollectorVisitor::new(
-            self.file_system.clone(),
-            &parent_dir.to_string_lossy().to_string(),
-        );
+        let mut using_visitor = PathCollectorVisitor::new(self.file_system.clone(), &parent_dir);
         module_term.accept(&mut using_visitor)?;
         Ok(using_visitor.modules_to_parse())
     }
 
-    fn resolve_paths(&self, abstract_paths: &[String]) -> Result<Vec<String>, ParseError> {
+    fn resolve_paths(&self, abstract_paths: &[PathBuf]) -> Result<Vec<PathBuf>, ParseError> {
         let mut concrete_paths = vec![];
 
         for path in abstract_paths {
-            let direct_dependency = path.clone() + &".cds";
-            let direct_dependency_path = PathBuf::from(path.clone() + &".cds");
-            let direct_exists = self.file_system.file_exists(&direct_dependency_path);
-            let module_dependency = path.clone() + &"/index.cds";
-            let module_dependency_path = PathBuf::from(path.clone() + &"/index.cds");
-            let module_exists = self.file_system.file_exists(&module_dependency_path);
+            let direct_dependency = path.with_extension("cds");
+            let direct_exists = self.file_system.file_exists(&direct_dependency);
+            let mut module_dependency = path.clone();
+            module_dependency.push("index.cds");
+            let module_exists = self.file_system.file_exists(&module_dependency);
             match (direct_exists, module_exists) {
                 (true, false) => {
                     concrete_paths.push(direct_dependency);
@@ -135,14 +128,14 @@ impl MultiModuleParserImpl {
                     return Err(ParseError::new(
                         format!(
                             "Unexpected duplication {}, both file and dir/index.cds are present",
-                            path
+                            path.to_string_lossy().to_string()
                         ),
                         ParseErrorType::FileIOError,
                     ))
                 }
                 _ => {
                     return Err(ParseError::new(
-                        format!("Cannot find import {}", path),
+                        format!("Cannot find import {}", path.to_string_lossy().to_string()),
                         ParseErrorType::FileIOError,
                     ))
                 }

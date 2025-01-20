@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
@@ -9,15 +9,15 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
     let parser = Parser::new_with_native_fs();
 
     let ast = parser
-        .parse_multiple_modules(vec!["./tests/projects/modules/srv".to_string()])
+        .parse_multiple_modules(vec![PathBuf::from("./tests/projects/modules/srv")])
         .unwrap();
 
     let mut expected_ast = HashMap::new();
-    let schema_path = Path::new("./tests/projects/modules/db/schema.cds")
+    let schema_path = PathBuf::from("./tests/projects/modules/db/schema.cds")
         .canonicalize()
         .unwrap();
     expected_ast.insert(
-        schema_path.to_string_lossy().to_string(),
+        schema_path,
         ModuleTerm::new(vec![ModuleDefinition::Entity(EntityTerm::new(
             Box::new(NameTerm::new("Books".to_string())),
             vec![],
@@ -33,11 +33,11 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
             ],
         ))]),
     );
-    let service_path = Path::new("./tests/projects/modules/srv/books.cds")
+    let service_path = PathBuf::from("./tests/projects/modules/srv/books.cds")
         .canonicalize()
         .unwrap();
     expected_ast.insert(
-        service_path.to_string_lossy().to_string(),
+        service_path,
         ModuleTerm::new(vec![
             ModuleDefinition::Import(ImportTerm::new(
                 Location::new(0, 32, &Path::new("./tests/projects/modules/srv/books.cds")),
