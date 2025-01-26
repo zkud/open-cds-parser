@@ -67,7 +67,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                     None,
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("../db/schema".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("../db/schema"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     31,
                     32,

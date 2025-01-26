@@ -68,7 +68,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                         None,
                     )),
                     Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new("/subdir/file3".to_string())),
+                    Box::new(PathTerm::new(PathBuf::from("/subdir/file3"))),
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
@@ -119,7 +119,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                         None,
                     )),
                     Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new("/subdir/subdir".to_string())),
+                    Box::new(PathTerm::new(PathBuf::from("/subdir/subdir"))),
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
@@ -162,7 +162,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                         None,
                     )),
                     Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new("/no_file_present".to_string())),
+                    Box::new(PathTerm::new(PathBuf::from("/no_file_present"))),
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
@@ -358,7 +358,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                         None,
                     )),
                     Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new("/file2".to_string())),
+                    Box::new(PathTerm::new(PathBuf::from("/file2"))),
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(

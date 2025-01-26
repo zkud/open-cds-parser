@@ -48,7 +48,7 @@ fn with_straight_wildcart_import_it_parses() {
                     None
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("path".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("path"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     19,
                     20,
@@ -102,7 +102,7 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     )))),
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("path".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("path"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     23,
                     24,
@@ -159,7 +159,7 @@ fn with_name_import_it_parses() {
                     )))),
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("path".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("path"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     27,
                     28,
@@ -223,7 +223,7 @@ fn with_name_with_comma_import_it_parses() {
                     )))),
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("path".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("path"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     28,
                     29,
@@ -284,7 +284,7 @@ fn with_name_with_alias_import_it_parses() {
                     )))),
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("path".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("path"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     36,
                     37,
@@ -351,7 +351,7 @@ fn with_name_with_wildcart_import_it_parses() {
                     )))),
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("path".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("path"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     29,
                     30,
@@ -426,7 +426,7 @@ fn with_multiple_imports_it_parses() {
                     )))),
                 )),
                 Box::new(FromTerm::new()),
-                Box::new(PathTerm::new("path".to_string())),
+                Box::new(PathTerm::new(PathBuf::from("path"))),
                 Box::new(SemicolumnTerm::new(Location::new(
                     35,
                     36,

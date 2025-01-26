@@ -1,5 +1,5 @@
 use crate::ast::*;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 grammar(filepath: &Path);
 
@@ -372,8 +372,14 @@ Using: UsingTerm = {
 }
 
 Path: PathTerm = {
-  <value:r"`[a-zA-Z0-9-/[.]]+`"> => PathTerm::new(value.to_string().trim_matches('`').to_string()),
-  <value:r"'[a-zA-Z0-9-/[.]]+'"> => PathTerm::new(value.to_string().trim_matches('\'').to_string()),
+  <value:r"`[a-zA-Z0-9-/[.]]+`"> => {
+    let trimmed_value = value.to_string().trim_matches('`').to_string();
+    PathTerm::new(PathBuf::from(trimmed_value))
+  },
+  <value:r"'[a-zA-Z0-9-/[.]]+'"> => {
+    let trimmed_value = value.to_string().trim_matches('\'').to_string();
+    PathTerm::new(PathBuf::from(trimmed_value))
+  },
 }
 
 Name: NameTerm = {
