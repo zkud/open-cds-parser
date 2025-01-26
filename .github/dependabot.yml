@@ -18,7 +18,7 @@ updates:
     reviewers:
       - "zkud"
 
-   - package-ecosystem: "devcontainers"
+  - package-ecosystem: "devcontainers"
     directory: "/"
     labels:
       - "dependencies"
