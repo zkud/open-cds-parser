@@ -17,3 +17,13 @@ updates:
       interval: "daily"
     reviewers:
       - "zkud"
+
+  - package-ecosystem: "devcontainers"
+    directory: "/"
+    labels:
+      - "dependencies"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - "zkud"
+
