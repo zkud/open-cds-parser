@@ -1,0 +1,101 @@
+Import: ImportTerm = {
+  <start: @L> <using:Using> <selection_block:SelectionBlock> <from:From> <path:Path> <semi:Semicolumn> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ImportTerm::new(
+      location,
+      Box::new(using),
+      Box::new(selection_block),
+      Box::new(from),
+      Box::new(path),
+      Box::new(semi)
+    )
+  }
+}
+
+SelectionBlock: SelectionBlockTerm = {
+  <start: @L> <open_brace:OpenCurlyBrace> <selectors:Selectors> <close_brace:CloseCurlyBrace> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectionBlockTerm::new(location, Some(Box::new(open_brace)), selectors, Some(Box::new(close_brace)))
+  },
+  <start: @L> <selectors:Selectors> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectionBlockTerm::new(location, None, selectors, None)
+  }
+}
+
+Selectors: Vec<SelectionBlockSegment> = {
+  <selector:Selector> => vec![SelectionBlockSegment::Selector(selector)],
+  <selector:Selector> <comma:Comma> => {
+    vec![
+      SelectionBlockSegment::Selector(selector),
+      SelectionBlockSegment::Comma(comma)
+    ]
+  },
+  <selector:Selector> <comma:Comma> <selectors:Selectors> => {
+    let mut new_selectors: Vec<SelectionBlockSegment> = vec![
+      SelectionBlockSegment::Selector(selector),
+      SelectionBlockSegment::Comma(comma)
+    ];
+    new_selectors.extend(selectors);
+    new_selectors
+  },
+}
+
+Selector: SelectorTerm = {
+  <start: @L> <import:ImportIdentifier> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectorTerm::new(
+      location,
+      Box::new(import),
+      None,
+      None
+    )
+  },
+  <start: @L> <import:ImportIdentifier> <as_term:As> <alias:Name> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SelectorTerm::new(
+      location,
+      Box::new(import),
+      Some(Box::new(as_term)),
+      Some(Box::new(alias))
+    )
+  },
+}
+
+ImportIdentifier: ImportIdentifierTerm = {
+  <start: @L> <name:Name> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ImportIdentifierTerm::new(
+      location,
+      Box::new(
+        ImportIdentifierVariant::NameOnly(
+          Box::new(name)
+        )
+      )
+    )
+  },
+  <start: @L> <name:Name> <dot:Dot> <wildcart:Wildcart> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ImportIdentifierTerm::new(
+      location,
+      Box::new(
+        ImportIdentifierVariant::NameWithWildcart {
+          name: Box::new(name),
+          dot: Box::new(dot),
+          wildcart: Box::new(wildcart)
+        }
+      )
+    )
+  },
+  <start: @L> <wildcart:Wildcart> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ImportIdentifierTerm::new(
+      location,
+      Box::new(
+        ImportIdentifierVariant::SelectAll(
+          Box::new(wildcart),
+        )
+      )
+    )
+  },
+}
