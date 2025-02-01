@@ -1,0 +1,62 @@
+As: AsTerm = {
+  <start: @L> "as" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    AsTerm::new(location)
+  },
+}
+
+OpenRoundBracket: OpenRoundBracketTerm = {
+  <start: @L> "(" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    OpenRoundBracketTerm::new(location)
+  },
+}
+
+CloseRoundBracket : CloseRoundBracketTerm = {
+  <start: @L> ")" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    CloseRoundBracketTerm::new(location)
+  },
+}
+
+OpenCurlyBrace: OpenCurlyBraceTerm = {
+  <start: @L> "{" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    OpenCurlyBraceTerm::new(location)
+  },
+}
+
+CloseCurlyBrace: CloseCurlyBraceTerm = {
+  <start: @L> "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    CloseCurlyBraceTerm::new(location)
+  },
+}
+
+Comma: CommaTerm = {
+  <start: @L> "," <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    CommaTerm::new(location)
+  },
+}
+
+Dot: DotTerm = {
+  <start: @L> "." <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    DotTerm::new(location)
+  },
+}
+
+Semicolumn: SemicolumnTerm = {
+  <start: @L> ";" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SemicolumnTerm::new(location)
+  },
+}
+
+Wildcart: WildcartTerm = {
+  <start: @L> "*" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    WildcartTerm::new(location)
+  },
+}
