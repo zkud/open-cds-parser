@@ -1,0 +1,8 @@
+Action: ActionTerm = {
+  "action" <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> ";" => {
+    ActionTerm::new(Box::new(name), Box::new(open_bracket), params, Box::new(close_bracket), None)
+  },
+  "action" <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> "returns" <returns:Returns> ";" => {
+    ActionTerm::new(Box::new(name), Box::new(open_bracket), params, Box::new(close_bracket), Some(Box::new(returns)))
+  }
+};

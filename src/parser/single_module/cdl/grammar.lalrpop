@@ -154,15 +154,6 @@ Field: FieldTerm = {
   <name:Name> ":" <type_name:Name> ";" => FieldTerm::new(Box::new(name), Box::new(type_name))
 }
 
-Action: ActionTerm = {
-  "action" <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> ";" => {
-    ActionTerm::new(Box::new(name), params, None)
-  },
-  "action" <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> "returns" <returns:Returns> ";" => {
-    ActionTerm::new(Box::new(name), params, Some(Box::new(returns)))
-  }
-};
-
 Function: FunctionTerm = {
   "function" <name:Name> <open_bracket:OpenRoundBracket> <close_bracket:CloseRoundBracket> "returns" <returns:Returns> ";" => {
     FunctionTerm::new(Box::new(name), Vec::new(), Box::new(returns))
