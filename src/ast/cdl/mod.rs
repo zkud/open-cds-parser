@@ -1,4 +1,4 @@
-mod action_declaration_term;
+mod actions_and_functions;
 mod entity_term;
 mod field_term;
 mod from_term;
@@ -11,7 +11,7 @@ mod returns_term;
 mod service_term;
 mod type_term;
 
-pub use action_declaration_term::*;
+pub use actions_and_functions::*;
 pub use entity_term::*;
 pub use field_term::*;
 pub use from_term::*;

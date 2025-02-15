@@ -1,10 +1,10 @@
 use crate::ast::*;
 
-use super::action_declaration_term::ActionDeclarationTerm;
 use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;
 use super::type_term::TypeTerm;
+use super::ActionDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]

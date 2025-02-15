@@ -1,12 +1,18 @@
-use super::super::CloseRoundBracketTerm;
-use super::super::OpenRoundBracketTerm;
-use super::name_term::NameTerm;
-use super::param_term::ParamTerm;
-use super::returns_term::ReturnsTerm;
+use crate::ast::Location;
+
+use super::super::super::CloseRoundBracketTerm;
+use super::super::super::OpenRoundBracketTerm;
+use super::super::NameTerm;
+use super::super::ParamTerm;
+use super::super::ReturnsTerm;
+use super::ActionTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ActionDeclarationTerm {
+    location: Location,
+    #[subnode_prop]
+    action: Box<ActionTerm>,
     #[subnode_prop]
     name: Box<NameTerm>,
     #[subnode_prop]

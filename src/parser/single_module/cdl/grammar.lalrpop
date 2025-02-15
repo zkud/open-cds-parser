@@ -154,38 +154,6 @@ Field: FieldTerm = {
   <name:Name> ":" <type_name:Name> ";" => FieldTerm::new(Box::new(name), Box::new(type_name))
 }
 
-Function: FunctionTerm = {
-  "function" <name:Name> <open_bracket:OpenRoundBracket> <close_bracket:CloseRoundBracket> "returns" <returns:Returns> ";" => {
-    FunctionTerm::new(Box::new(name), Vec::new(), Box::new(returns))
-  },
-  "function" <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> "returns" <returns:Returns> ";" => {
-    FunctionTerm::new(Box::new(name), params, Box::new(returns))
-  }
-};
-
-Returns: ReturnsTerm = {
-  <name:Name> => ReturnsTerm::new_scalar(Box::new(name)),
-  "array" "of" <name:Name> => ReturnsTerm::new_arrayed(Box::new(name)),
-}
-
-Params: Vec<ParamTerm> = {
-  <param:Param> => {
-    let mut params: Vec<ParamTerm> = Vec::new();
-    params.push(param);
-    params
-  },
-  <params:Params> <param:Param> => {
-    let mut new_params: Vec<ParamTerm> = Vec::new();
-    new_params.extend(params);
-    new_params.push(param);
-    new_params
-  },
-}
-
-Param: ParamTerm = {
-  <name:Name> ":" <type_name:Name> => ParamTerm::new(Box::new(name), Box::new(type_name))
-}
-
 Type: TypeTerm = {
   "define" "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
     TypeTerm::new(Box::new(name), Box::new(resolved_type_name))
