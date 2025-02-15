@@ -1,8 +1,8 @@
+use super::super::CloseRoundBracketTerm;
+use super::super::OpenRoundBracketTerm;
 use super::name_term::NameTerm;
 use super::param_term::ParamTerm;
 use super::returns_term::ReturnsTerm;
-use super::super::OpenRoundBracketTerm;
-use super::super::CloseRoundBracketTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]

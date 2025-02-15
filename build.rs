@@ -4,17 +4,16 @@ use std::io::Write;
 use std::{env, fs, path::Path};
 
 fn main() {
-    let out_dir = env::var("OUT_DIR")
-        .expect("Failed to get OUT_DIR environment variable");
-    let dest_dir_path = Path::new(&out_dir)
-        .join("parser/single_module/");
+    let out_dir = env::var("OUT_DIR").expect("Failed to get OUT_DIR environment variable");
+    let dest_dir_path = Path::new(&out_dir).join("parser/single_module/");
     let dest_path = dest_dir_path.join("cds.lalrpop");
     let src_dir = Path::new("src");
 
     create_dest_dir(&dest_dir_path);
     create_concatenated_file(&dest_path, &src_dir);
     lalrpop::Configuration::new()
-        .process_file(&dest_path).unwrap();
+        .process_file(&dest_path)
+        .unwrap();
     print_completion_message(&dest_path);
 }
 
@@ -27,8 +26,7 @@ fn create_concatenated_file(dest_path: &Path, src_dir: &Path) {
         fs::File::create(dest_path).expect("Failed to create cds.lalrpop file");
 
     // Process the header.lalrpop file first
-    let header_path = src_dir
-        .join("./parser/single_module/header.lalrpop");
+    let header_path = src_dir.join("./parser/single_module/header.lalrpop");
     if header_path.exists() {
         let header_contents = read_file_contents(&header_path);
         write_to_concatenated_file(&mut concatenated_file, &header_contents);
