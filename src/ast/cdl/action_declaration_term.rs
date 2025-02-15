@@ -6,7 +6,7 @@ use super::returns_term::ReturnsTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct ActionTerm {
+pub struct ActionDeclarationTerm {
     #[subnode_prop]
     name: Box<NameTerm>,
     #[subnode_prop]

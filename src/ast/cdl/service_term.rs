@@ -1,6 +1,6 @@
 use crate::ast::*;
 
-use super::action_term::ActionTerm;
+use super::action_declaration_term::ActionDeclarationTerm;
 use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;
@@ -19,7 +19,7 @@ pub struct ServiceTerm {
 pub enum ServiceDefinition {
     Entity(EntityTerm),
     Function(FunctionTerm),
-    Action(ActionTerm),
+    Action(ActionDeclarationTerm),
     Type(TypeTerm),
 }
 
