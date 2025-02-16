@@ -2,6 +2,7 @@ use crate::ast::Location;
 
 use super::super::super::CloseRoundBracketTerm;
 use super::super::super::OpenRoundBracketTerm;
+use super::super::super::SemicolumnTerm;
 use super::super::NameTerm;
 use super::super::ParamTerm;
 use super::super::ReturnsTerm;
@@ -23,4 +24,6 @@ pub struct ActionDeclarationTerm {
     close_bracket: Box<CloseRoundBracketTerm>,
     #[subnode_prop]
     returned_type: Option<Box<ReturnsTerm>>,
+    #[subnode_prop]
+    semicolumn: Box<SemicolumnTerm>,
 }
