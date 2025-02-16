@@ -3,8 +3,8 @@ use crate::ast::*;
 use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;
-use super::TypeTerm;
 use super::ActionDeclarationTerm;
+use super::TypeTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
