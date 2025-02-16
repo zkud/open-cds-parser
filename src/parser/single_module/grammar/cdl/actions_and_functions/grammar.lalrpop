@@ -52,9 +52,9 @@ Param: ParamTerm = {
   <name:Name> ":" <type_name:Name> => ParamTerm::new(Box::new(name), Box::new(type_name))
 }
 
-Returns: ReturnsTerm = {
-  <name:Name> => ReturnsTerm::new_scalar(Box::new(name)),
-  "array" "of" <name:Name> => ReturnsTerm::new_arrayed(Box::new(name)),
+Returns: ReturnsDeclarationTerm = {
+  <name:Name> => ReturnsDeclarationTerm::new_scalar(Box::new(name)),
+  "array" "of" <name:Name> => ReturnsDeclarationTerm::new_arrayed(Box::new(name)),
 }
 
 Function: FunctionTerm = {

@@ -2,23 +2,23 @@ use super::super::name_term::NameTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct ReturnsTerm {
+pub struct ReturnsDeclarationTerm {
     #[subnode_prop]
     type_name: Box<NameTerm>,
     #[prop]
     is_arrayed: bool,
 }
 
-impl ReturnsTerm {
-    pub fn new_scalar(type_name: Box<NameTerm>) -> ReturnsTerm {
-        ReturnsTerm {
+impl ReturnsDeclarationTerm {
+    pub fn new_scalar(type_name: Box<NameTerm>) -> ReturnsDeclarationTerm {
+        ReturnsDeclarationTerm {
             type_name,
             is_arrayed: false,
         }
     }
 
-    pub fn new_arrayed(type_name: Box<NameTerm>) -> ReturnsTerm {
-        ReturnsTerm {
+    pub fn new_arrayed(type_name: Box<NameTerm>) -> ReturnsDeclarationTerm {
+        ReturnsDeclarationTerm {
             type_name,
             is_arrayed: true,
         }
