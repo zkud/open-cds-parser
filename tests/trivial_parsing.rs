@@ -2,7 +2,7 @@ use std::path::Path;
 
 use open_cds_parser::ast::{
     EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
-    ReturnsDeclarationTerm, ServiceDefinition, ServiceTerm,
+    ServiceDefinition, ServiceTerm, TypeReferenceTerm,
 };
 use open_cds_parser::parser::Parser;
 
@@ -34,7 +34,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                 ServiceDefinition::Function(FunctionTerm::new(
                     Box::new(NameTerm::new("getUserScopesCount".to_string())),
                     vec![],
-                    Box::new(ReturnsDeclarationTerm::new_scalar(Box::new(NameTerm::new(
+                    Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
                         "Integer".to_string(),
                     )))),
                 )),

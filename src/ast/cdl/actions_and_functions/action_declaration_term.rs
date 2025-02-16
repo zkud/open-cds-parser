@@ -5,12 +5,13 @@ use super::super::super::OpenRoundBracketTerm;
 use super::super::super::SemicolumnTerm;
 use super::super::NameTerm;
 use super::super::ParamTerm;
-use super::super::TypeReferenceTerm;
+use super::super::ReturnsDeclarationTerm;
 use super::ActionTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ActionDeclarationTerm {
+    #[prop]
     location: Location,
     #[subnode_prop]
     action: Box<ActionTerm>,
@@ -23,7 +24,7 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     close_bracket: Box<CloseRoundBracketTerm>,
     #[subnode_prop]
-    returned_type: Option<Box<TypeReferenceTerm>>,
+    returned_type: Option<Box<ReturnsDeclarationTerm>>,
     #[subnode_prop]
     semicolumn: Box<SemicolumnTerm>,
 }

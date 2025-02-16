@@ -6,6 +6,7 @@ use ast_term_derive::ASTTerm;
 pub struct TypeReferenceTerm {
     #[subnode_prop]
     type_name: Box<NameTerm>,
+    #[prop]
     is_arrayed: bool,
 }
 

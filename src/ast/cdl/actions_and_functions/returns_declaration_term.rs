@@ -1,26 +1,13 @@
-use super::super::name_term::NameTerm;
+use super::super::ReturnsTerm;
+use super::super::TypeReferenceTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ReturnsDeclarationTerm {
-    #[subnode_prop]
-    type_name: Box<NameTerm>,
     #[prop]
-    is_arrayed: bool,
-}
-
-impl ReturnsDeclarationTerm {
-    pub fn new_scalar(type_name: Box<NameTerm>) -> ReturnsDeclarationTerm {
-        ReturnsDeclarationTerm {
-            type_name,
-            is_arrayed: false,
-        }
-    }
-
-    pub fn new_arrayed(type_name: Box<NameTerm>) -> ReturnsDeclarationTerm {
-        ReturnsDeclarationTerm {
-            type_name,
-            is_arrayed: true,
-        }
-    }
+    location: Location,
+    #[subnode_prop]
+    returns: Box<ReturnsTerm>,
+    #[subnode_prop]
+    type_reference: Box<TypeReferenceTerm>,
 }
