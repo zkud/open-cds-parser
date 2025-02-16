@@ -1,8 +1,8 @@
-Type: TypeTerm = {
+TypeDeclaration: TypeDeclarationTerm = {
   "define" "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
-    TypeTerm::new(Box::new(name), Box::new(resolved_type_name))
+    TypeDeclarationTerm::new(Box::new(name), Box::new(resolved_type_name))
   },
   "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
-    TypeTerm::new(Box::new(name), Box::new(resolved_type_name))
+    TypeDeclarationTerm::new(Box::new(name), Box::new(resolved_type_name))
   }
 }

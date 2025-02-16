@@ -3,7 +3,7 @@ use crate::ast::*;
 use super::super::import::ImportTerm;
 use super::entity_term::EntityTerm;
 use super::service_term::ServiceTerm;
-use super::TypeTerm;
+use super::TypeDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
@@ -15,7 +15,7 @@ pub struct ModuleTerm {
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ModuleDefinition {
     Entity(EntityTerm),
-    Type(TypeTerm),
+    Type(TypeDeclarationTerm),
     Service(ServiceTerm),
     Import(ImportTerm),
 }

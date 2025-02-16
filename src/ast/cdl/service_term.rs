@@ -4,7 +4,7 @@ use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;
 use super::ActionDeclarationTerm;
-use super::TypeTerm;
+use super::TypeDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
@@ -20,7 +20,7 @@ pub enum ServiceDefinition {
     Entity(EntityTerm),
     Function(FunctionTerm),
     Action(ActionDeclarationTerm),
-    Type(TypeTerm),
+    Type(TypeDeclarationTerm),
 }
 
 impl Visitable for ServiceDefinition {

@@ -2,7 +2,7 @@ use super::super::NameTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct TypeTerm {
+pub struct TypeDeclarationTerm {
     #[subnode_prop]
     name: Box<NameTerm>,
     #[subnode_prop]
