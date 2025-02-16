@@ -5,7 +5,7 @@ use super::super::super::OpenRoundBracketTerm;
 use super::super::super::SemicolumnTerm;
 use super::super::NameTerm;
 use super::super::ParamTerm;
-use super::super::ReturnsTerm;
+use super::super::TypeReferenceTerm;
 use super::ActionTerm;
 use ast_term_derive::ASTTerm;
 
@@ -23,7 +23,7 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     close_bracket: Box<CloseRoundBracketTerm>,
     #[subnode_prop]
-    returned_type: Option<Box<ReturnsTerm>>,
+    returned_type: Option<Box<TypeReferenceTerm>>,
     #[subnode_prop]
     semicolumn: Box<SemicolumnTerm>,
 }

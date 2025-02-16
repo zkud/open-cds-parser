@@ -12,7 +12,7 @@ ActionDeclaration: ActionDeclarationTerm = {
       Box::new(semicolumn)
     )
   },
-  <start: @L> <action:Action> <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> "returns" <returns:Returns> <semicolumn: Semicolumn> <end: @R> => {
+  <start: @L> <action:Action> <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> "returns" <type_reference: TypeReference> <semicolumn: Semicolumn> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ActionDeclarationTerm::new(
       location,
@@ -21,7 +21,7 @@ ActionDeclaration: ActionDeclarationTerm = {
       Box::new(open_bracket),
       params,
       Box::new(close_bracket),
-      Some(Box::new(returns)),
+      Some(Box::new(type_reference)),
       Box::new(semicolumn)
     )
   }

@@ -1,6 +1,6 @@
-use super::name_term::NameTerm;
-use super::param_term::ParamTerm;
-use super::returns_term::ReturnsTerm;
+use super::super::NameTerm;
+use super::super::ParamTerm;
+use super::super::ReturnsTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
