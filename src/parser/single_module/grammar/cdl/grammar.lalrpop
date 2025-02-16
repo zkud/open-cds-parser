@@ -154,15 +154,6 @@ Field: FieldTerm = {
   <name:Name> ":" <type_name:Name> ";" => FieldTerm::new(Box::new(name), Box::new(type_name))
 }
 
-Type: TypeTerm = {
-  "define" "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
-    TypeTerm::new(Box::new(name), Box::new(resolved_type_name))
-  },
-  "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
-    TypeTerm::new(Box::new(name), Box::new(resolved_type_name))
-  }
-}
-
 From: FromTerm = {
   "from" => FromTerm::new(),
 }

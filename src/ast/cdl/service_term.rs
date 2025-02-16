@@ -3,7 +3,7 @@ use crate::ast::*;
 use super::entity_term::EntityTerm;
 use super::function_term::FunctionTerm;
 use super::name_term::NameTerm;
-use super::type_term::TypeTerm;
+use super::TypeTerm;
 use super::ActionDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
