@@ -1,26 +1,22 @@
 ActionDeclaration: ActionDeclarationTerm = {
-  <start: @L> <action:Action> <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> <semicolumn: Semicolumn> <end: @R> => {
+  <start: @L> <action:Action> <name:Name> <parameters:ParametersBlock> <semicolumn: Semicolumn> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ActionDeclarationTerm::new(
       location,
       Box::new(action),
       Box::new(name),
-      Box::new(open_bracket),
-      params,
-      Box::new(close_bracket), 
+      Box::new(parameters),
       None,
       Box::new(semicolumn)
     )
   },
-  <start: @L> <action:Action> <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> <returns_declaration: ReturnsDeclaration> <semicolumn: Semicolumn> <end: @R> => {
+  <start: @L> <action:Action> <name:Name> <parameters:ParametersBlock> <returns_declaration: ReturnsDeclaration> <semicolumn: Semicolumn> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ActionDeclarationTerm::new(
       location,
       Box::new(action),
       Box::new(name),
-      Box::new(open_bracket),
-      params,
-      Box::new(close_bracket),
+      Box::new(parameters),
       Some(Box::new(returns_declaration)),
       Box::new(semicolumn)
     )
@@ -34,17 +30,33 @@ Action: ActionTerm = {
   },
 }
 
-Params: Vec<ParamTerm> = {
-  <param:Param> => {
-    let mut params: Vec<ParamTerm> = Vec::new();
-    params.push(param);
-    params
+ParametersBlock: ParametersBlockTerm = {
+  <start: @L> <open_bracket:OpenRoundBracket> <parameters_and_commas:ParametersAndCommas> <close_bracket:CloseRoundBracket> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ParametersBlockTerm::new(
+      location,
+      Box::new(open_bracket),
+      parameters_and_commas,
+      Box::new(close_bracket)
+    )
   },
-  <params:Params> <param:Param> => {
-    let mut new_params: Vec<ParamTerm> = Vec::new();
-    new_params.extend(params);
-    new_params.push(param);
+}
+
+ParametersAndCommas: Vec<ParameterOrComma> = {
+  <parameters_and_commas:ParametersAndCommas> <comma: Comma> <param:Param> => {
+    let mut new_params: Vec<ParameterOrComma> = Vec::new();
+    new_params.extend(parameters_and_commas);
+    new_params.push(ParameterOrComma::Comma(comma));
+    new_params.push(ParameterOrComma::Parameter(param));
     new_params
+  },
+  <param:Param?> => match param {
+    None => vec![],
+    Some(param) => {
+      let mut params: Vec<ParameterOrComma> = Vec::new();
+      params.push(ParameterOrComma::Parameter(param));
+      params
+    }
   },
 }
 
@@ -79,19 +91,11 @@ Returns: ReturnsTerm = {
 }
 
 FunctionDeclaration: FunctionDeclarationTerm = {
-  <function:Function> <name:Name> <open_bracket:OpenRoundBracket> <close_bracket:CloseRoundBracket> "returns" <returns:TypeReference> ";" => {
+  <function:Function> <name:Name> <parameters:ParametersBlock> "returns" <returns:TypeReference> ";" => {
     FunctionDeclarationTerm::new(
       Box::new(function),
       Box::new(name),
-      Vec::new(),
-      Box::new(returns)
-    )
-  },
-  <function:Function> <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> "returns" <returns:TypeReference> ";" => {
-    FunctionDeclarationTerm::new(
-      Box::new(function),
-      Box::new(name),
-      params,
+      Box::new(parameters),
       Box::new(returns)
     )
   }

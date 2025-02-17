@@ -1,6 +1,6 @@
 use super::super::FunctionTerm;
 use super::super::NameTerm;
-use super::super::ParamTerm;
+use super::super::ParametersBlockTerm;
 use super::super::TypeReferenceTerm;
 use ast_term_derive::ASTTerm;
 
@@ -11,7 +11,7 @@ pub struct FunctionDeclarationTerm {
     #[subnode_prop]
     name: Box<NameTerm>,
     #[subnode_prop]
-    params: Vec<ParamTerm>,
+    parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]
     returned_type: Box<TypeReferenceTerm>,
 }

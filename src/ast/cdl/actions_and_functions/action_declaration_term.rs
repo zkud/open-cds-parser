@@ -1,12 +1,10 @@
 use crate::ast::Location;
 
-use super::super::super::CloseRoundBracketTerm;
-use super::super::super::OpenRoundBracketTerm;
 use super::super::super::SemicolumnTerm;
 use super::super::NameTerm;
-use super::super::ParamTerm;
 use super::super::ReturnsDeclarationTerm;
 use super::ActionTerm;
+use super::ParametersBlockTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
@@ -18,11 +16,7 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     name: Box<NameTerm>,
     #[subnode_prop]
-    open_bracket: Box<OpenRoundBracketTerm>,
-    #[subnode_prop]
-    params: Vec<ParamTerm>,
-    #[subnode_prop]
-    close_bracket: Box<CloseRoundBracketTerm>,
+    parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]
     returned_type: Option<Box<ReturnsDeclarationTerm>>,
     #[subnode_prop]
