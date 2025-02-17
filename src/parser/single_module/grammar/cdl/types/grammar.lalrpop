@@ -1,0 +1,20 @@
+TypeDeclaration: TypeDeclarationTerm = {
+  "define" "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
+    TypeDeclarationTerm::new(Box::new(name), Box::new(resolved_type_name))
+  },
+  "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
+    TypeDeclarationTerm::new(Box::new(name), Box::new(resolved_type_name))
+  }
+}
+
+TypeReference: TypeReferenceTerm = {
+  <name:Name> => {
+    TypeReferenceTerm::new_scalar(Box::new(name))
+  },
+  "array" "of" <name:Name> => {
+    TypeReferenceTerm::new_arrayed(Box::new(name))
+  },
+  "many" <name:Name> => {
+    TypeReferenceTerm::new_arrayed(Box::new(name))
+  },
+}
