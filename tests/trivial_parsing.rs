@@ -1,8 +1,8 @@
 use std::path::Path;
 
 use open_cds_parser::ast::{
-    EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm,
-    ServiceDefinition, ServiceTerm, TypeReferenceTerm,
+    EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm, ServiceDefinition,
+    ServiceTerm, TypeReferenceTerm,
 };
 use open_cds_parser::parser::Parser;
 

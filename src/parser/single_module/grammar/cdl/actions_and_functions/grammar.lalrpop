@@ -49,7 +49,7 @@ Params: Vec<ParamTerm> = {
 }
 
 Param: ParamTerm = {
-  <name:Name> ":" <type_name:Name> => ParamTerm::new(Box::new(name), Box::new(type_name))
+  <name:Name> ":" <type_reference:TypeReference> => ParamTerm::new(Box::new(name), Box::new(type_reference))
 }
 
 ReturnsDeclaration: ReturnsDeclarationTerm = {
