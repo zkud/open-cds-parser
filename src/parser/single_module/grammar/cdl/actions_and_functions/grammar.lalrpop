@@ -78,11 +78,11 @@ Returns: ReturnsTerm = {
   },
 }
 
-Function: FunctionTerm = {
+FunctionDeclaration: FunctionDeclarationTerm = {
   "function" <name:Name> <open_bracket:OpenRoundBracket> <close_bracket:CloseRoundBracket> "returns" <returns:TypeReference> ";" => {
-    FunctionTerm::new(Box::new(name), Vec::new(), Box::new(returns))
+    FunctionDeclarationTerm::new(Box::new(name), Vec::new(), Box::new(returns))
   },
   "function" <name:Name> <open_bracket:OpenRoundBracket> <params:Params> <close_bracket:CloseRoundBracket> "returns" <returns:TypeReference> ";" => {
-    FunctionTerm::new(Box::new(name), params, Box::new(returns))
+    FunctionDeclarationTerm::new(Box::new(name), params, Box::new(returns))
   }
 };

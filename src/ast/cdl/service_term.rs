@@ -3,7 +3,7 @@ use crate::ast::*;
 use super::entity_term::EntityTerm;
 use super::name_term::NameTerm;
 use super::ActionDeclarationTerm;
-use super::FunctionTerm;
+use super::FunctionDeclarationTerm;
 use super::TypeDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
@@ -18,7 +18,7 @@ pub struct ServiceTerm {
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ServiceDefinition {
     Entity(EntityTerm),
-    Function(FunctionTerm),
+    Function(FunctionDeclarationTerm),
     Action(ActionDeclarationTerm),
     Type(TypeDeclarationTerm),
 }

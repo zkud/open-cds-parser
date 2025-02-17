@@ -71,7 +71,7 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
     definitions.push(ServiceDefinition::Action(action));
     definitions
   },
-  <function:Function> => {
+  <function:FunctionDeclaration> => {
     let mut definitions: Vec<ServiceDefinition> = Vec::new();
     definitions.push(ServiceDefinition::Function(function));
     definitions
@@ -93,7 +93,7 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
     new_definitions.push(ServiceDefinition::Action(action));
     new_definitions
   },
-  <definitions:ServiceDefinitions> <function:Function> => {
+  <definitions:ServiceDefinitions> <function:FunctionDeclaration> => {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
     new_definitions.push(ServiceDefinition::Function(function));

@@ -4,7 +4,7 @@ use super::super::TypeReferenceTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct FunctionTerm {
+pub struct FunctionDeclarationTerm {
     #[subnode_prop]
     name: Box<NameTerm>,
     #[subnode_prop]
