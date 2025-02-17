@@ -49,7 +49,15 @@ Params: Vec<ParamTerm> = {
 }
 
 Param: ParamTerm = {
-  <name:Name> ":" <type_reference:TypeReference> => ParamTerm::new(Box::new(name), Box::new(type_reference))
+  <start: @L> <name:Name> <colon:Colon> <type_reference:TypeReference> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ParamTerm::new(
+      location,
+      Box::new(name),
+      Box::new(colon),
+      Box::new(type_reference)
+    )
+  }
 }
 
 ReturnsDeclaration: ReturnsDeclarationTerm = {
