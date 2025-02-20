@@ -29,13 +29,13 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                     ],
                 )),
                 ServiceDefinition::Function(FunctionDeclarationTerm::new(
-                    Box::new(FunctionTerm::new(Location::new(100, 108, path))),
+                    Box::new(FunctionTerm::new(Location::new(106, 114, path))),
                     Box::new(NameTerm::new("getUserScopesCount".to_string())),
                     Box::new(ParametersBlockTerm::new(
-                        Location::new(127, 129, path),
-                        Box::new(OpenRoundBracketTerm::new(Location::new(127, 128, path))),
+                        Location::new(133, 135, path),
+                        Box::new(OpenRoundBracketTerm::new(Location::new(133, 134, path))),
                         vec![],
-                        Box::new(CloseRoundBracketTerm::new(Location::new(128, 129, path))),
+                        Box::new(CloseRoundBracketTerm::new(Location::new(134, 135, path))),
                     )),
                     Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
                         "Integer".to_string(),

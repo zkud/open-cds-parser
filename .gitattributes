@@ -1,2 +1,2 @@
 # To be compatible with Windows
-* text eol=crlf
+**/*.cds text eol=crlf
