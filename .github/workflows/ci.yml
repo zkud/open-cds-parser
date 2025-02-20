@@ -69,7 +69,7 @@ jobs:
     name: Code Coverage
     runs-on: ubuntu-latest
     container:
-      image: xd009642/tarpaulin:develop
+      image: xd009642/tarpaulin:0.31.5
       options: --security-opt seccomp=unconfined
     steps:
       - name: Checkout repository
