@@ -18,7 +18,7 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]
-    returned_type: Option<Box<ReturnsDeclarationTerm>>,
+    returns: Option<Box<ReturnsDeclarationTerm>>,
     #[subnode_prop]
     semicolumn: Box<SemicolumnTerm>,
 }

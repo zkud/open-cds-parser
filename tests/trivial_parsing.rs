@@ -29,6 +29,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                     ],
                 )),
                 ServiceDefinition::Function(FunctionDeclarationTerm::new(
+                    Location::new(106, 152, path),
                     Box::new(FunctionTerm::new(Location::new(106, 114, path))),
                     Box::new(NameTerm::new("getUserScopesCount".to_string())),
                     Box::new(ParametersBlockTerm::new(
@@ -37,9 +38,14 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                         vec![],
                         Box::new(CloseRoundBracketTerm::new(Location::new(134, 135, path))),
                     )),
-                    Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
-                        "Integer".to_string(),
-                    )))),
+                    Box::new(ReturnsDeclarationTerm::new(
+                        Location::new(136, 151, path),
+                        Box::new(ReturnsTerm::new(Location::new(136, 143, path))),
+                        Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
+                            "Integer".to_string(),
+                        )))),
+                    )),
+                    Box::new(SemicolumnTerm::new(Location::new(151, 152, path))),
                 )),
             ],
         ),

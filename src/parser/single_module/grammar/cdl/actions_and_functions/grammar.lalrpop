@@ -91,12 +91,15 @@ Returns: ReturnsTerm = {
 }
 
 FunctionDeclaration: FunctionDeclarationTerm = {
-  <function:Function> <name:Name> <parameters:ParametersBlock> "returns" <returns:TypeReference> ";" => {
+  <start: @L> <function:Function> <name:Name> <parameters:ParametersBlock> <returns_declaration:ReturnsDeclaration> <semicolumn:Semicolumn> <end: @R> => {
+    let location = Location::new(start, end, filepath);
     FunctionDeclarationTerm::new(
+      location,
       Box::new(function),
       Box::new(name),
       Box::new(parameters),
-      Box::new(returns)
+      Box::new(returns_declaration),
+      Box::new(semicolumn)
     )
   }
 };

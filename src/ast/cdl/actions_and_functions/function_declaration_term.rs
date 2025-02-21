@@ -1,11 +1,15 @@
+use super::super::super::SemicolumnTerm;
 use super::super::FunctionTerm;
 use super::super::NameTerm;
 use super::super::ParametersBlockTerm;
-use super::super::TypeReferenceTerm;
+use super::super::ReturnsDeclarationTerm;
+use crate::ast::Location;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct FunctionDeclarationTerm {
+    #[prop]
+    location: Location,
     #[subnode_prop]
     function: Box<FunctionTerm>,
     #[subnode_prop]
@@ -13,5 +17,7 @@ pub struct FunctionDeclarationTerm {
     #[subnode_prop]
     parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]
-    returned_type: Box<TypeReferenceTerm>,
+    returns: Box<ReturnsDeclarationTerm>,
+    #[subnode_prop]
+    semicolumn: Box<SemicolumnTerm>,
 }
