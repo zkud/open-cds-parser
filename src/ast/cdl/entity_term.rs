@@ -1,5 +1,5 @@
 use super::field_term::FieldTerm;
-use super::name_term::NameTerm;
+use super::NameTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]

@@ -1,9 +1,9 @@
 use crate::ast::*;
 
 use super::entity_term::EntityTerm;
-use super::name_term::NameTerm;
 use super::ActionDeclarationTerm;
 use super::FunctionDeclarationTerm;
+use super::NameTerm;
 use super::TypeDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
