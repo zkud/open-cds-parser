@@ -201,3 +201,45 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
         ))),
     )
 }
+
+#[test]
+fn with_action_with_no_params_it_parses() {
+    let source = "
+        service Example {
+            action example();
+        }
+    ";
+
+    let result = parse_single_file(&source);
+
+    expect_action_to_be(result, build_basic_action_with_no_args());
+}
+
+#[inline]
+fn build_basic_action_with_no_args() -> ActionDeclarationTerm {
+    ActionDeclarationTerm::new(
+        Location::new(39, 56, &get_import_path()),
+        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(NameTerm::new("example".to_string())),
+        Box::new(ParametersBlockTerm::new(
+            Location::new(53, 55, &get_import_path()),
+            Box::new(OpenRoundBracketTerm::new(Location::new(
+                53,
+                54,
+                &get_import_path(),
+            ))),
+            vec![],
+            Box::new(CloseRoundBracketTerm::new(Location::new(
+                54,
+                55,
+                &get_import_path(),
+            ))),
+        )),
+        None,
+        Box::new(SemicolumnTerm::new(Location::new(
+            55,
+            56,
+            &get_import_path(),
+        ))),
+    )
+}
