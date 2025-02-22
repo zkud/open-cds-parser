@@ -306,3 +306,67 @@ fn expect_function_to_be(
         ))])
     );
 }
+
+#[test]
+fn with_function_without_returns_it_fails() {
+    let source = "
+        service Example {
+            function example();
+        }
+    ";
+
+    let result = parse_single_file(&source);
+
+    assert!(result.is_err());
+}
+
+struct ParamCaptureVisitor {
+    params: Vec<(String, String)>,
+    comma_count: i32,
+}
+
+impl Visitor for ParamCaptureVisitor {
+    type Error = ();
+
+    fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), Self::Error> {
+        if let Some(term) = term.try_convert::<ParamTerm>() {
+            let name = term.name().value();
+            let param_type = term.type_reference().type_name().value();
+            self.params.push((name.clone(), param_type.clone()));
+        }
+        if let Some(_) = term.try_convert::<CommaTerm>() {
+            if self.params.is_empty() {
+                panic!("Unexpected comma order!!!");
+            }
+            self.comma_count += 1;
+        }
+        Ok(())
+    }
+}
+
+#[test]
+fn with_visiting_it_visits_correctly() {
+    let source = "
+        service Example {
+            function example(param1: Type1, param2: Type2) returns Example;
+        }
+    ";
+    let mut visitor = ParamCaptureVisitor {
+        params: vec![],
+        comma_count: 0,
+    };
+
+    let result = parse_single_file(&source);
+    result
+        .expect("Expected success")
+        .accept(&mut visitor)
+        .expect("Expected success");
+
+    assert_eq!(
+        visitor.params,
+        vec![
+            ("param1".to_string(), "Type1".to_string()),
+            ("param2".to_string(), "Type2".to_string())
+        ]
+    );
+}
