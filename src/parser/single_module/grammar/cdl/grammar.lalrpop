@@ -175,7 +175,3 @@ Path: PathTerm = {
     PathTerm::new(PathBuf::from(trimmed_value))
   },
 }
-
-Name: NameTerm = {
-  <value:r"[a-zA-Z0-9-]+"> => NameTerm::new(value.to_string())
-}
