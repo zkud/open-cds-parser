@@ -243,3 +243,66 @@ fn build_basic_action_with_no_args() -> ActionDeclarationTerm {
         ))),
     )
 }
+
+#[test]
+fn with_most_basic_function_it_parses() {
+    let source = "
+        service Example {
+            function example() returns Example;
+        }
+    ";
+
+    let result = parse_single_file(&source);
+
+    expect_function_to_be(result, build_the_most_simple_function());
+}
+
+#[inline]
+fn build_the_most_simple_function() -> FunctionDeclarationTerm {
+    FunctionDeclarationTerm::new(
+        Location::new(39, 74, &get_import_path()),
+        Box::new(FunctionTerm::new(Location::new(39, 47, &get_import_path()))),
+        Box::new(NameTerm::new("example".to_string())),
+        Box::new(ParametersBlockTerm::new(
+            Location::new(55, 57, &get_import_path()),
+            Box::new(OpenRoundBracketTerm::new(Location::new(
+                55,
+                56,
+                &get_import_path(),
+            ))),
+            vec![],
+            Box::new(CloseRoundBracketTerm::new(Location::new(
+                56,
+                57,
+                &get_import_path(),
+            ))),
+        )),
+        Box::new(ReturnsDeclarationTerm::new(
+            Location::new(58, 73, &get_import_path()),
+            Box::new(ReturnsTerm::new(Location::new(58, 65, &get_import_path()))),
+            Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
+                "Example".to_string(),
+            )))),
+        )),
+        Box::new(SemicolumnTerm::new(Location::new(
+            73,
+            74,
+            &get_import_path(),
+        ))),
+    )
+}
+
+#[inline]
+fn expect_function_to_be(
+    module_to_check: Result<Box<ModuleTerm>, ParseError>,
+    function: FunctionDeclarationTerm,
+) {
+    let module_to_check = module_to_check.expect("Unexpected Error");
+    assert_eq!(
+        module_to_check.deref(),
+        &ModuleTerm::new(vec![ModuleDefinition::Service(ServiceTerm::new(
+            Box::new(NameTerm::new("Example".to_string())),
+            vec![ServiceDefinition::Function(function)]
+        ))])
+    );
+}
