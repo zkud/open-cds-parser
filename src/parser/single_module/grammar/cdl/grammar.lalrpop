@@ -122,14 +122,14 @@ Entity: EntityTerm = {
   }
 }
 
-AspectNames: Vec<NameTerm> = {
+AspectNames: Vec<IdentifierTerm> = {
   <aspect_name:Name> => {
-    let mut aspect_names: Vec<NameTerm> = Vec::new();
+    let mut aspect_names: Vec<IdentifierTerm> = Vec::new();
     aspect_names.push(aspect_name);
     aspect_names
   },
   <aspect_names:AspectNames> "," <aspect_name:Name> => {
-    let mut new_aspect_names: Vec<NameTerm> = Vec::new();
+    let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
     new_aspect_names.extend(aspect_names);
     new_aspect_names.push(aspect_name);
     new_aspect_names

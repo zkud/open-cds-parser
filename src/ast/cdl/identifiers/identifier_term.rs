@@ -1,7 +1,7 @@
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct NameTerm {
+pub struct IdentifierTerm {
     #[prop]
     value: String,
 }

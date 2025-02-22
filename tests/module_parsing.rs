@@ -19,16 +19,16 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
     expected_ast.insert(
         schema_path,
         ModuleTerm::new(vec![ModuleDefinition::Entity(EntityTerm::new(
-            Box::new(NameTerm::new("Books".to_string())),
+            Box::new(IdentifierTerm::new("Books".to_string())),
             vec![],
             vec![
                 FieldTerm::new(
-                    Box::new(NameTerm::new("id".to_string())),
-                    Box::new(NameTerm::new("UUID".to_string())),
+                    Box::new(IdentifierTerm::new("id".to_string())),
+                    Box::new(IdentifierTerm::new("UUID".to_string())),
                 ),
                 FieldTerm::new(
-                    Box::new(NameTerm::new("name".to_string())),
-                    Box::new(NameTerm::new("String".to_string())),
+                    Box::new(IdentifierTerm::new("name".to_string())),
+                    Box::new(IdentifierTerm::new("String".to_string())),
                 ),
             ],
         ))]),
@@ -57,9 +57,9 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                                 11,
                                 &Path::new("./tests/projects/modules/srv/books.cds"),
                             ),
-                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
-                                "Books".to_string(),
-                            )))),
+                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                IdentifierTerm::new("Books".to_string()),
+                            ))),
                         )),
                         None,
                         None,
@@ -75,7 +75,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                 ))),
             )),
             ModuleDefinition::Service(ServiceTerm::new(
-                Box::new(NameTerm::new("BooksService".to_string())),
+                Box::new(IdentifierTerm::new("BooksService".to_string())),
                 vec![],
             )),
         ]),

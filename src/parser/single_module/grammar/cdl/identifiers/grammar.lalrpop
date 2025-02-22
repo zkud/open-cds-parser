@@ -1,3 +1,3 @@
-Name: NameTerm = {
-  <value:r"[a-zA-Z0-9-]+"> => NameTerm::new(value.to_string())
+Name: IdentifierTerm = {
+  <value:r"[a-zA-Z0-9-]+"> => IdentifierTerm::new(value.to_string())
 }

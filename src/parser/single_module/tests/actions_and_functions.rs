@@ -41,7 +41,7 @@ fn build_basic_action() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 70, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
-        Box::new(NameTerm::new("example".to_string())),
+        Box::new(IdentifierTerm::new("example".to_string())),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 69, &get_import_path()),
             Box::new(OpenRoundBracketTerm::new(Location::new(
@@ -51,11 +51,11 @@ fn build_basic_action() -> ActionDeclarationTerm {
             ))),
             vec![ParameterOrComma::Parameter(ParamTerm::new(
                 Location::new(54, 68, &get_import_path()),
-                Box::new(NameTerm::new("param".to_string())),
+                Box::new(IdentifierTerm::new("param".to_string())),
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
-                    "Example".to_string(),
-                )))),
+                Box::new(TypeReferenceTerm::new_scalar(Box::new(
+                    IdentifierTerm::new("Example".to_string()),
+                ))),
             ))],
             Box::new(CloseRoundBracketTerm::new(Location::new(
                 68,
@@ -81,7 +81,7 @@ fn expect_action_to_be(
     assert_eq!(
         module_to_check.deref(),
         &ModuleTerm::new(vec![ModuleDefinition::Service(ServiceTerm::new(
-            Box::new(NameTerm::new("Example".to_string())),
+            Box::new(IdentifierTerm::new("Example".to_string())),
             vec![ServiceDefinition::Action(action)]
         ))])
     );
@@ -105,7 +105,7 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 86, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
-        Box::new(NameTerm::new("example".to_string())),
+        Box::new(IdentifierTerm::new("example".to_string())),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 69, &get_import_path()),
             Box::new(OpenRoundBracketTerm::new(Location::new(
@@ -115,11 +115,11 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
             ))),
             vec![ParameterOrComma::Parameter(ParamTerm::new(
                 Location::new(54, 68, &get_import_path()),
-                Box::new(NameTerm::new("param".to_string())),
+                Box::new(IdentifierTerm::new("param".to_string())),
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
-                    "Example".to_string(),
-                )))),
+                Box::new(TypeReferenceTerm::new_scalar(Box::new(
+                    IdentifierTerm::new("Example".to_string()),
+                ))),
             ))],
             Box::new(CloseRoundBracketTerm::new(Location::new(
                 68,
@@ -130,9 +130,9 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
         Some(Box::new(ReturnsDeclarationTerm::new(
             Location::new(70, 85, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(70, 77, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
-                "Example".to_string(),
-            )))),
+            Box::new(TypeReferenceTerm::new_scalar(Box::new(
+                IdentifierTerm::new("Example".to_string()),
+            ))),
         ))),
         Box::new(SemicolumnTerm::new(Location::new(
             85,
@@ -160,7 +160,7 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 90, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
-        Box::new(NameTerm::new("example".to_string())),
+        Box::new(IdentifierTerm::new("example".to_string())),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 89, &get_import_path()),
             Box::new(OpenRoundBracketTerm::new(Location::new(
@@ -171,20 +171,20 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
             vec![
                 ParameterOrComma::Parameter(ParamTerm::new(
                     Location::new(54, 70, &get_import_path()),
-                    Box::new(NameTerm::new("param1".to_string())),
+                    Box::new(IdentifierTerm::new("param1".to_string())),
                     Box::new(ColonTerm::new(Location::new(60, 61, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
-                        "Example1".to_string(),
-                    )))),
+                    Box::new(TypeReferenceTerm::new_scalar(Box::new(
+                        IdentifierTerm::new("Example1".to_string()),
+                    ))),
                 )),
                 ParameterOrComma::Comma(CommaTerm::new(Location::new(70, 71, &get_import_path()))),
                 ParameterOrComma::Parameter(ParamTerm::new(
                     Location::new(72, 88, &get_import_path()),
-                    Box::new(NameTerm::new("param2".to_string())),
+                    Box::new(IdentifierTerm::new("param2".to_string())),
                     Box::new(ColonTerm::new(Location::new(78, 79, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
-                        "Example2".to_string(),
-                    )))),
+                    Box::new(TypeReferenceTerm::new_scalar(Box::new(
+                        IdentifierTerm::new("Example2".to_string()),
+                    ))),
                 )),
             ],
             Box::new(CloseRoundBracketTerm::new(Location::new(
@@ -220,7 +220,7 @@ fn build_basic_action_with_no_args() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 56, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
-        Box::new(NameTerm::new("example".to_string())),
+        Box::new(IdentifierTerm::new("example".to_string())),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 55, &get_import_path()),
             Box::new(OpenRoundBracketTerm::new(Location::new(
@@ -262,7 +262,7 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
     FunctionDeclarationTerm::new(
         Location::new(39, 74, &get_import_path()),
         Box::new(FunctionTerm::new(Location::new(39, 47, &get_import_path()))),
-        Box::new(NameTerm::new("example".to_string())),
+        Box::new(IdentifierTerm::new("example".to_string())),
         Box::new(ParametersBlockTerm::new(
             Location::new(55, 57, &get_import_path()),
             Box::new(OpenRoundBracketTerm::new(Location::new(
@@ -280,9 +280,9 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
         Box::new(ReturnsDeclarationTerm::new(
             Location::new(58, 73, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(58, 65, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
-                "Example".to_string(),
-            )))),
+            Box::new(TypeReferenceTerm::new_scalar(Box::new(
+                IdentifierTerm::new("Example".to_string()),
+            ))),
         )),
         Box::new(SemicolumnTerm::new(Location::new(
             73,
@@ -301,7 +301,7 @@ fn expect_function_to_be(
     assert_eq!(
         module_to_check.deref(),
         &ModuleTerm::new(vec![ModuleDefinition::Service(ServiceTerm::new(
-            Box::new(NameTerm::new("Example".to_string())),
+            Box::new(IdentifierTerm::new("Example".to_string())),
             vec![ServiceDefinition::Function(function)]
         ))])
     );

@@ -1,7 +1,7 @@
 use crate::ast::Location;
 
 use super::super::super::SemicolumnTerm;
-use super::super::NameTerm;
+use super::super::IdentifierTerm;
 use super::super::ReturnsDeclarationTerm;
 use super::ActionTerm;
 use super::ParametersBlockTerm;
@@ -14,7 +14,7 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     action: Box<ActionTerm>,
     #[subnode_prop]
-    name: Box<NameTerm>,
+    name: Box<IdentifierTerm>,
     #[subnode_prop]
     parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]

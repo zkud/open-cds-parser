@@ -1,6 +1,6 @@
 use super::super::super::SemicolumnTerm;
 use super::super::FunctionTerm;
-use super::super::NameTerm;
+use super::super::IdentifierTerm;
 use super::super::ParametersBlockTerm;
 use super::super::ReturnsDeclarationTerm;
 use crate::ast::Location;
@@ -13,7 +13,7 @@ pub struct FunctionDeclarationTerm {
     #[subnode_prop]
     function: Box<FunctionTerm>,
     #[subnode_prop]
-    name: Box<NameTerm>,
+    name: Box<IdentifierTerm>,
     #[subnode_prop]
     parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]

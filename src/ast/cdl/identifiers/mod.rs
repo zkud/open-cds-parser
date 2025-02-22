@@ -1,3 +1,3 @@
-mod name_term;
+mod identifier_term;
 
-pub use name_term::*;
+pub use identifier_term::*;
