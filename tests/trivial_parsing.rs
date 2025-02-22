@@ -1,9 +1,6 @@
 use std::path::Path;
 
-use open_cds_parser::ast::{
-    EntityTerm, FieldTerm, FunctionTerm, ModuleDefinition, ModuleTerm, NameTerm, ReturnsTerm,
-    ServiceDefinition, ServiceTerm,
-};
+use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
 
 #[test]
@@ -31,12 +28,24 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                         ),
                     ],
                 )),
-                ServiceDefinition::Function(FunctionTerm::new(
+                ServiceDefinition::Function(FunctionDeclarationTerm::new(
+                    Location::new(106, 152, path),
+                    Box::new(FunctionTerm::new(Location::new(106, 114, path))),
                     Box::new(NameTerm::new("getUserScopesCount".to_string())),
-                    vec![],
-                    Box::new(ReturnsTerm::new_scalar(Box::new(NameTerm::new(
-                        "Integer".to_string(),
-                    )))),
+                    Box::new(ParametersBlockTerm::new(
+                        Location::new(133, 135, path),
+                        Box::new(OpenRoundBracketTerm::new(Location::new(133, 134, path))),
+                        vec![],
+                        Box::new(CloseRoundBracketTerm::new(Location::new(134, 135, path))),
+                    )),
+                    Box::new(ReturnsDeclarationTerm::new(
+                        Location::new(136, 151, path),
+                        Box::new(ReturnsTerm::new(Location::new(136, 143, path))),
+                        Box::new(TypeReferenceTerm::new_scalar(Box::new(NameTerm::new(
+                            "Integer".to_string(),
+                        )))),
+                    )),
+                    Box::new(SemicolumnTerm::new(Location::new(151, 152, path))),
                 )),
             ],
         ),

@@ -1,0 +1,112 @@
+ActionDeclaration: ActionDeclarationTerm = {
+  <start: @L> <action:Action> <name:Name> <parameters:ParametersBlock> <semicolumn: Semicolumn> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ActionDeclarationTerm::new(
+      location,
+      Box::new(action),
+      Box::new(name),
+      Box::new(parameters),
+      None,
+      Box::new(semicolumn)
+    )
+  },
+  <start: @L> <action:Action> <name:Name> <parameters:ParametersBlock> <returns_declaration: ReturnsDeclaration> <semicolumn: Semicolumn> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ActionDeclarationTerm::new(
+      location,
+      Box::new(action),
+      Box::new(name),
+      Box::new(parameters),
+      Some(Box::new(returns_declaration)),
+      Box::new(semicolumn)
+    )
+  }
+};
+
+Action: ActionTerm = {
+  <start: @L> "action" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ActionTerm::new(location)
+  },
+}
+
+ParametersBlock: ParametersBlockTerm = {
+  <start: @L> <open_bracket:OpenRoundBracket> <parameters_and_commas:ParametersAndCommas> <close_bracket:CloseRoundBracket> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ParametersBlockTerm::new(
+      location,
+      Box::new(open_bracket),
+      parameters_and_commas,
+      Box::new(close_bracket)
+    )
+  },
+}
+
+ParametersAndCommas: Vec<ParameterOrComma> = {
+  <parameters_and_commas:ParametersAndCommas> <comma: Comma> <param:Param> => {
+    let mut new_params: Vec<ParameterOrComma> = Vec::new();
+    new_params.extend(parameters_and_commas);
+    new_params.push(ParameterOrComma::Comma(comma));
+    new_params.push(ParameterOrComma::Parameter(param));
+    new_params
+  },
+  <param:Param?> => match param {
+    None => vec![],
+    Some(param) => {
+      let mut params: Vec<ParameterOrComma> = Vec::new();
+      params.push(ParameterOrComma::Parameter(param));
+      params
+    }
+  },
+}
+
+Param: ParamTerm = {
+  <start: @L> <name:Name> <colon:Colon> <type_reference:TypeReference> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ParamTerm::new(
+      location,
+      Box::new(name),
+      Box::new(colon),
+      Box::new(type_reference)
+    )
+  }
+}
+
+ReturnsDeclaration: ReturnsDeclarationTerm = {
+  <start: @L> <returns: Returns> <type_reference: TypeReference> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ReturnsDeclarationTerm::new(
+      location,
+      Box::new(returns),
+      Box::new(type_reference)
+    )
+  },
+}
+
+Returns: ReturnsTerm = {
+  <start: @L> "returns" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ReturnsTerm::new(location)
+  },
+}
+
+FunctionDeclaration: FunctionDeclarationTerm = {
+  <start: @L> <function:Function> <name:Name> <parameters:ParametersBlock> <returns_declaration:ReturnsDeclaration> <semicolumn:Semicolumn> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    FunctionDeclarationTerm::new(
+      location,
+      Box::new(function),
+      Box::new(name),
+      Box::new(parameters),
+      Box::new(returns_declaration),
+      Box::new(semicolumn)
+    )
+  }
+};
+
+Function: FunctionTerm = {
+  <start: @L> "function" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    FunctionTerm::new(location)
+  },
+}
