@@ -122,14 +122,14 @@ Entity: EntityTerm = {
   }
 }
 
-AspectNames: Vec<NameTerm> = {
+AspectNames: Vec<IdentifierTerm> = {
   <aspect_name:Name> => {
-    let mut aspect_names: Vec<NameTerm> = Vec::new();
+    let mut aspect_names: Vec<IdentifierTerm> = Vec::new();
     aspect_names.push(aspect_name);
     aspect_names
   },
   <aspect_names:AspectNames> "," <aspect_name:Name> => {
-    let mut new_aspect_names: Vec<NameTerm> = Vec::new();
+    let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
     new_aspect_names.extend(aspect_names);
     new_aspect_names.push(aspect_name);
     new_aspect_names
@@ -174,8 +174,4 @@ Path: PathTerm = {
     let trimmed_value = value.to_string().trim_matches('\'').to_string();
     PathTerm::new(PathBuf::from(trimmed_value))
   },
-}
-
-Name: NameTerm = {
-  <value:r"[a-zA-Z0-9-]+"> => NameTerm::new(value.to_string())
 }

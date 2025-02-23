@@ -2,7 +2,7 @@ use ast_term_derive::ASTTerm;
 
 use crate::ast::*;
 
-use super::super::{DotTerm, NameTerm, WildcartTerm};
+use super::super::{DotTerm, IdentifierTerm, WildcartTerm};
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ImportIdentifierTerm {
@@ -13,9 +13,9 @@ pub struct ImportIdentifierTerm {
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ImportIdentifierVariant {
-    NameOnly(Box<NameTerm>),
+    NameOnly(Box<IdentifierTerm>),
     NameWithWildcart {
-        name: Box<NameTerm>,
+        name: Box<IdentifierTerm>,
         dot: Box<DotTerm>,
         wildcart: Box<WildcartTerm>,
     },

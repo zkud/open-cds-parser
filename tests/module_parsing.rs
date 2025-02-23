@@ -17,18 +17,33 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
         .canonicalize()
         .unwrap();
     expected_ast.insert(
-        schema_path,
+        schema_path.clone(),
         ModuleTerm::new(vec![ModuleDefinition::Entity(EntityTerm::new(
-            Box::new(NameTerm::new("Books".to_string())),
+            Box::new(IdentifierTerm::new_basic(
+                Location::new(0, 0, &schema_path),
+                "Books",
+            )),
             vec![],
             vec![
                 FieldTerm::new(
-                    Box::new(NameTerm::new("id".to_string())),
-                    Box::new(NameTerm::new("UUID".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &schema_path),
+                        "id",
+                    )),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &schema_path),
+                        "UUID",
+                    )),
                 ),
                 FieldTerm::new(
-                    Box::new(NameTerm::new("name".to_string())),
-                    Box::new(NameTerm::new("String".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &schema_path),
+                        "name",
+                    )),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &schema_path),
+                        "String",
+                    )),
                 ),
             ],
         ))]),
@@ -37,7 +52,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
         .canonicalize()
         .unwrap();
     expected_ast.insert(
-        service_path,
+        service_path.clone(),
         ModuleTerm::new(vec![
             ModuleDefinition::Import(ImportTerm::new(
                 Location::new(0, 32, &Path::new("./tests/projects/modules/srv/books.cds")),
@@ -57,9 +72,12 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                                 11,
                                 &Path::new("./tests/projects/modules/srv/books.cds"),
                             ),
-                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(NameTerm::new(
-                                "Books".to_string(),
-                            )))),
+                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                IdentifierTerm::new_basic(
+                                    Location::new(0, 0, &service_path),
+                                    "Books",
+                                ),
+                            ))),
                         )),
                         None,
                         None,
@@ -75,7 +93,10 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                 ))),
             )),
             ModuleDefinition::Service(ServiceTerm::new(
-                Box::new(NameTerm::new("BooksService".to_string())),
+                Box::new(IdentifierTerm::new_basic(
+                    Location::new(0, 0, &service_path),
+                    "BooksService",
+                )),
                 vec![],
             )),
         ]),
