@@ -42,7 +42,7 @@ fn build_basic_action() -> ActionDeclarationTerm {
         Location::new(39, 70, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
         Box::new(IdentifierTerm::new_basic(
-            Location::new(45, 52, &get_import_path()),
+            Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
@@ -88,7 +88,7 @@ fn expect_action_to_be(
         module_to_check.deref(),
         &ModuleTerm::new(vec![ModuleDefinition::Service(ServiceTerm::new(
             Box::new(IdentifierTerm::new_basic(
-                Location::new(61, 68, &get_import_path()),
+                Location::new(17, 24, &get_import_path()),
                 "Example",
             )),
             vec![ServiceDefinition::Action(action)]
