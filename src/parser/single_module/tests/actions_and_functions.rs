@@ -251,7 +251,7 @@ fn build_basic_action_with_no_args() -> ActionDeclarationTerm {
         Location::new(39, 56, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
         Box::new(IdentifierTerm::new_basic(
-            Location::new(61, 68, &get_import_path()),
+            Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
