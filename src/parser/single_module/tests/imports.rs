@@ -285,8 +285,8 @@ fn with_name_with_alias_import_it_parses() {
                             &get_import_path()
                         )))),
                         Some(Box::new(IdentifierTerm::new_basic(
-                            Location::new(9, 13, &get_import_path()),
-                            "name"
+                            Location::new(17, 22, &get_import_path()),
+                            "name2"
                         )))
                     ))],
                     Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
@@ -412,7 +412,7 @@ fn with_multiple_imports_it_parses() {
                                 Location::new(9, 14, &get_import_path()),
                                 Box::new(ImportIdentifierVariant::NameOnly(Box::new(
                                     IdentifierTerm::new_basic(
-                                        Location::new(9, 13, &get_import_path()),
+                                        Location::new(9, 14, &get_import_path()),
                                         "name1"
                                     )
                                 )))
@@ -431,7 +431,7 @@ fn with_multiple_imports_it_parses() {
                                 Location::new(16, 21, &get_import_path()),
                                 Box::new(ImportIdentifierVariant::NameOnly(Box::new(
                                     IdentifierTerm::new_basic(
-                                        Location::new(9, 13, &get_import_path()),
+                                        Location::new(16, 21, &get_import_path()),
                                         "name2"
                                     )
                                 )))
