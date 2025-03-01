@@ -115,7 +115,7 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
         Location::new(39, 86, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
         Box::new(IdentifierTerm::new_basic(
-            Location::new(61, 68, &get_import_path()),
+            Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
@@ -128,7 +128,7 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
             vec![ParameterOrComma::Parameter(ParamTerm::new(
                 Location::new(54, 68, &get_import_path()),
                 Box::new(IdentifierTerm::new_basic(
-                    Location::new(61, 68, &get_import_path()),
+                    Location::new(54, 59, &get_import_path()),
                     "param",
                 )),
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
@@ -146,7 +146,7 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
             Location::new(70, 85, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(70, 77, &get_import_path()))),
             Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                IdentifierTerm::new_basic(Location::new(61, 68, &get_import_path()), "Example"),
+                IdentifierTerm::new_basic(Location::new(78, 85, &get_import_path()), "Example"),
             ))),
         ))),
         Box::new(SemicolumnTerm::new(Location::new(
