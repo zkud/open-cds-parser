@@ -85,7 +85,7 @@ impl MultiModuleParserImpl {
             return Ok(());
         }
 
-        let module_term = self.single_module_parser.parse(path)?;
+        let module_term = self.single_module_parser.parse(&absolute_path)?;
         result.insert(absolute_path, (*module_term).clone());
 
         let abstract_paths = self.collect_abstract_paths(path, &module_term)?;
