@@ -56,22 +56,14 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
         ModuleTerm::new(vec![
             ModuleDefinition::Import(ImportTerm::new(
                 Location::new(0, 32, &service_path),
-                Box::new(UsingTerm::new(Location::new(
-                    0,
-                    5,
-                    &service_path,
-                ))),
+                Box::new(UsingTerm::new(Location::new(0, 5, &service_path))),
                 Box::new(SelectionBlockTerm::new(
                     Location::new(6, 11, &service_path),
                     None,
                     vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                         Location::new(6, 11, &service_path),
                         Box::new(ImportIdentifierTerm::new(
-                            Location::new(
-                                6,
-                                11,
-                                &service_path,
-                            ),
+                            Location::new(6, 11, &service_path),
                             Box::new(ImportIdentifierVariant::NameOnly(Box::new(
                                 IdentifierTerm::new_basic(
                                     Location::new(6, 11, &service_path),
@@ -86,11 +78,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                 )),
                 Box::new(FromTerm::new()),
                 Box::new(PathTerm::new(PathBuf::from("../db/schema"))),
-                Box::new(SemicolumnTerm::new(Location::new(
-                    31,
-                    32,
-                    &service_path,
-                ))),
+                Box::new(SemicolumnTerm::new(Location::new(31, 32, &service_path))),
             )),
             ModuleDefinition::Service(ServiceTerm::new(
                 Box::new(IdentifierTerm::new_basic(
