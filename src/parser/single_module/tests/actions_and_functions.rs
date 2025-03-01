@@ -296,7 +296,7 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
         Location::new(39, 74, &get_import_path()),
         Box::new(FunctionTerm::new(Location::new(39, 47, &get_import_path()))),
         Box::new(IdentifierTerm::new_basic(
-            Location::new(61, 68, &get_import_path()),
+            Location::new(48, 55, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
@@ -317,7 +317,7 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
             Location::new(58, 73, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(58, 65, &get_import_path()))),
             Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                IdentifierTerm::new_basic(Location::new(61, 68, &get_import_path()), "Example"),
+                IdentifierTerm::new_basic(Location::new(66, 73, &get_import_path()), "Example"),
             ))),
         )),
         Box::new(SemicolumnTerm::new(Location::new(
@@ -338,8 +338,8 @@ fn expect_function_to_be(
         module_to_check.deref(),
         &ModuleTerm::new(vec![ModuleDefinition::Service(ServiceTerm::new(
             Box::new(IdentifierTerm::new_basic(
-                Location::new(61, 68, &get_import_path()),
-                "example",
+                Location::new(17, 24, &get_import_path()),
+                "Example",
             )),
             vec![ServiceDefinition::Function(function)]
         ))])
