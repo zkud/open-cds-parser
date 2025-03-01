@@ -13,34 +13,34 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
     let expected_ast = Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
         ServiceTerm::new(
             Box::new(IdentifierTerm::new_basic(
-                Location::new(0, 0, &path),
+                Location::new(8, 22, &path),
                 "CatalogService",
             )),
             vec![
                 ServiceDefinition::Entity(EntityTerm::new(
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &path),
+                        Location::new(35, 45, &path),
                         "UserScopes",
                     )),
                     vec![],
                     vec![
                         FieldTerm::new(
                             Box::new(IdentifierTerm::new_basic(
-                                Location::new(0, 0, &path),
+                                Location::new(53, 61, &path),
                                 "username",
                             )),
                             Box::new(IdentifierTerm::new_basic(
-                                Location::new(0, 0, &path),
+                                Location::new(64, 70, &path),
                                 "String",
                             )),
                         ),
                         FieldTerm::new(
                             Box::new(IdentifierTerm::new_basic(
-                                Location::new(0, 0, &path),
+                                Location::new(77, 82, &path),
                                 "scope",
                             )),
                             Box::new(IdentifierTerm::new_basic(
-                                Location::new(0, 0, &path),
+                                Location::new(88, 94, &path),
                                 "String",
                             )),
                         ),
@@ -50,7 +50,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                     Location::new(106, 152, path),
                     Box::new(FunctionTerm::new(Location::new(106, 114, path))),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &path),
+                        Location::new(115, 133, &path),
                         "getUserScopesCount",
                     )),
                     Box::new(ParametersBlockTerm::new(
@@ -63,7 +63,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                         Location::new(136, 151, path),
                         Box::new(ReturnsTerm::new(Location::new(136, 143, path))),
                         Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                            IdentifierTerm::new_basic(Location::new(0, 0, &path), "Integer"),
+                            IdentifierTerm::new_basic(Location::new(144, 151, &path), "Integer"),
                         ))),
                     )),
                     Box::new(SemicolumnTerm::new(Location::new(151, 152, path))),
