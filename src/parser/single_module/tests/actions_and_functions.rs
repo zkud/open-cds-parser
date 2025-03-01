@@ -176,7 +176,7 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
         Location::new(39, 90, &get_import_path()),
         Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
         Box::new(IdentifierTerm::new_basic(
-            Location::new(61, 68, &get_import_path()),
+            Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
@@ -190,13 +190,13 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                 ParameterOrComma::Parameter(ParamTerm::new(
                     Location::new(54, 70, &get_import_path()),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(61, 68, &get_import_path()),
+                        Location::new(54, 60, &get_import_path()),
                         "param1",
                     )),
                     Box::new(ColonTerm::new(Location::new(60, 61, &get_import_path()))),
                     Box::new(TypeReferenceTerm::new_scalar(Box::new(
                         IdentifierTerm::new_basic(
-                            Location::new(61, 68, &get_import_path()),
+                            Location::new(62, 70, &get_import_path()),
                             "Example1",
                         ),
                     ))),
@@ -205,13 +205,13 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                 ParameterOrComma::Parameter(ParamTerm::new(
                     Location::new(72, 88, &get_import_path()),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(61, 68, &get_import_path()),
+                        Location::new(72, 78, &get_import_path()),
                         "param2",
                     )),
                     Box::new(ColonTerm::new(Location::new(78, 79, &get_import_path()))),
                     Box::new(TypeReferenceTerm::new_scalar(Box::new(
                         IdentifierTerm::new_basic(
-                            Location::new(61, 68, &get_import_path()),
+                            Location::new(80, 88, &get_import_path()),
                             "Example2",
                         ),
                     ))),
