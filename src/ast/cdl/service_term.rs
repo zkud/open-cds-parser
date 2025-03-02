@@ -1,16 +1,16 @@
 use crate::ast::*;
 
 use super::entity_term::EntityTerm;
-use super::name_term::NameTerm;
 use super::ActionDeclarationTerm;
 use super::FunctionDeclarationTerm;
+use super::IdentifierTerm;
 use super::TypeDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ServiceTerm {
     #[subnode_prop]
-    name: Box<NameTerm>,
+    identifier: Box<IdentifierTerm>,
     #[subnode_prop]
     definitions: Vec<ServiceDefinition>,
 }

@@ -1,20 +1,20 @@
 TypeDeclaration: TypeDeclarationTerm = {
-  "define" "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
-    TypeDeclarationTerm::new(Box::new(name), Box::new(resolved_type_name))
+  "define" "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" => {
+    TypeDeclarationTerm::new(Box::new(identifier), Box::new(resolved_type_identifier))
   },
-  "type" <name:Name> ":" <resolved_type_name:Name> ";" => {
-    TypeDeclarationTerm::new(Box::new(name), Box::new(resolved_type_name))
+  "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" => {
+    TypeDeclarationTerm::new(Box::new(identifier), Box::new(resolved_type_identifier))
   }
 }
 
 TypeReference: TypeReferenceTerm = {
-  <name:Name> => {
-    TypeReferenceTerm::new_scalar(Box::new(name))
+  <identifier:Identifier> => {
+    TypeReferenceTerm::new_scalar(Box::new(identifier))
   },
-  "array" "of" <name:Name> => {
-    TypeReferenceTerm::new_arrayed(Box::new(name))
+  "array" "of" <identifier:Identifier> => {
+    TypeReferenceTerm::new_arrayed(Box::new(identifier))
   },
-  "many" <name:Name> => {
-    TypeReferenceTerm::new_arrayed(Box::new(name))
+  "many" <identifier:Identifier> => {
+    TypeReferenceTerm::new_arrayed(Box::new(identifier))
   },
 }

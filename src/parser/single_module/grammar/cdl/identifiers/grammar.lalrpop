@@ -1,0 +1,35 @@
+#[inline] // inlined to avoid conflict in LR(1) push / reset
+Identifier: IdentifierTerm = {
+  <start: @L> <segments: IdentifierSegments> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    IdentifierTerm::new(
+      location,
+      segments
+    )
+  }
+}
+
+IdentifierSegments: Vec<IdentifierSegment> = {
+  <sub_identifier:SubIdentifier> => {
+    let mut segments: Vec<IdentifierSegment> = Vec::new();
+    segments.push(IdentifierSegment::SubIdentifier(sub_identifier));
+    segments 
+  },
+  <segments:IdentifierSegments> <dot: Dot> <sub_identifier:SubIdentifier> => {
+    let mut new_segments: Vec<IdentifierSegment> = Vec::new();
+    new_segments.extend(segments);
+    new_segments.push(IdentifierSegment::Dot(dot));
+    new_segments.push(IdentifierSegment::SubIdentifier(sub_identifier));
+    new_segments
+  },
+}
+
+SubIdentifier: SubIdentifierTerm = {
+  <start: @L> <value:r"[$A-Za-z_]\w*"> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    SubIdentifierTerm::new(
+      location,
+      value.to_string()
+    )
+  }
+}

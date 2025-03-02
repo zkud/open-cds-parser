@@ -58,8 +58,11 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
-                                    NameTerm::new("Books".to_string()),
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                    IdentifierTerm::new_basic(
+                                        Location::new(0, 0, &PathBuf::new()),
+                                        "Books",
+                                    ),
                                 ))),
                             )),
                             None,
@@ -72,7 +75,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(NameTerm::new("BooksService".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "BooksService",
+                    )),
                     vec![],
                 )),
             ])));
@@ -80,7 +86,10 @@ impl SingleModuleParser for MockSingleModuleParser {
         if path == get_file_2_path() {
             return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
-                    Box::new(NameTerm::new("AuthorsService1".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "AuthorsService1",
+                    )),
                     vec![],
                 ),
             )])));
@@ -88,7 +97,10 @@ impl SingleModuleParser for MockSingleModuleParser {
         if path == get_subdir_file_3_path() {
             return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
-                    Box::new(NameTerm::new("AuthorsService2".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "AuthorsService2",
+                    )),
                     vec![],
                 ),
             )])));
@@ -109,8 +121,11 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
-                                    NameTerm::new("Books".to_string()),
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                    IdentifierTerm::new_basic(
+                                        Location::new(0, 0, &PathBuf::new()),
+                                        "Books",
+                                    ),
                                 ))),
                             )),
                             None,
@@ -123,7 +138,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(NameTerm::new("BooksService".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "BooksService",
+                    )),
                     vec![],
                 )),
             ])));
@@ -131,7 +149,10 @@ impl SingleModuleParser for MockSingleModuleParser {
         if path == get_subdir_subdir_index_path() {
             return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
-                    Box::new(NameTerm::new("AuthorsService2".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "AuthorsService2",
+                    )),
                     vec![],
                 ),
             )])));
@@ -152,8 +173,11 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
-                                    NameTerm::new("Books".to_string()),
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                    IdentifierTerm::new_basic(
+                                        Location::new(0, 0, &PathBuf::new()),
+                                        "Books",
+                                    ),
                                 ))),
                             )),
                             None,
@@ -166,7 +190,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(NameTerm::new("BooksService".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "BooksService",
+                    )),
                     vec![],
                 )),
             ])));
@@ -348,8 +375,11 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
-                                    NameTerm::new("Books".to_string()),
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                    IdentifierTerm::new_basic(
+                                        Location::new(0, 0, &PathBuf::new()),
+                                        "Books",
+                                    ),
                                 ))),
                             )),
                             None,
@@ -362,7 +392,10 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                     Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                 )),
                 ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(NameTerm::new("BooksService".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "BooksService",
+                    )),
                     vec![],
                 )),
             ])));
@@ -370,7 +403,10 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
         if path == Path::new("/file2.cds") {
             return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
-                    Box::new(NameTerm::new("AuthorsService1".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "AuthorsService1",
+                    )),
                     vec![],
                 ),
             )])));
@@ -378,7 +414,10 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
         if path == Path::new("/file2/index.cds") {
             return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
                 ServiceTerm::new(
-                    Box::new(NameTerm::new("AuthorsService2".to_string())),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(0, 0, &PathBuf::new()),
+                        "AuthorsService2",
+                    )),
                     vec![],
                 ),
             )])));

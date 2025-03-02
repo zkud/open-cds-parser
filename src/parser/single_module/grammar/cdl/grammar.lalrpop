@@ -52,11 +52,11 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
 }
 
 Service: ServiceTerm = {
-  "service" <name:Name> "{" "}" => {
-    ServiceTerm::new(Box::new(name), Vec::new())
+  "service" <identifier:Identifier> "{" "}" => {
+    ServiceTerm::new(Box::new(identifier), Vec::new())
   },
-  "service" <name:Name> "{" <definitions:ServiceDefinitions> "}" => {
-    ServiceTerm::new(Box::new(name), definitions)
+  "service" <identifier:Identifier> "{" <definitions:ServiceDefinitions> "}" => {
+    ServiceTerm::new(Box::new(identifier), definitions)
   },
 }
 
@@ -108,28 +108,28 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
 }
 
 Entity: EntityTerm = {
-  "entity" <name:Name> "{" "}" => {
-    EntityTerm::new(Box::new(name), Vec::new(), Vec::new())
+  "entity" <identifier:Identifier> "{" "}" => {
+    EntityTerm::new(Box::new(identifier), Vec::new(), Vec::new())
   },
-  "entity" <name:Name> "{" <fields:Fields> "}" => {
-    EntityTerm::new(Box::new(name), Vec::new(), fields)
+  "entity" <identifier:Identifier> "{" <fields:Fields> "}" => {
+    EntityTerm::new(Box::new(identifier), Vec::new(), fields)
   },
-  "entity" <name:Name> ":" <aspects:AspectNames> "{" "}" => {
-    EntityTerm::new(Box::new(name), aspects, Vec::new())
+  "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" "}" => {
+    EntityTerm::new(Box::new(identifier), aspects, Vec::new())
   },
-  "entity" <name:Name> ":" <aspects:AspectNames> "{" <fields:Fields> "}" => {
-    EntityTerm::new(Box::new(name), aspects, fields)
+  "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" <fields:Fields> "}" => {
+    EntityTerm::new(Box::new(identifier), aspects, fields)
   }
 }
 
-AspectNames: Vec<NameTerm> = {
-  <aspect_name:Name> => {
-    let mut aspect_names: Vec<NameTerm> = Vec::new();
+AspectNames: Vec<IdentifierTerm> = {
+  <aspect_name:Identifier> => {
+    let mut aspect_names: Vec<IdentifierTerm> = Vec::new();
     aspect_names.push(aspect_name);
     aspect_names
   },
-  <aspect_names:AspectNames> "," <aspect_name:Name> => {
-    let mut new_aspect_names: Vec<NameTerm> = Vec::new();
+  <aspect_names:AspectNames> "," <aspect_name:Identifier> => {
+    let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
     new_aspect_names.extend(aspect_names);
     new_aspect_names.push(aspect_name);
     new_aspect_names
@@ -151,7 +151,7 @@ Fields: Vec<FieldTerm> = {
 }
 
 Field: FieldTerm = {
-  <name:Name> ":" <type_name:Name> ";" => FieldTerm::new(Box::new(name), Box::new(type_name))
+  <identifier:Identifier> ":" <type_name:Identifier> ";" => FieldTerm::new(Box::new(identifier), Box::new(type_name))
 }
 
 From: FromTerm = {
@@ -174,8 +174,4 @@ Path: PathTerm = {
     let trimmed_value = value.to_string().trim_matches('\'').to_string();
     PathTerm::new(PathBuf::from(trimmed_value))
   },
-}
-
-Name: NameTerm = {
-  <value:r"[a-zA-Z0-9-]+"> => NameTerm::new(value.to_string())
 }

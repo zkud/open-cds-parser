@@ -51,7 +51,7 @@ Selector: SelectorTerm = {
       None
     )
   },
-  <start: @L> <import:ImportIdentifier> <as_term:As> <alias:Name> <end: @R> => {
+  <start: @L> <import:ImportIdentifier> <as_term:As> <alias:Identifier> <end: @R> => {
     let location = Location::new(start, end, filepath);
     SelectorTerm::new(
       location,
@@ -63,24 +63,24 @@ Selector: SelectorTerm = {
 }
 
 ImportIdentifier: ImportIdentifierTerm = {
-  <start: @L> <name:Name> <end: @R> => {
+  <start: @L> <identifier:Identifier> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ImportIdentifierTerm::new(
       location,
       Box::new(
-        ImportIdentifierVariant::NameOnly(
-          Box::new(name)
+        ImportIdentifierVariant::IdentifierOnly(
+          Box::new(identifier)
         )
       )
     )
   },
-  <start: @L> <name:Name> <dot:Dot> <wildcart:Wildcart> <end: @R> => {
+  <start: @L> <identifier:Identifier> <dot:Dot> <wildcart:Wildcart> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ImportIdentifierTerm::new(
       location,
       Box::new(
-        ImportIdentifierVariant::NameWithWildcart {
-          name: Box::new(name),
+        ImportIdentifierVariant::IdentifierWithWildcart {
+          identifier: Box::new(identifier),
           dot: Box::new(dot),
           wildcart: Box::new(wildcart)
         }

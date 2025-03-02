@@ -17,6 +17,18 @@ impl Location {
         }
     }
 
+    /**
+     * Creates a new mock location to be reused in all tests
+     */
+    #[cfg(test)]
+    pub fn new_mock() -> Self {
+        Self {
+            start: 0,
+            end: 0,
+            filepath: PathBuf::new(),
+        }
+    }
+
     pub fn start(&self) -> usize {
         self.start
     }

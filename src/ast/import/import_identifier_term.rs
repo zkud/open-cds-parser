@@ -2,7 +2,7 @@ use ast_term_derive::ASTTerm;
 
 use crate::ast::*;
 
-use super::super::{DotTerm, NameTerm, WildcartTerm};
+use super::super::{DotTerm, IdentifierTerm, WildcartTerm};
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ImportIdentifierTerm {
@@ -13,9 +13,9 @@ pub struct ImportIdentifierTerm {
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ImportIdentifierVariant {
-    NameOnly(Box<NameTerm>),
-    NameWithWildcart {
-        name: Box<NameTerm>,
+    IdentifierOnly(Box<IdentifierTerm>),
+    IdentifierWithWildcart {
+        identifier: Box<IdentifierTerm>,
         dot: Box<DotTerm>,
         wildcart: Box<WildcartTerm>,
     },
@@ -25,13 +25,13 @@ pub enum ImportIdentifierVariant {
 impl Visitable for ImportIdentifierVariant {
     fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
-            Self::NameOnly(name) => name.accept(visitor)?,
-            Self::NameWithWildcart {
-                name,
+            Self::IdentifierOnly(identifier) => identifier.accept(visitor)?,
+            Self::IdentifierWithWildcart {
+                identifier,
                 dot,
                 wildcart,
             } => {
-                name.accept(visitor)?;
+                identifier.accept(visitor)?;
                 dot.accept(visitor)?;
                 wildcart.accept(visitor)?;
             }
