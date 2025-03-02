@@ -52,3 +52,79 @@ impl Visitable for IdentifierSegment {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::ast::common::{ASTTerm, Visitor};
+    use crate::ast::Location;
+
+    struct MockVisitor {
+        pub visits: Vec<String>,
+    }
+
+    impl MockVisitor {
+        pub fn new() -> Self {
+            MockVisitor { visits: vec![] }
+        }
+    }
+
+    impl Visitor for MockVisitor {
+        type Error = ();
+
+        fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), Self::Error> {
+            if let Some(term) = term.try_convert::<SubIdentifierTerm>() {
+                self.visits.push(term.value().clone());
+            } else if let Some(_) = term.try_convert::<DotTerm>() {
+                self.visits.push(".".to_string());
+            }
+            Ok(())
+        }
+    }
+
+    #[test]
+    fn with_sub_identifier_it_visits() {
+        let location = Location::new_mock();
+        let term = IdentifierTerm::new_basic(location.clone(), "test");
+        let mut visitor = MockVisitor::new();
+
+        let result = term.accept(&mut visitor);
+
+        assert!(result.is_ok());
+        assert_eq!(visitor.visits, vec!["test"]);
+    }
+
+    #[test]
+    fn with_dot_it_visits() {
+        let location = Location::new_mock();
+        let dot_term = DotTerm::new(location.clone());
+        let term = IdentifierTerm::new(location, vec![IdentifierSegment::Dot(dot_term)]);
+        let mut visitor = MockVisitor::new();
+
+        let result = term.accept(&mut visitor);
+
+        assert!(result.is_ok());
+        assert_eq!(visitor.visits, vec!["."]);
+    }
+
+    #[test]
+    fn with_all_variants_it_visits() {
+        let location = Location::new_mock();
+        let sub_identifier = SubIdentifierTerm::new(location.clone(), "test".to_string());
+        let dot_term = DotTerm::new(location.clone());
+        let term = IdentifierTerm::new(
+            location,
+            vec![
+                IdentifierSegment::SubIdentifier(sub_identifier.clone()),
+                IdentifierSegment::Dot(dot_term),
+                IdentifierSegment::SubIdentifier(sub_identifier),
+            ],
+        );
+        let mut visitor = MockVisitor::new();
+
+        let result = term.accept(&mut visitor);
+
+        assert!(result.is_ok());
+        assert_eq!(visitor.visits, vec!["test", ".", "test"]);
+    }
+}
