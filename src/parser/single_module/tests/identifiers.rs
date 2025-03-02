@@ -7,6 +7,18 @@ use std::ops::Deref;
 use std::path::PathBuf;
 use std::sync::Arc;
 
+#[test]
+fn with_basic_service_name_it_parses() {
+    let source = "
+        service SimpleService {
+        }
+    ";
+
+    let result = parse_single_file(&source);
+
+    expect_service_to_be(result, build_basic_service());
+}
+
 #[inline]
 fn parse_single_file(file_content: &str) -> Result<Box<ModuleTerm>, ParseError> {
     let mut files = HashMap::new();
@@ -23,6 +35,18 @@ fn get_import_path() -> PathBuf {
     PathBuf::from("/import.cds")
 }
 
+#[test]
+fn with_namespaced_service_name_it_parses() {
+    let source = "
+        service My.Namespaced.Service {
+        }
+    ";
+
+    let result = parse_single_file(&source);
+
+    expect_service_to_be(result, build_namespaced_service());
+}
+
 #[inline]
 fn expect_service_to_be(
     module_to_check: Result<Box<ModuleTerm>, ParseError>,
@@ -35,18 +59,6 @@ fn expect_service_to_be(
     );
 }
 
-#[test]
-fn with_basic_service_name_it_parses() {
-    let source = "
-        service SimpleService {
-        }
-    ";
-
-    let result = parse_single_file(&source);
-
-    expect_service_to_be(result, build_basic_service());
-}
-
 #[inline]
 fn build_basic_service() -> ServiceTerm {
     ServiceTerm::new(
@@ -56,18 +68,6 @@ fn build_basic_service() -> ServiceTerm {
         )),
         vec![],
     )
-}
-
-#[test]
-fn with_namespaced_service_name_it_parses() {
-    let source = "
-        service My.Namespaced.Service {
-        }
-    ";
-
-    let result = parse_single_file(&source);
-
-    expect_service_to_be(result, build_namespaced_service());
 }
 
 #[inline]
