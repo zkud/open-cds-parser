@@ -64,7 +64,7 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
                         Location::new(6, 11, &service_path),
                         Box::new(ImportIdentifierTerm::new(
                             Location::new(6, 11, &service_path),
-                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                            Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                 IdentifierTerm::new_basic(
                                     Location::new(6, 11, &service_path),
                                     "Books",

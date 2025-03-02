@@ -58,7 +58,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                     IdentifierTerm::new_basic(
                                         Location::new(0, 0, &PathBuf::new()),
                                         "Books",
@@ -121,7 +121,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                     IdentifierTerm::new_basic(
                                         Location::new(0, 0, &PathBuf::new()),
                                         "Books",
@@ -173,7 +173,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                     IdentifierTerm::new_basic(
                                         Location::new(0, 0, &PathBuf::new()),
                                         "Books",
@@ -375,7 +375,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                             ),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                     IdentifierTerm::new_basic(
                                         Location::new(0, 0, &PathBuf::new()),
                                         "Books",

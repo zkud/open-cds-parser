@@ -145,7 +145,7 @@ fn with_name_import_it_parses() {
                         Location::new(9, 13, &get_import_path()),
                         Box::new(ImportIdentifierTerm::new(
                             Location::new(9, 13, &get_import_path()),
-                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                            Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                 IdentifierTerm::new_basic(
                                     Location::new(9, 13, &get_import_path()),
                                     "name"
@@ -206,7 +206,7 @@ fn with_name_with_comma_import_it_parses() {
                             Location::new(9, 13, &get_import_path()),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(9, 13, &get_import_path()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                     IdentifierTerm::new_basic(
                                         Location::new(9, 13, &get_import_path()),
                                         "name"
@@ -272,7 +272,7 @@ fn with_name_with_alias_import_it_parses() {
                         Location::new(9, 22, &get_import_path()),
                         Box::new(ImportIdentifierTerm::new(
                             Location::new(9, 13, &get_import_path()),
-                            Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                            Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                 IdentifierTerm::new_basic(
                                     Location::new(9, 13, &get_import_path()),
                                     "name"
@@ -339,8 +339,8 @@ fn with_name_with_wildcart_import_it_parses() {
                         Location::new(9, 15, &get_import_path()),
                         Box::new(ImportIdentifierTerm::new(
                             Location::new(9, 15, &get_import_path()),
-                            Box::new(ImportIdentifierVariant::NameWithWildcart {
-                                name: Box::new(IdentifierTerm::new_basic(
+                            Box::new(ImportIdentifierVariant::IdentifierWithWildcart {
+                                identifier: Box::new(IdentifierTerm::new_basic(
                                     Location::new(9, 13, &get_import_path()),
                                     "name"
                                 )),
@@ -410,7 +410,7 @@ fn with_multiple_imports_it_parses() {
                             Location::new(9, 14, &get_import_path()),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(9, 14, &get_import_path()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                     IdentifierTerm::new_basic(
                                         Location::new(9, 14, &get_import_path()),
                                         "name1"
@@ -429,7 +429,7 @@ fn with_multiple_imports_it_parses() {
                             Location::new(16, 21, &get_import_path()),
                             Box::new(ImportIdentifierTerm::new(
                                 Location::new(16, 21, &get_import_path()),
-                                Box::new(ImportIdentifierVariant::NameOnly(Box::new(
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
                                     IdentifierTerm::new_basic(
                                         Location::new(16, 21, &get_import_path()),
                                         "name2"

@@ -1,5 +1,5 @@
 #[inline] // inlined to avoid conflict in LR(1) push / reset
-Name: IdentifierTerm = {
+Identifier: IdentifierTerm = {
   <start: @L> <segments: IdentifierSegments> <end: @R> => {
     let location = Location::new(start, end, filepath);
     IdentifierTerm::new(

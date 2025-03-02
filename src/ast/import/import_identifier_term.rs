@@ -13,9 +13,9 @@ pub struct ImportIdentifierTerm {
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ImportIdentifierVariant {
-    NameOnly(Box<IdentifierTerm>),
-    NameWithWildcart {
-        name: Box<IdentifierTerm>,
+    IdentifierOnly(Box<IdentifierTerm>),
+    IdentifierWithWildcart {
+        identifier: Box<IdentifierTerm>,
         dot: Box<DotTerm>,
         wildcart: Box<WildcartTerm>,
     },
@@ -25,9 +25,9 @@ pub enum ImportIdentifierVariant {
 impl Visitable for ImportIdentifierVariant {
     fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
-            Self::NameOnly(name) => name.accept(visitor)?,
-            Self::NameWithWildcart {
-                name,
+            Self::IdentifierOnly(name) => name.accept(visitor)?,
+            Self::IdentifierWithWildcart {
+                identifier: name,
                 dot,
                 wildcart,
             } => {
