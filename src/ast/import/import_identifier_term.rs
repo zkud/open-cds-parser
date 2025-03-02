@@ -25,13 +25,13 @@ pub enum ImportIdentifierVariant {
 impl Visitable for ImportIdentifierVariant {
     fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
-            Self::IdentifierOnly(name) => name.accept(visitor)?,
+            Self::IdentifierOnly(identifier) => identifier.accept(visitor)?,
             Self::IdentifierWithWildcart {
-                identifier: name,
+                identifier,
                 dot,
                 wildcart,
             } => {
-                name.accept(visitor)?;
+                identifier.accept(visitor)?;
                 dot.accept(visitor)?;
                 wildcart.accept(visitor)?;
             }

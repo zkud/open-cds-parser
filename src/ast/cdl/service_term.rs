@@ -10,7 +10,7 @@ use ast_term_derive::ASTTerm;
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ServiceTerm {
     #[subnode_prop]
-    name: Box<IdentifierTerm>,
+    identifier: Box<IdentifierTerm>,
     #[subnode_prop]
     definitions: Vec<ServiceDefinition>,
 }

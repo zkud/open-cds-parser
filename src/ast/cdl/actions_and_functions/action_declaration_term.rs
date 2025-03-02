@@ -14,7 +14,7 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     action: Box<ActionTerm>,
     #[subnode_prop]
-    name: Box<IdentifierTerm>,
+    identifier: Box<IdentifierTerm>,
     #[subnode_prop]
     parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]

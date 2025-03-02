@@ -5,7 +5,7 @@ use ast_term_derive::ASTTerm;
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct EntityTerm {
     #[subnode_prop]
-    name: Box<IdentifierTerm>,
+    identifier: Box<IdentifierTerm>,
     #[subnode_prop]
     applied_aspects: Vec<IdentifierTerm>,
     #[subnode_prop]

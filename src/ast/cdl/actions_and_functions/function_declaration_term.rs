@@ -13,7 +13,7 @@ pub struct FunctionDeclarationTerm {
     #[subnode_prop]
     function: Box<FunctionTerm>,
     #[subnode_prop]
-    name: Box<IdentifierTerm>,
+    identifier: Box<IdentifierTerm>,
     #[subnode_prop]
     parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]

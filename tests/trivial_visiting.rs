@@ -22,7 +22,7 @@ impl Visitor for SQLVisitor {
 
     fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ()> {
         if let Some(term) = term.try_convert::<EntityTerm>() {
-            let name = term.name().full_name();
+            let name = term.identifier().full_name();
             let fields = term
                 .fields()
                 .iter()
