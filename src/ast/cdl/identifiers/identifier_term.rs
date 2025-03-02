@@ -127,4 +127,41 @@ mod tests {
         assert!(result.is_ok());
         assert_eq!(visitor.visits, vec!["test", ".", "test"]);
     }
+
+    #[test]
+    fn with_basic_identifier_it_returns_full_name() {
+        let location = Location::new_mock();
+        let term = IdentifierTerm::new_basic(location, "test");
+
+        assert_eq!(term.full_name(), "test");
+    }
+
+    #[test]
+    fn with_namespaced_identifier_it_returns_full_name() {
+        let location = Location::new_mock();
+        let term = IdentifierTerm::new(
+            location,
+            vec![
+                IdentifierSegment::SubIdentifier(SubIdentifierTerm::new(
+                    Location::new_mock(),
+                    "parent1".to_string(),
+                )),
+                IdentifierSegment::Dot(DotTerm::new(Location::new_mock())),
+                IdentifierSegment::SubIdentifier(SubIdentifierTerm::new(
+                    Location::new_mock(),
+                    "parent2".to_string(),
+                )),
+            ],
+        );
+
+        assert_eq!(term.full_name(), "parent1.parent2");
+    }
+
+    #[test]
+    fn with_empty_segments_it_returns_empty_string() {
+        let location = Location::new_mock();
+        let term = IdentifierTerm::new(location, vec![]);
+
+        assert_eq!(term.full_name(), "");
+    }
 }
