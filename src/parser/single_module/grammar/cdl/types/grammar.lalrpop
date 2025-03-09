@@ -1,20 +1,25 @@
 TypeDeclaration: TypeDeclarationTerm = {
-  "define" "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" => {
-    TypeDeclarationTerm::new(Box::new(identifier), Box::new(resolved_type_identifier))
+  <start: @L> "define" "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type_identifier))
   },
-  "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" => {
-    TypeDeclarationTerm::new(Box::new(identifier), Box::new(resolved_type_identifier))
+  <start: @L> "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type_identifier))
   }
 }
 
 TypeReference: TypeReferenceTerm = {
-  <identifier:Identifier> => {
-    TypeReferenceTerm::new_scalar(Box::new(identifier))
+  <start: @L> <identifier:Identifier> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    TypeReferenceTerm::new_scalar(location, Box::new(identifier))
   },
-  "array" "of" <identifier:Identifier> => {
-    TypeReferenceTerm::new_arrayed(Box::new(identifier))
+  <start: @L> "array" "of" <identifier:Identifier> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    TypeReferenceTerm::new_arrayed(location, Box::new(identifier))
   },
-  "many" <identifier:Identifier> => {
-    TypeReferenceTerm::new_arrayed(Box::new(identifier))
+  <start: @L> "many" <identifier:Identifier> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    TypeReferenceTerm::new_arrayed(location, Box::new(identifier))
   },
 }

@@ -1,6 +1,7 @@
 pub Module: ModuleTerm = {
-  <definitions:ModuleDefinitions> => {
-    ModuleTerm::new(definitions)
+  <start: @L> <definitions:ModuleDefinitions> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ModuleTerm::new(location, definitions)
   },
 }
 
@@ -52,11 +53,13 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
 }
 
 Service: ServiceTerm = {
-  "service" <identifier:Identifier> "{" "}" => {
-    ServiceTerm::new(Box::new(identifier), Vec::new())
+  <start: @L> "service" <identifier:Identifier> "{" "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ServiceTerm::new(location, Box::new(identifier), Vec::new())
   },
-  "service" <identifier:Identifier> "{" <definitions:ServiceDefinitions> "}" => {
-    ServiceTerm::new(Box::new(identifier), definitions)
+  <start: @L> "service" <identifier:Identifier> "{" <definitions:ServiceDefinitions> "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ServiceTerm::new(location, Box::new(identifier), definitions)
   },
 }
 
@@ -108,17 +111,21 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
 }
 
 Entity: EntityTerm = {
-  "entity" <identifier:Identifier> "{" "}" => {
-    EntityTerm::new(Box::new(identifier), Vec::new(), Vec::new())
+  <start: @L> "entity" <identifier:Identifier> "{" "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(location, Box::new(identifier), Vec::new(), Vec::new())
   },
-  "entity" <identifier:Identifier> "{" <fields:Fields> "}" => {
-    EntityTerm::new(Box::new(identifier), Vec::new(), fields)
+  <start: @L> "entity" <identifier:Identifier> "{" <fields:Fields> "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(location, Box::new(identifier), Vec::new(), fields)
   },
-  "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" "}" => {
-    EntityTerm::new(Box::new(identifier), aspects, Vec::new())
+  <start: @L> "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(location, Box::new(identifier), aspects, Vec::new())
   },
-  "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" <fields:Fields> "}" => {
-    EntityTerm::new(Box::new(identifier), aspects, fields)
+  <start: @L> "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" <fields:Fields> "}" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    EntityTerm::new(location, Box::new(identifier), aspects, fields)
   }
 }
 
@@ -151,11 +158,17 @@ Fields: Vec<FieldTerm> = {
 }
 
 Field: FieldTerm = {
-  <identifier:Identifier> ":" <type_name:Identifier> ";" => FieldTerm::new(Box::new(identifier), Box::new(type_name))
+  <start: @L> <identifier:Identifier> ":" <type_name:Identifier> ";" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    FieldTerm::new(location, Box::new(identifier), Box::new(type_name))
+  }
 }
 
 From: FromTerm = {
-  "from" => FromTerm::new(),
+  <start: @L> "from" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    FromTerm::new(location)
+  }
 }
 
 Using: UsingTerm = {
@@ -166,12 +179,14 @@ Using: UsingTerm = {
 }
 
 Path: PathTerm = {
-  <value:r"`[a-zA-Z0-9-/[.]]+`"> => {
+  <start: @L> <value:r"`[a-zA-Z0-9-/[.]]+`"> <end: @R> => {
+    let location = Location::new(start, end, filepath);
     let trimmed_value = value.to_string().trim_matches('`').to_string();
-    PathTerm::new(PathBuf::from(trimmed_value))
+    PathTerm::new(location, PathBuf::from(trimmed_value))
   },
-  <value:r"'[a-zA-Z0-9-/[.]]+'"> => {
+  <start: @L> <value:r"'[a-zA-Z0-9-/[.]]+'"> <end: @R> => {
+    let location = Location::new(start, end, filepath);
     let trimmed_value = value.to_string().trim_matches('\'').to_string();
-    PathTerm::new(PathBuf::from(trimmed_value))
+    PathTerm::new(location, PathBuf::from(trimmed_value))
   },
 }
