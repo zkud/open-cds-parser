@@ -10,14 +10,17 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
     let path = Path::new("./tests/projects/trivial/srv/cat-service.cds");
     let ast = parser.parse_single_module(path).unwrap();
 
-    let expected_ast = Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-        ServiceTerm::new(
+    let expected_ast = Box::new(ModuleTerm::new(
+        Location::new(0, 0, &path),
+        vec![ModuleDefinition::Service(ServiceTerm::new(
+            Location::new(0, 0, &path),
             Box::new(IdentifierTerm::new_basic(
                 Location::new(8, 22, &path),
                 "CatalogService",
             )),
             vec![
                 ServiceDefinition::Entity(EntityTerm::new(
+                    Location::new(0, 0, &path),
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(35, 45, &path),
                         "UserScopes",
@@ -25,6 +28,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                     vec![],
                     vec![
                         FieldTerm::new(
+                            Location::new(0, 0, &path),
                             Box::new(IdentifierTerm::new_basic(
                                 Location::new(53, 61, &path),
                                 "username",
@@ -35,6 +39,7 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                             )),
                         ),
                         FieldTerm::new(
+                            Location::new(0, 0, &path),
                             Box::new(IdentifierTerm::new_basic(
                                 Location::new(77, 82, &path),
                                 "scope",
@@ -62,14 +67,18 @@ fn with_correct_and_trivial_cds_it_buids_a_tree() {
                     Box::new(ReturnsDeclarationTerm::new(
                         Location::new(136, 151, path),
                         Box::new(ReturnsTerm::new(Location::new(136, 143, path))),
-                        Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                            IdentifierTerm::new_basic(Location::new(144, 151, &path), "Integer"),
-                        ))),
+                        Box::new(TypeReferenceTerm::new_scalar(
+                            Location::new(144, 151, &path),
+                            Box::new(IdentifierTerm::new_basic(
+                                Location::new(144, 151, &path),
+                                "Integer",
+                            )),
+                        )),
                     )),
                     Box::new(SemicolumnTerm::new(Location::new(151, 152, path))),
                 )),
             ],
-        ),
-    )]));
+        ))],
+    ));
     assert_eq!(ast, expected_ast);
 }

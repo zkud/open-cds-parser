@@ -18,76 +18,89 @@ fn with_correct_and_multi_module_it_builds_modules_table() {
         .unwrap();
     expected_ast.insert(
         schema_path.clone(),
-        ModuleTerm::new(vec![ModuleDefinition::Entity(EntityTerm::new(
-            Box::new(IdentifierTerm::new_basic(
-                Location::new(7, 12, &schema_path),
-                "Books",
-            )),
-            vec![],
-            vec![
-                FieldTerm::new(
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(20, 22, &schema_path),
-                        "id",
-                    )),
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(24, 28, &schema_path),
-                        "UUID",
-                    )),
-                ),
-                FieldTerm::new(
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(35, 39, &schema_path),
-                        "name",
-                    )),
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(41, 47, &schema_path),
-                        "String",
-                    )),
-                ),
-            ],
-        ))]),
+        ModuleTerm::new(
+            Location::new(0, 0, &schema_path),
+            vec![ModuleDefinition::Entity(EntityTerm::new(
+                Location::new(0, 0, &schema_path),
+                Box::new(IdentifierTerm::new_basic(
+                    Location::new(7, 12, &schema_path),
+                    "Books",
+                )),
+                vec![],
+                vec![
+                    FieldTerm::new(
+                        Location::new(0, 0, &schema_path),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(20, 22, &schema_path),
+                            "id",
+                        )),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(24, 28, &schema_path),
+                            "UUID",
+                        )),
+                    ),
+                    FieldTerm::new(
+                        Location::new(0, 0, &schema_path),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(35, 39, &schema_path),
+                            "name",
+                        )),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(41, 47, &schema_path),
+                            "String",
+                        )),
+                    ),
+                ],
+            ))],
+        ),
     );
     let service_path = PathBuf::from("./tests/projects/modules/srv/books.cds")
         .canonicalize()
         .unwrap();
     expected_ast.insert(
         service_path.clone(),
-        ModuleTerm::new(vec![
-            ModuleDefinition::Import(ImportTerm::new(
-                Location::new(0, 32, &service_path),
-                Box::new(UsingTerm::new(Location::new(0, 5, &service_path))),
-                Box::new(SelectionBlockTerm::new(
-                    Location::new(6, 11, &service_path),
-                    None,
-                    vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+        ModuleTerm::new(
+            Location::new(0, 0, &service_path),
+            vec![
+                ModuleDefinition::Import(ImportTerm::new(
+                    Location::new(0, 32, &service_path),
+                    Box::new(UsingTerm::new(Location::new(0, 5, &service_path))),
+                    Box::new(SelectionBlockTerm::new(
                         Location::new(6, 11, &service_path),
-                        Box::new(ImportIdentifierTerm::new(
+                        None,
+                        vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                             Location::new(6, 11, &service_path),
-                            Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
-                                IdentifierTerm::new_basic(
-                                    Location::new(6, 11, &service_path),
-                                    "Books",
-                                ),
-                            ))),
-                        )),
+                            Box::new(ImportIdentifierTerm::new(
+                                Location::new(6, 11, &service_path),
+                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                    IdentifierTerm::new_basic(
+                                        Location::new(6, 11, &service_path),
+                                        "Books",
+                                    ),
+                                ))),
+                            )),
+                            None,
+                            None,
+                        ))],
                         None,
-                        None,
-                    ))],
-                    None,
+                    )),
+                    Box::new(FromTerm::new(Location::new(0, 0, &service_path))),
+                    Box::new(PathTerm::new(
+                        Location::new(0, 0, &service_path),
+                        PathBuf::from("../db/schema"),
+                    )),
+                    Box::new(SemicolumnTerm::new(Location::new(31, 32, &service_path))),
                 )),
-                Box::new(FromTerm::new()),
-                Box::new(PathTerm::new(PathBuf::from("../db/schema"))),
-                Box::new(SemicolumnTerm::new(Location::new(31, 32, &service_path))),
-            )),
-            ModuleDefinition::Service(ServiceTerm::new(
-                Box::new(IdentifierTerm::new_basic(
-                    Location::new(44, 56, &service_path),
-                    "BooksService",
+                ModuleDefinition::Service(ServiceTerm::new(
+                    Location::new(0, 0, &service_path),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(44, 56, &service_path),
+                        "BooksService",
+                    )),
+                    vec![],
                 )),
-                vec![],
-            )),
-        ]),
+            ],
+        ),
     );
     assert_eq!(ast, expected_ast);
 }
