@@ -3,7 +3,6 @@ use crate::parser::fs::MockInMemoryFileSystem;
 use crate::parser::single_module::{SingleModuleParser, SingleModuleParserImpl};
 use crate::parser::ParseError;
 use std::collections::HashMap;
-use std::ops::Deref;
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -59,9 +58,13 @@ fn build_basic_action() -> ActionDeclarationTerm {
                     "param",
                 )),
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                    IdentifierTerm::new_basic(Location::new(61, 68, &get_import_path()), "Example"),
-                ))),
+                Box::new(TypeReferenceTerm::new_scalar(
+                    Location::new(61, 68, &get_import_path()),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(61, 68, &get_import_path()),
+                        "Example",
+                    )),
+                )),
             ))],
             Box::new(CloseRoundBracketTerm::new(Location::new(
                 68,
@@ -81,19 +84,30 @@ fn build_basic_action() -> ActionDeclarationTerm {
 #[inline]
 fn expect_action_to_be(
     module_to_check: Result<Box<ModuleTerm>, ParseError>,
-    action: ActionDeclarationTerm,
+    expected_action: ActionDeclarationTerm,
 ) {
     let module_to_check = module_to_check.expect("Unexpected Error");
-    assert_eq!(
-        module_to_check.deref(),
-        &ModuleTerm::new(vec![ModuleDefinition::Service(ServiceTerm::new(
-            Box::new(IdentifierTerm::new_basic(
-                Location::new(17, 24, &get_import_path()),
-                "Example",
-            )),
-            vec![ServiceDefinition::Action(action)]
-        ))])
-    );
+    assert_eq!(module_to_check.definitions().len(), 1);
+    let service = module_to_check
+        .definitions()
+        .get(0)
+        .expect("Unable to retrieve service");
+    let service = if let ModuleDefinition::Service(service) = service {
+        service
+    } else {
+        panic!("Unable to retrieve service")
+    };
+    assert_eq!(service.definitions().len(), 1);
+    let action = service
+        .definitions()
+        .get(0)
+        .expect("Unable to retrieve action");
+    let action = if let ServiceDefinition::Action(action) = action {
+        action
+    } else {
+        panic!("Unable to retrieve action")
+    };
+    assert_eq!(action, &expected_action);
 }
 
 #[test]
@@ -132,9 +146,13 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
                     "param",
                 )),
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                    IdentifierTerm::new_basic(Location::new(61, 68, &get_import_path()), "Example"),
-                ))),
+                Box::new(TypeReferenceTerm::new_scalar(
+                    Location::new(61, 68, &get_import_path()),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(61, 68, &get_import_path()),
+                        "Example",
+                    )),
+                )),
             ))],
             Box::new(CloseRoundBracketTerm::new(Location::new(
                 68,
@@ -145,9 +163,13 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
         Some(Box::new(ReturnsDeclarationTerm::new(
             Location::new(70, 85, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(70, 77, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                IdentifierTerm::new_basic(Location::new(78, 85, &get_import_path()), "Example"),
-            ))),
+            Box::new(TypeReferenceTerm::new_scalar(
+                Location::new(78, 85, &get_import_path()),
+                Box::new(IdentifierTerm::new_basic(
+                    Location::new(78, 85, &get_import_path()),
+                    "Example",
+                )),
+            )),
         ))),
         Box::new(SemicolumnTerm::new(Location::new(
             85,
@@ -194,12 +216,13 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                         "param1",
                     )),
                     Box::new(ColonTerm::new(Location::new(60, 61, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                        IdentifierTerm::new_basic(
+                    Box::new(TypeReferenceTerm::new_scalar(
+                        Location::new(62, 70, &get_import_path()),
+                        Box::new(IdentifierTerm::new_basic(
                             Location::new(62, 70, &get_import_path()),
                             "Example1",
-                        ),
-                    ))),
+                        )),
+                    )),
                 )),
                 ParameterOrComma::Comma(CommaTerm::new(Location::new(70, 71, &get_import_path()))),
                 ParameterOrComma::Parameter(ParamTerm::new(
@@ -209,12 +232,13 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                         "param2",
                     )),
                     Box::new(ColonTerm::new(Location::new(78, 79, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                        IdentifierTerm::new_basic(
+                    Box::new(TypeReferenceTerm::new_scalar(
+                        Location::new(80, 88, &get_import_path()),
+                        Box::new(IdentifierTerm::new_basic(
                             Location::new(80, 88, &get_import_path()),
                             "Example2",
-                        ),
-                    ))),
+                        )),
+                    )),
                 )),
             ],
             Box::new(CloseRoundBracketTerm::new(Location::new(
@@ -316,9 +340,13 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
         Box::new(ReturnsDeclarationTerm::new(
             Location::new(58, 73, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(58, 65, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(Box::new(
-                IdentifierTerm::new_basic(Location::new(66, 73, &get_import_path()), "Example"),
-            ))),
+            Box::new(TypeReferenceTerm::new_scalar(
+                Location::new(66, 73, &get_import_path()),
+                Box::new(IdentifierTerm::new_basic(
+                    Location::new(66, 73, &get_import_path()),
+                    "Example",
+                )),
+            )),
         )),
         Box::new(SemicolumnTerm::new(Location::new(
             73,
@@ -331,19 +359,30 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
 #[inline]
 fn expect_function_to_be(
     module_to_check: Result<Box<ModuleTerm>, ParseError>,
-    function: FunctionDeclarationTerm,
+    expected_function: FunctionDeclarationTerm,
 ) {
     let module_to_check = module_to_check.expect("Unexpected Error");
-    assert_eq!(
-        module_to_check.deref(),
-        &ModuleTerm::new(vec![ModuleDefinition::Service(ServiceTerm::new(
-            Box::new(IdentifierTerm::new_basic(
-                Location::new(17, 24, &get_import_path()),
-                "Example",
-            )),
-            vec![ServiceDefinition::Function(function)]
-        ))])
-    );
+    assert_eq!(module_to_check.definitions().len(), 1);
+    let service = module_to_check
+        .definitions()
+        .get(0)
+        .expect("Unable to retrieve service");
+    let service = if let ModuleDefinition::Service(service) = service {
+        service
+    } else {
+        panic!("Unable to retrieve service")
+    };
+    assert_eq!(service.definitions().len(), 1);
+    let function = service
+        .definitions()
+        .get(0)
+        .expect("Unable to retrieve function");
+    let function = if let ServiceDefinition::Function(function) = function {
+        function
+    } else {
+        panic!("Unable to retrieve function")
+    };
+    assert_eq!(function, &expected_function);
 }
 
 #[test]
