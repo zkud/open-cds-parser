@@ -69,7 +69,7 @@ fn expect_service_to_be(
 #[inline]
 fn build_basic_service() -> ServiceTerm {
     ServiceTerm::new(
-        Location::new(0, 0, &get_import_path()),
+        Location::new(9, 42, &get_import_path()),
         Box::new(IdentifierTerm::new_basic(
             Location::new(17, 30, &get_import_path()),
             "SimpleService",
@@ -81,7 +81,7 @@ fn build_basic_service() -> ServiceTerm {
 #[inline]
 fn build_namespaced_service() -> ServiceTerm {
     ServiceTerm::new(
-        Location::new(0, 0, &get_import_path()),
+        Location::new(9, 50, &get_import_path()),
         Box::new(IdentifierTerm::new(
             Location::new(17, 38, &get_import_path()),
             vec![

@@ -117,7 +117,7 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     &get_import_path(),
                 )))),
             )),
-            Box::new(FromTerm::new(Location::new(12, 15, &get_import_path()))),
+            Box::new(FromTerm::new(Location::new(12, 16, &get_import_path()))),
             Box::new(PathTerm::new(
                 Location::new(17, 23, &get_import_path()),
                 PathBuf::from("path"),
