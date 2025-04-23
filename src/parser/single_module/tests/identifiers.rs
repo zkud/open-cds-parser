@@ -50,18 +50,26 @@ fn with_namespaced_service_name_it_parses() {
 #[inline]
 fn expect_service_to_be(
     module_to_check: Result<Box<ModuleTerm>, ParseError>,
-    service: ServiceTerm,
+    expected_service: ServiceTerm,
 ) {
     let module_to_check = module_to_check.expect("Unexpected Error");
-    assert_eq!(
-        module_to_check.deref(),
-        &ModuleTerm::new(vec![ModuleDefinition::Service(service)])
-    );
+    assert_eq!(module_to_check.definitions().len(), 1);
+    let service = module_to_check
+        .definitions()
+        .get(0)
+        .expect("Unable to retrieve service");
+    let service = if let ModuleDefinition::Service(service) = service {
+        service
+    } else {
+        panic!("Unable to retrieve service")
+    };
+    assert_eq!(service, &expected_service);
 }
 
 #[inline]
 fn build_basic_service() -> ServiceTerm {
     ServiceTerm::new(
+        Location::new(9, 42, &get_import_path()),
         Box::new(IdentifierTerm::new_basic(
             Location::new(17, 30, &get_import_path()),
             "SimpleService",
@@ -73,6 +81,7 @@ fn build_basic_service() -> ServiceTerm {
 #[inline]
 fn build_namespaced_service() -> ServiceTerm {
     ServiceTerm::new(
+        Location::new(9, 50, &get_import_path()),
         Box::new(IdentifierTerm::new(
             Location::new(17, 38, &get_import_path()),
             vec![

@@ -4,6 +4,8 @@ use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct EntityTerm {
+    #[prop]
+    location: Location,
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]

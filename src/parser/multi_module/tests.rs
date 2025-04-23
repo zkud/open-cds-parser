@@ -38,165 +38,176 @@ fn get_failure_no_file_present_path() -> PathBuf {
     PathBuf::from("/failure_no_file_present.cds")
 }
 
+#[inline]
+fn get_mock_location() -> Location {
+    Location::new(0, 0, &PathBuf::new())
+}
+
 struct MockSingleModuleParser;
 
 impl SingleModuleParser for MockSingleModuleParser {
     fn parse(&self, path: &Path) -> Result<Box<ModuleTerm>, ParseError> {
         if path == get_file_1_path() {
-            return Ok(Box::new(ModuleTerm::new(vec![
-                ModuleDefinition::Import(ImportTerm::new(
-                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                    Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
-                    Box::new(SelectionBlockTerm::new(
-                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                        None,
-                        vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Location::new(
-                                6,
-                                11,
-                                &Path::new("./tests/projects/modules/srv/books.cds"),
-                            ),
-                            Box::new(ImportIdentifierTerm::new(
-                                Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
-                                    IdentifierTerm::new_basic(
-                                        Location::new(0, 0, &PathBuf::new()),
-                                        "Books",
-                                    ),
-                                ))),
-                            )),
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![
+                    ModuleDefinition::Import(ImportTerm::new(
+                        get_mock_location(),
+                        Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
+                        Box::new(SelectionBlockTerm::new(
+                            get_mock_location(),
                             None,
+                            vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                                get_mock_location(),
+                                Box::new(ImportIdentifierTerm::new(
+                                    get_mock_location(),
+                                    Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                        IdentifierTerm::new_basic(get_mock_location(), "Books"),
+                                    ))),
+                                )),
+                                None,
+                                None,
+                            ))],
                             None,
-                        ))],
-                        None,
+                        )),
+                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(PathTerm::new(
+                            get_mock_location(),
+                            PathBuf::from("/subdir/file3"),
+                        )),
+                        Box::new(SemicolumnTerm::new(get_mock_location())),
                     )),
-                    Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new(PathBuf::from("/subdir/file3"))),
-                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
-                )),
-                ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
-                        "BooksService",
+                    ModuleDefinition::Service(ServiceTerm::new(
+                        get_mock_location(),
+                        Box::new(IdentifierTerm::new_basic(
+                            get_mock_location(),
+                            "BooksService",
+                        )),
+                        vec![],
                     )),
-                    vec![],
-                )),
-            ])));
+                ],
+            )));
         }
         if path == get_file_2_path() {
-            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-                ServiceTerm::new(
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![ModuleDefinition::Service(ServiceTerm::new(
+                    get_mock_location(),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
+                        get_mock_location(),
                         "AuthorsService1",
                     )),
                     vec![],
-                ),
-            )])));
+                ))],
+            )));
         }
         if path == get_subdir_file_3_path() {
-            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-                ServiceTerm::new(
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![ModuleDefinition::Service(ServiceTerm::new(
+                    get_mock_location(),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
+                        get_mock_location(),
                         "AuthorsService2",
                     )),
                     vec![],
-                ),
-            )])));
+                ))],
+            )));
         }
         if path == get_subdir_file_4_path() {
-            return Ok(Box::new(ModuleTerm::new(vec![
-                ModuleDefinition::Import(ImportTerm::new(
-                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                    Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
-                    Box::new(SelectionBlockTerm::new(
-                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                        None,
-                        vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Location::new(
-                                6,
-                                11,
-                                &Path::new("./tests/projects/modules/srv/books.cds"),
-                            ),
-                            Box::new(ImportIdentifierTerm::new(
-                                Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
-                                    IdentifierTerm::new_basic(
-                                        Location::new(0, 0, &PathBuf::new()),
-                                        "Books",
-                                    ),
-                                ))),
-                            )),
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![
+                    ModuleDefinition::Import(ImportTerm::new(
+                        get_mock_location(),
+                        Box::new(UsingTerm::new(get_mock_location())),
+                        Box::new(SelectionBlockTerm::new(
+                            get_mock_location(),
                             None,
+                            vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                                get_mock_location(),
+                                Box::new(ImportIdentifierTerm::new(
+                                    Location::new(0, 0, &PathBuf::new()),
+                                    Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                        IdentifierTerm::new_basic(get_mock_location(), "Books"),
+                                    ))),
+                                )),
+                                None,
+                                None,
+                            ))],
                             None,
-                        ))],
-                        None,
+                        )),
+                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(PathTerm::new(
+                            get_mock_location(),
+                            PathBuf::from("/subdir/subdir"),
+                        )),
+                        Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
                     )),
-                    Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new(PathBuf::from("/subdir/subdir"))),
-                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
-                )),
-                ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
-                        "BooksService",
+                    ModuleDefinition::Service(ServiceTerm::new(
+                        get_mock_location(),
+                        Box::new(IdentifierTerm::new_basic(
+                            get_mock_location(),
+                            "BooksService",
+                        )),
+                        vec![],
                     )),
-                    vec![],
-                )),
-            ])));
+                ],
+            )));
         }
         if path == get_subdir_subdir_index_path() {
-            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-                ServiceTerm::new(
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![ModuleDefinition::Service(ServiceTerm::new(
+                    get_mock_location(),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
+                        get_mock_location(),
                         "AuthorsService2",
                     )),
                     vec![],
-                ),
-            )])));
+                ))],
+            )));
         }
         if path == get_failure_no_file_present_path() {
-            return Ok(Box::new(ModuleTerm::new(vec![
-                ModuleDefinition::Import(ImportTerm::new(
-                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                    Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
-                    Box::new(SelectionBlockTerm::new(
-                        Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                        None,
-                        vec![SelectionBlockSegment::Selector(SelectorTerm::new(
-                            Location::new(
-                                6,
-                                11,
-                                &Path::new("./tests/projects/modules/srv/books.cds"),
-                            ),
-                            Box::new(ImportIdentifierTerm::new(
-                                Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
-                                    IdentifierTerm::new_basic(
-                                        Location::new(0, 0, &PathBuf::new()),
-                                        "Books",
-                                    ),
-                                ))),
-                            )),
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![
+                    ModuleDefinition::Import(ImportTerm::new(
+                        get_mock_location(),
+                        Box::new(UsingTerm::new(get_mock_location())),
+                        Box::new(SelectionBlockTerm::new(
+                            get_mock_location(),
                             None,
+                            vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                                get_mock_location(),
+                                Box::new(ImportIdentifierTerm::new(
+                                    get_mock_location(),
+                                    Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                        IdentifierTerm::new_basic(get_mock_location(), "Books"),
+                                    ))),
+                                )),
+                                None,
+                                None,
+                            ))],
                             None,
-                        ))],
-                        None,
+                        )),
+                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(PathTerm::new(
+                            get_mock_location(),
+                            PathBuf::from("/no_file_present"),
+                        )),
+                        Box::new(SemicolumnTerm::new(get_mock_location())),
                     )),
-                    Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new(PathBuf::from("/no_file_present"))),
-                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
-                )),
-                ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
-                        "BooksService",
+                    ModuleDefinition::Service(ServiceTerm::new(
+                        get_mock_location(),
+                        Box::new(IdentifierTerm::new_basic(
+                            get_mock_location(),
+                            "BooksService",
+                        )),
+                        vec![],
                     )),
-                    vec![],
-                )),
-            ])));
+                ],
+            )));
         }
         return Err(ParseError::new(
             "Unexpected file".to_string(),
@@ -360,67 +371,72 @@ struct MockSingleModuleParserForDuplication;
 impl SingleModuleParser for MockSingleModuleParserForDuplication {
     fn parse(&self, path: &Path) -> Result<Box<ModuleTerm>, ParseError> {
         if path == Path::new("/file1.cds") {
-            return Ok(Box::new(ModuleTerm::new(vec![
-                ModuleDefinition::Import(ImportTerm::new(
-                    Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                    Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
-                    Box::new(SelectionBlockTerm::new(
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![
+                    ModuleDefinition::Import(ImportTerm::new(
                         Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                        None,
-                        vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                        Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
+                        Box::new(SelectionBlockTerm::new(
                             Location::new(
                                 6,
                                 11,
                                 &Path::new("./tests/projects/modules/srv/books.cds"),
                             ),
-                            Box::new(ImportIdentifierTerm::new(
-                                Location::new(0, 0, &PathBuf::new()),
-                                Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
-                                    IdentifierTerm::new_basic(
-                                        Location::new(0, 0, &PathBuf::new()),
-                                        "Books",
-                                    ),
-                                ))),
-                            )),
                             None,
+                            vec![SelectionBlockSegment::Selector(SelectorTerm::new(
+                                get_mock_location(),
+                                Box::new(ImportIdentifierTerm::new(
+                                    get_mock_location(),
+                                    Box::new(ImportIdentifierVariant::IdentifierOnly(Box::new(
+                                        IdentifierTerm::new_basic(get_mock_location(), "Books"),
+                                    ))),
+                                )),
+                                None,
+                                None,
+                            ))],
                             None,
-                        ))],
-                        None,
+                        )),
+                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(PathTerm::new(get_mock_location(), PathBuf::from("/file2"))),
+                        Box::new(SemicolumnTerm::new(get_mock_location())),
                     )),
-                    Box::new(FromTerm::new()),
-                    Box::new(PathTerm::new(PathBuf::from("/file2"))),
-                    Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
-                )),
-                ModuleDefinition::Service(ServiceTerm::new(
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
-                        "BooksService",
+                    ModuleDefinition::Service(ServiceTerm::new(
+                        get_mock_location(),
+                        Box::new(IdentifierTerm::new_basic(
+                            get_mock_location(),
+                            "BooksService",
+                        )),
+                        vec![],
                     )),
-                    vec![],
-                )),
-            ])));
+                ],
+            )));
         }
         if path == Path::new("/file2.cds") {
-            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-                ServiceTerm::new(
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![ModuleDefinition::Service(ServiceTerm::new(
+                    get_mock_location(),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
+                        get_mock_location(),
                         "AuthorsService1",
                     )),
                     vec![],
-                ),
-            )])));
+                ))],
+            )));
         }
         if path == Path::new("/file2/index.cds") {
-            return Ok(Box::new(ModuleTerm::new(vec![ModuleDefinition::Service(
-                ServiceTerm::new(
+            return Ok(Box::new(ModuleTerm::new(
+                get_mock_location(),
+                vec![ModuleDefinition::Service(ServiceTerm::new(
+                    get_mock_location(),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(0, 0, &PathBuf::new()),
+                        get_mock_location(),
                         "AuthorsService2",
                     )),
                     vec![],
-                ),
-            )])));
+                ))],
+            )));
         }
         Err(ParseError::new(
             "Unexpected file".to_string(),

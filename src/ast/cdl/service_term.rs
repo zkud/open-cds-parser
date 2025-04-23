@@ -1,5 +1,6 @@
 use crate::ast::*;
 
+use super::super::Location;
 use super::entity_term::EntityTerm;
 use super::ActionDeclarationTerm;
 use super::FunctionDeclarationTerm;
@@ -9,6 +10,8 @@ use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ServiceTerm {
+    #[prop]
+    location: Location,
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]

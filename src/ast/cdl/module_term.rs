@@ -8,6 +8,8 @@ use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ModuleTerm {
+    #[prop]
+    location: Location,
     #[subnode_prop]
     definitions: Vec<ModuleDefinition>,
 }
