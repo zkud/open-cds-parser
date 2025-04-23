@@ -60,10 +60,13 @@ fn build_basic_action() -> ActionDeclarationTerm {
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
                 Box::new(TypeReferenceTerm::new_scalar(
                     Location::new(61, 68, &get_import_path()),
-                    Box::new(IdentifierTerm::new_basic(
+                    Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                         Location::new(61, 68, &get_import_path()),
-                        "Example",
-                    )),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(61, 68, &get_import_path()),
+                            "Example",
+                        )),
+                    ))),
                 )),
             ))],
             Box::new(CloseRoundBracketTerm::new(Location::new(
@@ -148,10 +151,13 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
                 Box::new(TypeReferenceTerm::new_scalar(
                     Location::new(61, 68, &get_import_path()),
-                    Box::new(IdentifierTerm::new_basic(
+                    Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                         Location::new(61, 68, &get_import_path()),
-                        "Example",
-                    )),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(61, 68, &get_import_path()),
+                            "Example",
+                        )),
+                    ))),
                 )),
             ))],
             Box::new(CloseRoundBracketTerm::new(Location::new(
@@ -165,10 +171,13 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
             Box::new(ReturnsTerm::new(Location::new(70, 77, &get_import_path()))),
             Box::new(TypeReferenceTerm::new_scalar(
                 Location::new(78, 85, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
+                Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                     Location::new(78, 85, &get_import_path()),
-                    "Example",
-                )),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(78, 85, &get_import_path()),
+                        "Example",
+                    )),
+                ))),
             )),
         ))),
         Box::new(SemicolumnTerm::new(Location::new(
@@ -218,10 +227,13 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                     Box::new(ColonTerm::new(Location::new(60, 61, &get_import_path()))),
                     Box::new(TypeReferenceTerm::new_scalar(
                         Location::new(62, 70, &get_import_path()),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                             Location::new(62, 70, &get_import_path()),
-                            "Example1",
-                        )),
+                            Box::new(IdentifierTerm::new_basic(
+                                Location::new(62, 70, &get_import_path()),
+                                "Example1",
+                            )),
+                        ))),
                     )),
                 )),
                 ParameterOrComma::Comma(CommaTerm::new(Location::new(70, 71, &get_import_path()))),
@@ -234,10 +246,13 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                     Box::new(ColonTerm::new(Location::new(78, 79, &get_import_path()))),
                     Box::new(TypeReferenceTerm::new_scalar(
                         Location::new(80, 88, &get_import_path()),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                             Location::new(80, 88, &get_import_path()),
-                            "Example2",
-                        )),
+                            Box::new(IdentifierTerm::new_basic(
+                                Location::new(80, 88, &get_import_path()),
+                                "Example2",
+                            )),
+                        ))),
                     )),
                 )),
             ],
@@ -342,10 +357,13 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
             Box::new(ReturnsTerm::new(Location::new(58, 65, &get_import_path()))),
             Box::new(TypeReferenceTerm::new_scalar(
                 Location::new(66, 73, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
+                Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                     Location::new(66, 73, &get_import_path()),
-                    "Example",
-                )),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(66, 73, &get_import_path()),
+                        "Example",
+                    )),
+                ))),
             )),
         )),
         Box::new(SemicolumnTerm::new(Location::new(
@@ -403,13 +421,25 @@ struct ParamCaptureVisitor {
     comma_count: i32,
 }
 
+impl ParamCaptureVisitor {
+    fn extract_full_name(param: &ParamTerm) -> String {
+        if let TypeDetailsVariant::Simple(simple_type) =
+            param.type_reference().type_details().as_ref()
+        {
+            simple_type.identifier().full_name()
+        } else {
+            panic!("Unexpected TypeDetailsVariant");
+        }
+    }
+}
+
 impl Visitor for ParamCaptureVisitor {
     type Error = ();
 
     fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), Self::Error> {
         if let Some(term) = term.try_convert::<ParamTerm>() {
             let name = term.name().full_name();
-            let param_type = term.type_reference().type_name().full_name();
+            let param_type = Self::extract_full_name(term);
             self.params.push((name.clone(), param_type.clone()));
         }
         if let Some(_) = term.try_convert::<CommaTerm>() {
