@@ -14,17 +14,17 @@ TypeReference: TypeReferenceTerm = {
         let location = Location::new(start, end, filepath);
         TypeReferenceTerm::new(location, None, Box::new(type_details))
     },
-    <start: @L> "array" "of" <type_details:TypeDetails> <end: @R> => {
+    <start: @L> <array: Array> <of: Of> <type_details:TypeDetails> <end: @R> => {
         let location = Location::new(start, end, filepath);
         let array_prefix = ArrayPrefix::ArrayOf {
-            array: Box::new(ArrayTerm::new(Location::new(start, start + "array".len(), filepath))), 
-            of: Box::new(OfTerm::new(Location::new(start + "array ".len(), start + "array of".len(), filepath))),
+            array: Box::new(array), 
+            of: Box::new(of),
         };
         TypeReferenceTerm::new(location, Some(array_prefix), Box::new(type_details))
     },
-    <start: @L> "many" <type_details:TypeDetails> <end: @R> => {
+    <start: @L> <many:Many> <type_details:TypeDetails> <end: @R> => {
         let location = Location::new(start, end, filepath);
-        let array_prefix = ArrayPrefix::Many(Box::new(ManyTerm::new(Location::new(start, start + "many".len(), filepath))));
+        let array_prefix = ArrayPrefix::Many(Box::new(many));
         TypeReferenceTerm::new(location, Some(array_prefix), Box::new(type_details))
     },
 }
@@ -48,21 +48,21 @@ StructuredTypeDetails: StructuredTypeDetailsTerm = {
     },
 }
 
-ArrayTerm: ArrayTerm = {
+Array: ArrayTerm = {
     <start: @L> "array" <end: @R> => {
         let location = Location::new(start, end, filepath);
         ArrayTerm::new(location)
     },
 }
 
-ManyTerm: ManyTerm = {
+Many: ManyTerm = {
     <start: @L> "many" <end: @R> => {
         let location = Location::new(start, end, filepath);
         ManyTerm::new(location)
     },
 }
 
-OfTerm: OfTerm = {
+Of: OfTerm = {
     <start: @L> "of" <end: @R> => {
         let location = Location::new(start, end, filepath);
         OfTerm::new(location)
