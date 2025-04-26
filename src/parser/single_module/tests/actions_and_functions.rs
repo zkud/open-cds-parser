@@ -58,8 +58,9 @@ fn build_basic_action() -> ActionDeclarationTerm {
                     "param",
                 )),
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(
+                Box::new(TypeReferenceTerm::new(
                     Location::new(61, 68, &get_import_path()),
+                    None,
                     Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                         Location::new(61, 68, &get_import_path()),
                         Box::new(IdentifierTerm::new_basic(
@@ -149,8 +150,9 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
                     "param",
                 )),
                 Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(
+                Box::new(TypeReferenceTerm::new(
                     Location::new(61, 68, &get_import_path()),
+                    None,
                     Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                         Location::new(61, 68, &get_import_path()),
                         Box::new(IdentifierTerm::new_basic(
@@ -169,8 +171,9 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
         Some(Box::new(ReturnsDeclarationTerm::new(
             Location::new(70, 85, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(70, 77, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(
+            Box::new(TypeReferenceTerm::new(
                 Location::new(78, 85, &get_import_path()),
+                None,
                 Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                     Location::new(78, 85, &get_import_path()),
                     Box::new(IdentifierTerm::new_basic(
@@ -225,8 +228,9 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                         "param1",
                     )),
                     Box::new(ColonTerm::new(Location::new(60, 61, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(
+                    Box::new(TypeReferenceTerm::new(
                         Location::new(62, 70, &get_import_path()),
+                        None,
                         Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                             Location::new(62, 70, &get_import_path()),
                             Box::new(IdentifierTerm::new_basic(
@@ -244,8 +248,9 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                         "param2",
                     )),
                     Box::new(ColonTerm::new(Location::new(78, 79, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(
+                    Box::new(TypeReferenceTerm::new(
                         Location::new(80, 88, &get_import_path()),
+                        None,
                         Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                             Location::new(80, 88, &get_import_path()),
                             Box::new(IdentifierTerm::new_basic(
@@ -355,8 +360,9 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
         Box::new(ReturnsDeclarationTerm::new(
             Location::new(58, 73, &get_import_path()),
             Box::new(ReturnsTerm::new(Location::new(58, 65, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(
+            Box::new(TypeReferenceTerm::new(
                 Location::new(66, 73, &get_import_path()),
+                None,
                 Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                     Location::new(66, 73, &get_import_path()),
                     Box::new(IdentifierTerm::new_basic(

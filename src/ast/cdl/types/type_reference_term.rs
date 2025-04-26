@@ -1,4 +1,5 @@
 use super::super::super::Location;
+use super::ArrayPrefix;
 use super::SimpleTypeDetailsTerm;
 use super::StructuredTypeDetailsTerm;
 use ast_term_derive::ASTTerm;
@@ -7,34 +8,10 @@ use ast_term_derive::ASTTerm;
 pub struct TypeReferenceTerm {
     #[prop]
     location: Location,
+    #[prop]
+    array_prefix: Option<ArrayPrefix>,
     #[subnode_prop]
     type_details: Box<TypeDetailsVariant>,
-    #[prop]
-    is_arrayed: bool,
-}
-
-impl TypeReferenceTerm {
-    pub fn new_scalar(
-        location: Location,
-        type_details: Box<TypeDetailsVariant>,
-    ) -> TypeReferenceTerm {
-        TypeReferenceTerm {
-            location,
-            type_details,
-            is_arrayed: false,
-        }
-    }
-
-    pub fn new_arrayed(
-        location: Location,
-        type_details: Box<TypeDetailsVariant>,
-    ) -> TypeReferenceTerm {
-        TypeReferenceTerm {
-            location,
-            type_details,
-            is_arrayed: true,
-        }
-    }
 }
 
 #[derive(PartialEq, Eq, Debug, Clone)]

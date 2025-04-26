@@ -87,7 +87,7 @@ fn test_function_declaration() {
                     panic!("Unexpected type variant!");
                 };
             assert_eq!(return_type_name, "Integer");
-            assert!(!return_type.is_arrayed());
+            assert!(return_type.array_prefix().is_none());
         } else {
             panic!("Expected function definition");
         }
