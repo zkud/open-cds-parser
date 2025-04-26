@@ -427,18 +427,6 @@ struct ParamCaptureVisitor {
     comma_count: i32,
 }
 
-impl ParamCaptureVisitor {
-    fn extract_full_name(param: &ParamTerm) -> String {
-        if let TypeDetailsVariant::Simple(simple_type) =
-            param.type_reference().type_details().as_ref()
-        {
-            simple_type.identifier().full_name()
-        } else {
-            panic!("Unexpected TypeDetailsVariant");
-        }
-    }
-}
-
 impl Visitor for ParamCaptureVisitor {
     type Error = ();
 
@@ -455,6 +443,18 @@ impl Visitor for ParamCaptureVisitor {
             self.comma_count += 1;
         }
         Ok(())
+    }
+}
+
+impl ParamCaptureVisitor {
+    fn extract_full_name(param: &ParamTerm) -> String {
+        if let TypeDetailsVariant::Simple(simple_type) =
+            param.type_reference().type_details().as_ref()
+        {
+            simple_type.identifier().full_name()
+        } else {
+            panic!("Unexpected TypeDetailsVariant");
+        }
     }
 }
 
