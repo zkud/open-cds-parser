@@ -1,48 +1,70 @@
 TypeDeclaration: TypeDeclarationTerm = {
-  <start: @L> "define" "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type_identifier))
-  },
-  <start: @L> "type" <identifier:Identifier> ":" <resolved_type_identifier:Identifier> ";" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type_identifier))
-  }
+    <start: @L> "define" "type" <identifier:Identifier> ":" <resolved_type:TypeReference> ";" <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type))
+    },
+    <start: @L> "type" <identifier:Identifier> ":" <resolved_type:TypeReference> ";" <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type))
+    }
 }
 
 TypeReference: TypeReferenceTerm = {
-  <start: @L> <type_details:TypeDetails> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    TypeReferenceTerm::new(location, None, Box::new(type_details))
-  },
-  <start: @L> "array" "of" <type_details:TypeDetails> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    TypeReferenceTerm::new(location, None, Box::new(type_details))
-  },
-  <start: @L> "many" <type_details:TypeDetails> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    TypeReferenceTerm::new(location, None, Box::new(type_details))
-  },
+    <start: @L> <type_details:TypeDetails> <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        TypeReferenceTerm::new(location, None, Box::new(type_details))
+    },
+    <start: @L> "array" "of" <type_details:TypeDetails> <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        let array_prefix = ArrayPrefix::ArrayOf {
+            array: Box::new(ArrayTerm::new(Location::new(start, start + "array".len(), filepath))), 
+            of: Box::new(OfTerm::new(Location::new(start + "array ".len(), start + "array of".len(), filepath))),
+        };
+        TypeReferenceTerm::new(location, Some(array_prefix), Box::new(type_details))
+    },
+    <start: @L> "many" <type_details:TypeDetails> <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        let array_prefix = ArrayPrefix::Many(Box::new(ManyTerm::new(Location::new(start, start + "many".len(), filepath))));
+        TypeReferenceTerm::new(location, Some(array_prefix), Box::new(type_details))
+    },
 }
 
 TypeDetails: TypeDetailsVariant = {
-  <simple: SimpleTypeDetails> => {
-    TypeDetailsVariant::Simple(simple)
-  },
-  <structured: StructuredTypeDetails> => {
-    TypeDetailsVariant::Structured(structured)
-  },
+    <simple: SimpleTypeDetails> => TypeDetailsVariant::Simple(simple),
+    <structured: StructuredTypeDetails> => TypeDetailsVariant::Structured(structured),
 }
 
 SimpleTypeDetails: SimpleTypeDetailsTerm = {
-  <start: @L> <identifier:Identifier> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    SimpleTypeDetailsTerm::new(location, Box::new(identifier))
-  },
+    <start: @L> <identifier:Identifier> <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        SimpleTypeDetailsTerm::new(location, Box::new(identifier))
+    },
 }
 
 StructuredTypeDetails: StructuredTypeDetailsTerm = {
-  <start: @L> "{" "}" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    StructuredTypeDetailsTerm::new(location)
-  },
+    <start: @L> "{" "}" <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        StructuredTypeDetailsTerm::new(location)
+    },
+}
+
+ArrayTerm: ArrayTerm = {
+    <start: @L> "array" <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        ArrayTerm::new(location)
+    },
+}
+
+ManyTerm: ManyTerm = {
+    <start: @L> "many" <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        ManyTerm::new(location)
+    },
+}
+
+OfTerm: OfTerm = {
+    <start: @L> "of" <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        OfTerm::new(location)
+    },
 }
