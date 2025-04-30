@@ -291,11 +291,11 @@ fn with_name_with_alias_import_it_parses() {
                             ),
                         ))),
                     )),
-                    Some(Box::new(AsTerm::new(Location::new(
+                    Some(Box::new(KeywordTerm::new(Location::new(
                         14,
                         16,
                         &get_import_path(),
-                    )))),
+                    ), Keyword::As))),
                     Some(Box::new(IdentifierTerm::new_basic(
                         Location::new(17, 22, &get_import_path()),
                         "name2",

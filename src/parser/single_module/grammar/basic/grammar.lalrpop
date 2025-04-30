@@ -1,7 +1,7 @@
-As: AsTerm = {
+As: KeywordTerm = {
   <start: @L> "as" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    AsTerm::new(location)
+    KeywordTerm::new(location, Keyword::As)
   },
 }
 
