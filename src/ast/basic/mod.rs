@@ -8,7 +8,6 @@ mod open_curly_brace_term;
 mod open_round_bracket_term;
 mod punctuation_sign_term;
 mod semicolumn_term;
-mod using_term;
 mod wildcart_term;
 
 pub use close_curly_brace_term::*;
@@ -21,5 +20,4 @@ pub use open_curly_brace_term::*;
 pub use open_round_bracket_term::*;
 pub use punctuation_sign_term::*;
 pub use semicolumn_term::*;
-pub use using_term::*;
 pub use wildcart_term::*;

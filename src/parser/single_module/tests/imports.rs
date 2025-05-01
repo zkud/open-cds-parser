@@ -28,7 +28,10 @@ fn with_straight_wildcart_import_it_parses() {
         result,
         ImportTerm::new(
             Location::new(0, 20, &get_import_path()),
-            Box::new(UsingTerm::new(Location::new(0, 5, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(0, 5, &get_import_path()),
+                Keyword::Using,
+            )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(6, 7, &get_import_path()),
                 None,
@@ -92,7 +95,10 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
         result,
         ImportTerm::new(
             Location::new(0, 24, &get_import_path()),
-            Box::new(UsingTerm::new(Location::new(0, 5, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(0, 5, &get_import_path()),
+                Keyword::Using,
+            )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(6, 11, &get_import_path()),
                 Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
@@ -148,7 +154,10 @@ fn with_name_import_it_parses() {
         result,
         ImportTerm::new(
             Location::new(1, 28, &get_import_path()),
-            Box::new(UsingTerm::new(Location::new(1, 6, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(1, 6, &get_import_path()),
+                Keyword::Using,
+            )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 15, &get_import_path()),
                 Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
@@ -207,7 +216,10 @@ fn with_name_with_comma_import_it_parses() {
         result,
         ImportTerm::new(
             Location::new(1, 29, &get_import_path()),
-            Box::new(UsingTerm::new(Location::new(1, 6, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(1, 6, &get_import_path()),
+                Keyword::Using,
+            )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 16, &get_import_path()),
                 Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
@@ -272,7 +284,10 @@ fn with_name_with_alias_import_it_parses() {
         result,
         ImportTerm::new(
             Location::new(1, 37, &get_import_path()),
-            Box::new(UsingTerm::new(Location::new(1, 6, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(1, 6, &get_import_path()),
+                Keyword::Using,
+            )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 24, &get_import_path()),
                 Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
@@ -291,11 +306,10 @@ fn with_name_with_alias_import_it_parses() {
                             ),
                         ))),
                     )),
-                    Some(Box::new(KeywordTerm::new(Location::new(
-                        14,
-                        16,
-                        &get_import_path(),
-                    ), Keyword::As))),
+                    Some(Box::new(KeywordTerm::new(
+                        Location::new(14, 16, &get_import_path()),
+                        Keyword::As,
+                    ))),
                     Some(Box::new(IdentifierTerm::new_basic(
                         Location::new(17, 22, &get_import_path()),
                         "name2",
@@ -338,7 +352,10 @@ fn with_name_with_wildcart_import_it_parses() {
         result,
         ImportTerm::new(
             Location::new(1, 30, &get_import_path()),
-            Box::new(UsingTerm::new(Location::new(1, 6, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(1, 6, &get_import_path()),
+                Keyword::Using,
+            )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 17, &get_import_path()),
                 Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
@@ -403,7 +420,10 @@ fn with_multiple_imports_it_parses() {
         result,
         ImportTerm::new(
             Location::new(1, 36, &get_import_path()),
-            Box::new(UsingTerm::new(Location::new(1, 6, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(1, 6, &get_import_path()),
+                Keyword::Using,
+            )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 23, &get_import_path()),
                 Some(Box::new(OpenCurlyBraceTerm::new(Location::new(

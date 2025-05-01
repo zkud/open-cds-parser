@@ -53,7 +53,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         get_mock_location(),
-                        Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
+                        Box::new(KeywordTerm::new(
+                            Location::new(0, 0, &PathBuf::new()),
+                            Keyword::Using,
+                        )),
                         Box::new(SelectionBlockTerm::new(
                             get_mock_location(),
                             None,
@@ -120,7 +123,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         get_mock_location(),
-                        Box::new(UsingTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Using)),
                         Box::new(SelectionBlockTerm::new(
                             get_mock_location(),
                             None,
@@ -174,7 +177,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         get_mock_location(),
-                        Box::new(UsingTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Using)),
                         Box::new(SelectionBlockTerm::new(
                             get_mock_location(),
                             None,
@@ -376,7 +379,10 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                        Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
+                        Box::new(KeywordTerm::new(
+                            Location::new(0, 0, &Path::new("")),
+                            Keyword::Using,
+                        )),
                         Box::new(SelectionBlockTerm::new(
                             Location::new(
                                 6,
