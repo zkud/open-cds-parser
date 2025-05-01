@@ -23,13 +23,6 @@ ActionDeclaration: ActionDeclarationTerm = {
   }
 };
 
-Action: ActionTerm = {
-  <start: @L> "action" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    ActionTerm::new(location)
-  },
-}
-
 ParametersBlock: ParametersBlockTerm = {
   <start: @L> <open_bracket:OpenRoundBracket> <parameters_and_commas:ParametersAndCommas> <close_bracket:CloseRoundBracket> <end: @R> => {
     let location = Location::new(start, end, filepath);

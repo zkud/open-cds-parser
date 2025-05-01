@@ -39,7 +39,10 @@ fn get_import_path() -> PathBuf {
 fn build_basic_action() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 70, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
@@ -131,7 +134,10 @@ fn with_action_with_one_param_and_one_return_it_parses() {
 fn build_basic_action_plus_return() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 86, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
@@ -208,7 +214,10 @@ fn with_action_with_several_params_it_parses() {
 fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 90, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
@@ -293,7 +302,10 @@ fn with_action_with_no_params_it_parses() {
 fn build_basic_action_with_no_args() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 56, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
