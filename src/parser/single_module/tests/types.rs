@@ -154,11 +154,10 @@ fn build_many_type_declaration() -> TypeDeclarationTerm {
         )),
         Box::new(TypeReferenceTerm::new(
             Location::new(28, 39, &get_import_path()),
-            Some(ArrayPrefix::Many(Box::new(ManyTerm::new(Location::new(
-                28,
-                32,
-                &get_import_path(),
-            ))))),
+            Some(ArrayPrefix::Many(Box::new(KeywordTerm::new(
+                Location::new(28, 32, &get_import_path()),
+                Keyword::Many,
+            )))),
             Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
                 Location::new(33, 39, &get_import_path()),
                 Box::new(IdentifierTerm::new_basic(

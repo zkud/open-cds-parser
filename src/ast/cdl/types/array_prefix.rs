@@ -1,5 +1,4 @@
 use super::super::super::KeywordTerm;
-use super::ManyTerm;
 use super::OfTerm;
 use crate::ast::{Visitable, Visitor};
 
@@ -9,7 +8,7 @@ pub enum ArrayPrefix {
         array: Box<KeywordTerm>,
         of: Box<OfTerm>,
     },
-    Many(Box<ManyTerm>),
+    Many(Box<KeywordTerm>),
 }
 
 impl Visitable for ArrayPrefix {
