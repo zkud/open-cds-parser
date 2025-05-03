@@ -164,13 +164,6 @@ Field: FieldTerm = {
   }
 }
 
-From: FromTerm = {
-  <start: @L> "from" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    FromTerm::new(location)
-  }
-}
-
 Path: PathTerm = {
   <start: @L> <value:r"`[a-zA-Z0-9-/[.]]+`"> <end: @R> => {
     let location = Location::new(start, end, filepath);

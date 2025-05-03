@@ -48,7 +48,10 @@ fn with_straight_wildcart_import_it_parses() {
                 ))],
                 None,
             )),
-            Box::new(FromTerm::new(Location::new(8, 12, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(8, 12, &get_import_path()),
+                Keyword::From,
+            )),
             Box::new(PathTerm::new(
                 Location::new(13, 19, &get_import_path()),
                 PathBuf::from("path"),
@@ -123,7 +126,10 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     &get_import_path(),
                 )))),
             )),
-            Box::new(FromTerm::new(Location::new(12, 16, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(12, 16, &get_import_path()),
+                Keyword::From,
+            )),
             Box::new(PathTerm::new(
                 Location::new(17, 23, &get_import_path()),
                 PathBuf::from("path"),
@@ -185,7 +191,10 @@ fn with_name_import_it_parses() {
                     &get_import_path(),
                 )))),
             )),
-            Box::new(FromTerm::new(Location::new(16, 20, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(16, 20, &get_import_path()),
+                Keyword::From,
+            )),
             Box::new(PathTerm::new(
                 Location::new(21, 27, &get_import_path()),
                 PathBuf::from("path"),
@@ -254,7 +263,10 @@ fn with_name_with_comma_import_it_parses() {
                     &get_import_path(),
                 )))),
             )),
-            Box::new(FromTerm::new(Location::new(17, 21, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(17, 21, &get_import_path()),
+                Keyword::From,
+            )),
             Box::new(PathTerm::new(
                 Location::new(22, 28, &get_import_path()),
                 PathBuf::from("path"),
@@ -321,7 +333,10 @@ fn with_name_with_alias_import_it_parses() {
                     &get_import_path(),
                 )))),
             )),
-            Box::new(FromTerm::new(Location::new(25, 29, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(25, 29, &get_import_path()),
+                Keyword::From,
+            )),
             Box::new(PathTerm::new(
                 Location::new(30, 36, &get_import_path()),
                 PathBuf::from("path"),
@@ -389,7 +404,10 @@ fn with_name_with_wildcart_import_it_parses() {
                     &get_import_path(),
                 )))),
             )),
-            Box::new(FromTerm::new(Location::new(18, 22, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(18, 22, &get_import_path()),
+                Keyword::From,
+            )),
             Box::new(PathTerm::new(
                 Location::new(23, 29, &get_import_path()),
                 PathBuf::from("path"),
@@ -472,7 +490,10 @@ fn with_multiple_imports_it_parses() {
                     &get_import_path(),
                 )))),
             )),
-            Box::new(FromTerm::new(Location::new(24, 28, &get_import_path()))),
+            Box::new(KeywordTerm::new(
+                Location::new(24, 28, &get_import_path()),
+                Keyword::From,
+            )),
             Box::new(PathTerm::new(
                 Location::new(29, 35, &get_import_path()),
                 PathBuf::from("path"),

@@ -73,7 +73,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(
                             get_mock_location(),
                             PathBuf::from("/subdir/file3"),
@@ -140,7 +140,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(
                             get_mock_location(),
                             PathBuf::from("/subdir/subdir"),
@@ -194,7 +194,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(
                             get_mock_location(),
                             PathBuf::from("/no_file_present"),
@@ -403,7 +403,7 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(get_mock_location(), PathBuf::from("/file2"))),
                         Box::new(SemicolumnTerm::new(get_mock_location())),
                     )),
