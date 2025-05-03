@@ -76,13 +76,6 @@ ReturnsDeclaration: ReturnsDeclarationTerm = {
   },
 }
 
-Returns: ReturnsTerm = {
-  <start: @L> "returns" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    ReturnsTerm::new(location)
-  },
-}
-
 FunctionDeclaration: FunctionDeclarationTerm = {
   <start: @L> <function:Function> <identifier:Identifier> <parameters:ParametersBlock> <returns_declaration:ReturnsDeclaration> <semicolumn:Semicolumn> <end: @R> => {
     let location = Location::new(start, end, filepath);
