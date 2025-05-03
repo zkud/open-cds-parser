@@ -48,13 +48,6 @@ StructuredTypeDetails: StructuredTypeDetailsTerm = {
     },
 }
 
-Array: ArrayTerm = {
-    <start: @L> "array" <end: @R> => {
-        let location = Location::new(start, end, filepath);
-        ArrayTerm::new(location)
-    },
-}
-
 Many: ManyTerm = {
     <start: @L> "many" <end: @R> => {
         let location = Location::new(start, end, filepath);

@@ -127,7 +127,10 @@ fn build_array_type_declaration() -> TypeDeclarationTerm {
         Box::new(TypeReferenceTerm::new(
             Location::new(29, 44, &get_import_path()),
             Some(ArrayPrefix::ArrayOf {
-                array: Box::new(ArrayTerm::new(Location::new(29, 34, &get_import_path()))),
+                array: Box::new(KeywordTerm::new(
+                    Location::new(29, 34, &get_import_path()),
+                    Keyword::Array,
+                )),
                 of: Box::new(OfTerm::new(Location::new(35, 37, &get_import_path()))),
             }),
             Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(

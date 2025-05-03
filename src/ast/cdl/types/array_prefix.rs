@@ -1,4 +1,4 @@
-use super::ArrayTerm;
+use super::super::super::KeywordTerm;
 use super::ManyTerm;
 use super::OfTerm;
 use crate::ast::{Visitable, Visitor};
@@ -6,7 +6,7 @@ use crate::ast::{Visitable, Visitor};
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ArrayPrefix {
     ArrayOf {
-        array: Box<ArrayTerm>,
+        array: Box<KeywordTerm>,
         of: Box<OfTerm>,
     },
     Many(Box<ManyTerm>),
