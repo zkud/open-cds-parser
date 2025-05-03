@@ -3,8 +3,8 @@ use crate::ast::Location;
 use super::super::super::SemicolumnTerm;
 use super::super::IdentifierTerm;
 use super::super::ReturnsDeclarationTerm;
-use crate::ast::basic::KeywordTerm;
 use super::ParametersBlockTerm;
+use crate::ast::basic::KeywordTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
