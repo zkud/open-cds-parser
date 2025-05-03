@@ -1,6 +1,7 @@
 use crate::ast::Visitable;
 
-use super::super::{CommaTerm, PunctuationSignTerm, SelectorTerm};
+use super::super::PunctuationSignTerm;
+use super::super::SelectorTerm;
 use crate::ast::*;
 use ast_term_derive::ASTTerm;
 
@@ -19,7 +20,7 @@ pub struct SelectionBlockTerm {
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum SelectionBlockSegment {
     Selector(SelectorTerm),
-    Comma(CommaTerm),
+    Comma(PunctuationSignTerm),
 }
 
 impl Visitable for SelectionBlockSegment {

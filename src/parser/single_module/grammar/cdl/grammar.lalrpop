@@ -53,11 +53,11 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
 }
 
 Service: ServiceTerm = {
-  <start: @L> "service" <identifier:Identifier> "{" "}" <end: @R> => {
+  <start: @L> "service" <identifier:Identifier> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ServiceTerm::new(location, Box::new(identifier), Vec::new())
   },
-  <start: @L> "service" <identifier:Identifier> "{" <definitions:ServiceDefinitions> "}" <end: @R> => {
+  <start: @L> "service" <identifier:Identifier> <open:OpenCurlyBrace> <definitions:ServiceDefinitions> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ServiceTerm::new(location, Box::new(identifier), definitions)
   },
@@ -111,19 +111,19 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
 }
 
 Entity: EntityTerm = {
-  <start: @L> "entity" <identifier:Identifier> "{" "}" <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     EntityTerm::new(location, Box::new(identifier), Vec::new(), Vec::new())
   },
-  <start: @L> "entity" <identifier:Identifier> "{" <fields:Fields> "}" <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <open:OpenCurlyBrace> <fields:Fields> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     EntityTerm::new(location, Box::new(identifier), Vec::new(), fields)
   },
-  <start: @L> "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" "}" <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     EntityTerm::new(location, Box::new(identifier), aspects, Vec::new())
   },
-  <start: @L> "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" <fields:Fields> "}" <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <open:OpenCurlyBrace> <fields:Fields> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     EntityTerm::new(location, Box::new(identifier), aspects, fields)
   }
@@ -135,7 +135,7 @@ AspectNames: Vec<IdentifierTerm> = {
     aspect_names.push(aspect_name);
     aspect_names
   },
-  <aspect_names:AspectNames> "," <aspect_name:Identifier> => {
+  <aspect_names:AspectNames> <comma:Comma> <aspect_name:Identifier> => {
     let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
     new_aspect_names.extend(aspect_names);
     new_aspect_names.push(aspect_name);
@@ -158,21 +158,21 @@ Fields: Vec<FieldTerm> = {
 }
 
 Field: FieldTerm = {
-  <start: @L> <identifier:Identifier> ":" <type_name:Identifier> ";" <end: @R> => {
+  <start: @L> <identifier:Identifier> <colon:Colon> <type_name:Identifier> <semi:Semicolumn> <end: @R> => {
     let location = Location::new(start, end, filepath);
     FieldTerm::new(location, Box::new(identifier), Box::new(type_name))
   }
 }
 
 Path: PathTerm = {
-  <start: @L> <value:r"`[a-zA-Z0-9-/[.]]+`"> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    let trimmed_value = value.to_string().trim_matches('`').to_string();
-    PathTerm::new(location, PathBuf::from(trimmed_value))
-  },
   <start: @L> <value:r"'[a-zA-Z0-9-/[.]]+'"> <end: @R> => {
     let location = Location::new(start, end, filepath);
     let trimmed_value = value.to_string().trim_matches('\'').to_string();
     PathTerm::new(location, PathBuf::from(trimmed_value))
   },
+  <start: @L> <value:r"`[a-zA-Z0-9-/[.]]+`"> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    let trimmed_value = value.to_string().trim_matches('`').to_string();
+    PathTerm::new(location, PathBuf::from(trimmed_value))
+  }
 }

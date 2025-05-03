@@ -78,7 +78,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                             get_mock_location(),
                             PathBuf::from("/subdir/file3"),
                         )),
-                        Box::new(SemicolumnTerm::new(get_mock_location())),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),
@@ -145,7 +148,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                             get_mock_location(),
                             PathBuf::from("/subdir/subdir"),
                         )),
-                        Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
+                        Box::new(PunctuationSignTerm::new(
+                            Location::new(0, 0, &PathBuf::new()),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),
@@ -199,7 +205,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                             get_mock_location(),
                             PathBuf::from("/no_file_present"),
                         )),
-                        Box::new(SemicolumnTerm::new(get_mock_location())),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),
@@ -405,7 +414,10 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                         )),
                         Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(get_mock_location(), PathBuf::from("/file2"))),
-                        Box::new(SemicolumnTerm::new(get_mock_location())),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),

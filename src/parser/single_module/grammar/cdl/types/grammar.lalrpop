@@ -1,9 +1,9 @@
 TypeDeclaration: TypeDeclarationTerm = {
-    <start: @L> "define" "type" <identifier:Identifier> ":" <resolved_type:TypeReference> ";" <end: @R> => {
+    <start: @L> "define" "type" <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
         let location = Location::new(start, end, filepath);
         TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type))
     },
-    <start: @L> "type" <identifier:Identifier> ":" <resolved_type:TypeReference> ";" <end: @R> => {
+    <start: @L> "type" <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
         let location = Location::new(start, end, filepath);
         TypeDeclarationTerm::new(location, Box::new(identifier), Box::new(resolved_type))
     }
@@ -14,7 +14,7 @@ TypeReference: TypeReferenceTerm = {
         let location = Location::new(start, end, filepath);
         TypeReferenceTerm::new(location, None, Box::new(type_details))
     },
-    <start: @L> <array: Array> <of: Of> <type_details:TypeDetails> <end: @R> => {
+    <start: @L> <array:Array> <of:Of> <type_details:TypeDetails> <end: @R> => {
         let location = Location::new(start, end, filepath);
         let array_prefix = ArrayPrefix::ArrayOf {
             array: Box::new(array), 
@@ -30,8 +30,8 @@ TypeReference: TypeReferenceTerm = {
 }
 
 TypeDetails: TypeDetailsVariant = {
-    <simple: SimpleTypeDetails> => TypeDetailsVariant::Simple(simple),
-    <structured: StructuredTypeDetails> => TypeDetailsVariant::Structured(structured),
+    <simple:SimpleTypeDetails> => TypeDetailsVariant::Simple(simple),
+    <structured:StructuredTypeDetails> => TypeDetailsVariant::Structured(structured),
 }
 
 SimpleTypeDetails: SimpleTypeDetailsTerm = {
@@ -42,7 +42,7 @@ SimpleTypeDetails: SimpleTypeDetailsTerm = {
 }
 
 StructuredTypeDetails: StructuredTypeDetailsTerm = {
-    <start: @L> "{" "}" <end: @R> => {
+    <start: @L> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
         let location = Location::new(start, end, filepath);
         StructuredTypeDetailsTerm::new(location)
     },

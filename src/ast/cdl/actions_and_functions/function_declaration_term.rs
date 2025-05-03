@@ -1,5 +1,5 @@
 use super::super::super::KeywordTerm;
-use super::super::super::SemicolumnTerm;
+use super::super::super::PunctuationSignTerm;
 use super::super::IdentifierTerm;
 use super::super::ParametersBlockTerm;
 use super::super::ReturnsDeclarationTerm;
@@ -19,5 +19,5 @@ pub struct FunctionDeclarationTerm {
     #[subnode_prop]
     returns: Box<ReturnsDeclarationTerm>,
     #[subnode_prop]
-    semicolumn: Box<SemicolumnTerm>,
+    semicolumn: Box<PunctuationSignTerm>,
 }

@@ -40,7 +40,10 @@ fn with_straight_wildcart_import_it_parses() {
                     Box::new(ImportIdentifierTerm::new(
                         Location::new(6, 7, &get_import_path()),
                         Box::new(ImportIdentifierVariant::SelectAll(Box::new(
-                            WildcartTerm::new(Location::new(6, 7, &get_import_path())),
+                            PunctuationSignTerm::new(
+                                Location::new(6, 7, &get_import_path()),
+                                PunctuationSign::Wildcart,
+                            ),
                         ))),
                     )),
                     None,
@@ -56,11 +59,10 @@ fn with_straight_wildcart_import_it_parses() {
                 Location::new(13, 19, &get_import_path()),
                 PathBuf::from("path"),
             )),
-            Box::new(SemicolumnTerm::new(Location::new(
-                19,
-                20,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(19, 20, &get_import_path()),
+                PunctuationSign::Semicolumn,
+            )),
         ),
     );
 }
@@ -113,7 +115,10 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     Box::new(ImportIdentifierTerm::new(
                         Location::new(8, 9, &get_import_path()),
                         Box::new(ImportIdentifierVariant::SelectAll(Box::new(
-                            WildcartTerm::new(Location::new(8, 9, &get_import_path())),
+                            PunctuationSignTerm::new(
+                                Location::new(8, 9, &get_import_path()),
+                                PunctuationSign::Wildcart,
+                            ),
                         ))),
                     )),
                     None,
@@ -132,11 +137,10 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                 Location::new(17, 23, &get_import_path()),
                 PathBuf::from("path"),
             )),
-            Box::new(SemicolumnTerm::new(Location::new(
-                23,
-                24,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(23, 24, &get_import_path()),
+                PunctuationSign::Semicolumn,
+            )),
         ),
     );
 }
@@ -195,11 +199,10 @@ fn with_name_import_it_parses() {
                 Location::new(21, 27, &get_import_path()),
                 PathBuf::from("path"),
             )),
-            Box::new(SemicolumnTerm::new(Location::new(
-                27,
-                28,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(27, 28, &get_import_path()),
+                PunctuationSign::Semicolumn,
+            )),
         ),
     );
 }
@@ -246,11 +249,10 @@ fn with_name_with_comma_import_it_parses() {
                         None,
                         None,
                     )),
-                    SelectionBlockSegment::Comma(CommaTerm::new(Location::new(
-                        13,
-                        14,
-                        &get_import_path(),
-                    ))),
+                    SelectionBlockSegment::Comma(PunctuationSignTerm::new(
+                        Location::new(13, 14, &get_import_path()),
+                        PunctuationSign::Comma,
+                    )),
                 ],
                 Some(Box::new(PunctuationSignTerm::new(
                     Location::new(15, 16, &get_import_path()),
@@ -265,11 +267,10 @@ fn with_name_with_comma_import_it_parses() {
                 Location::new(22, 28, &get_import_path()),
                 PathBuf::from("path"),
             )),
-            Box::new(SemicolumnTerm::new(Location::new(
-                28,
-                29,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(28, 29, &get_import_path()),
+                PunctuationSign::Semicolumn,
+            )),
         ),
     );
 }
@@ -333,11 +334,10 @@ fn with_name_with_alias_import_it_parses() {
                 Location::new(30, 36, &get_import_path()),
                 PathBuf::from("path"),
             )),
-            Box::new(SemicolumnTerm::new(Location::new(
-                36,
-                37,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(36, 37, &get_import_path()),
+                PunctuationSign::Semicolumn,
+            )),
         ),
     );
 }
@@ -378,12 +378,14 @@ fn with_name_with_wildcart_import_it_parses() {
                                 Location::new(9, 13, &get_import_path()),
                                 "name",
                             )),
-                            dot: Box::new(DotTerm::new(Location::new(13, 14, &get_import_path()))),
-                            wildcart: Box::new(WildcartTerm::new(Location::new(
-                                14,
-                                15,
-                                &get_import_path(),
-                            ))),
+                            dot: Box::new(PunctuationSignTerm::new(
+                                Location::new(13, 14, &get_import_path()),
+                                PunctuationSign::Dot,
+                            )),
+                            wildcart: Box::new(PunctuationSignTerm::new(
+                                Location::new(14, 15, &get_import_path()),
+                                PunctuationSign::Wildcart,
+                            )),
                         }),
                     )),
                     None,
@@ -402,11 +404,10 @@ fn with_name_with_wildcart_import_it_parses() {
                 Location::new(23, 29, &get_import_path()),
                 PathBuf::from("path"),
             )),
-            Box::new(SemicolumnTerm::new(Location::new(
-                29,
-                30,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(29, 30, &get_import_path()),
+                PunctuationSign::Semicolumn,
+            )),
         ),
     );
 }
@@ -453,11 +454,10 @@ fn with_multiple_imports_it_parses() {
                         None,
                         None,
                     )),
-                    SelectionBlockSegment::Comma(CommaTerm::new(Location::new(
-                        14,
-                        15,
-                        &get_import_path(),
-                    ))),
+                    SelectionBlockSegment::Comma(PunctuationSignTerm::new(
+                        Location::new(14, 15, &get_import_path()),
+                        PunctuationSign::Comma,
+                    )),
                     SelectionBlockSegment::Selector(SelectorTerm::new(
                         Location::new(16, 21, &get_import_path()),
                         Box::new(ImportIdentifierTerm::new(
@@ -486,11 +486,10 @@ fn with_multiple_imports_it_parses() {
                 Location::new(29, 35, &get_import_path()),
                 PathBuf::from("path"),
             )),
-            Box::new(SemicolumnTerm::new(Location::new(
-                35,
-                36,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(35, 36, &get_import_path()),
+                PunctuationSign::Semicolumn,
+            )),
         ),
     );
 }

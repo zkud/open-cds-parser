@@ -1,6 +1,6 @@
 use crate::ast::Location;
 
-use super::super::super::SemicolumnTerm;
+use super::super::super::PunctuationSignTerm;
 use super::super::IdentifierTerm;
 use super::super::ReturnsDeclarationTerm;
 use super::ParametersBlockTerm;
@@ -20,5 +20,5 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     returns: Option<Box<ReturnsDeclarationTerm>>,
     #[subnode_prop]
-    semicolumn: Box<SemicolumnTerm>,
+    semicolumn: Box<PunctuationSignTerm>,
 }

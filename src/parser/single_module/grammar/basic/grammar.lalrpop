@@ -5,17 +5,17 @@ As: KeywordTerm = {
   },
 }
 
-OpenRoundBracket: OpenRoundBracketTerm = {
+OpenRoundBracket: PunctuationSignTerm = {
   <start: @L> "(" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    OpenRoundBracketTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::OpenRoundBracket)
   },
 }
 
-CloseRoundBracket : CloseRoundBracketTerm = {
+CloseRoundBracket: PunctuationSignTerm = {
   <start: @L> ")" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    CloseRoundBracketTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::CloseRoundBracket)
   },
 }
 
@@ -33,38 +33,38 @@ CloseCurlyBrace: PunctuationSignTerm = {
   },
 }
 
-Comma: CommaTerm = {
+Comma: PunctuationSignTerm = {
   <start: @L> "," <end: @R> => {
     let location = Location::new(start, end, filepath);
-    CommaTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::Comma)
   },
 }
 
-Dot: DotTerm = {
+Dot: PunctuationSignTerm = {
   <start: @L> "." <end: @R> => {
     let location = Location::new(start, end, filepath);
-    DotTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::Dot)
   },
 }
 
-Semicolumn: SemicolumnTerm = {
+Semicolumn: PunctuationSignTerm = {
   <start: @L> ";" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    SemicolumnTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::Semicolumn)
   },
 }
 
-Wildcart: WildcartTerm = {
+Wildcart: PunctuationSignTerm = {
   <start: @L> "*" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    WildcartTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::Wildcart)
   },
 }
 
-Colon : ColonTerm = {
+Colon: PunctuationSignTerm = {
   <start: @L> ":" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    ColonTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::Colon)
   },
 }
 
