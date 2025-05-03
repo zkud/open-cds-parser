@@ -19,10 +19,10 @@ CloseRoundBracket : CloseRoundBracketTerm = {
   },
 }
 
-OpenCurlyBrace: OpenCurlyBraceTerm = {
+OpenCurlyBrace: PunctuationSignTerm = {
   <start: @L> "{" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    OpenCurlyBraceTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::OpenCurlyBrace)
   },
 }
 

@@ -104,11 +104,10 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
             )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(6, 11, &get_import_path()),
-                Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
-                    6,
-                    7,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(6, 7, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                ))),
                 vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                     Location::new(8, 9, &get_import_path()),
                     Box::new(ImportIdentifierTerm::new(
@@ -166,11 +165,10 @@ fn with_name_import_it_parses() {
             )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 15, &get_import_path()),
-                Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
-                    7,
-                    8,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(7, 8, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                ))),
                 vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                     Location::new(9, 13, &get_import_path()),
                     Box::new(ImportIdentifierTerm::new(
@@ -231,11 +229,10 @@ fn with_name_with_comma_import_it_parses() {
             )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 16, &get_import_path()),
-                Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
-                    7,
-                    8,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(7, 8, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                ))),
                 vec![
                     SelectionBlockSegment::Selector(SelectorTerm::new(
                         Location::new(9, 13, &get_import_path()),
@@ -302,11 +299,10 @@ fn with_name_with_alias_import_it_parses() {
             )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 24, &get_import_path()),
-                Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
-                    7,
-                    8,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(7, 8, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                ))),
                 vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                     Location::new(9, 22, &get_import_path()),
                     Box::new(ImportIdentifierTerm::new(
@@ -373,11 +369,10 @@ fn with_name_with_wildcart_import_it_parses() {
             )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 17, &get_import_path()),
-                Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
-                    7,
-                    8,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(7, 8, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                ))),
                 vec![SelectionBlockSegment::Selector(SelectorTerm::new(
                     Location::new(9, 15, &get_import_path()),
                     Box::new(ImportIdentifierTerm::new(
@@ -444,11 +439,10 @@ fn with_multiple_imports_it_parses() {
             )),
             Box::new(SelectionBlockTerm::new(
                 Location::new(7, 23, &get_import_path()),
-                Some(Box::new(OpenCurlyBraceTerm::new(Location::new(
-                    7,
-                    8,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(7, 8, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                ))),
                 vec![
                     SelectionBlockSegment::Selector(SelectorTerm::new(
                         Location::new(9, 14, &get_import_path()),
