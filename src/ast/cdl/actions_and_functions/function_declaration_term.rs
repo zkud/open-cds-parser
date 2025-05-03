@@ -1,5 +1,5 @@
+use super::super::super::KeywordTerm;
 use super::super::super::SemicolumnTerm;
-use super::super::FunctionTerm;
 use super::super::IdentifierTerm;
 use super::super::ParametersBlockTerm;
 use super::super::ReturnsDeclarationTerm;
@@ -11,7 +11,7 @@ pub struct FunctionDeclarationTerm {
     #[prop]
     location: Location,
     #[subnode_prop]
-    function: Box<FunctionTerm>,
+    function: Box<KeywordTerm>,
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]

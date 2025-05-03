@@ -97,9 +97,3 @@ FunctionDeclaration: FunctionDeclarationTerm = {
   }
 };
 
-Function: FunctionTerm = {
-  <start: @L> "function" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    FunctionTerm::new(location)
-  },
-}

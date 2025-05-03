@@ -41,7 +41,7 @@ fn build_basic_action() -> ActionDeclarationTerm {
         Location::new(39, 70, &get_import_path()),
         Box::new(KeywordTerm::new(
             Location::new(39, 45, &get_import_path()),
-            Keyword::Action
+            Keyword::Action,
         )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
@@ -136,7 +136,7 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
         Location::new(39, 86, &get_import_path()),
         Box::new(KeywordTerm::new(
             Location::new(39, 45, &get_import_path()),
-            Keyword::Action
+            Keyword::Action,
         )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
@@ -216,7 +216,7 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
         Location::new(39, 90, &get_import_path()),
         Box::new(KeywordTerm::new(
             Location::new(39, 45, &get_import_path()),
-            Keyword::Action
+            Keyword::Action,
         )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
@@ -304,7 +304,7 @@ fn build_basic_action_with_no_args() -> ActionDeclarationTerm {
         Location::new(39, 56, &get_import_path()),
         Box::new(KeywordTerm::new(
             Location::new(39, 45, &get_import_path()),
-            Keyword::Action
+            Keyword::Action,
         )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
@@ -350,7 +350,10 @@ fn with_most_basic_function_it_parses() {
 fn build_the_most_simple_function() -> FunctionDeclarationTerm {
     FunctionDeclarationTerm::new(
         Location::new(39, 74, &get_import_path()),
-        Box::new(FunctionTerm::new(Location::new(39, 47, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 47, &get_import_path()),
+            Keyword::Function,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(48, 55, &get_import_path()),
             "example",
