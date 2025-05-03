@@ -119,11 +119,10 @@ fn with_straigh_wildcart_import_with_braces_it_parses() {
                     None,
                     None,
                 ))],
-                Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
-                    10,
-                    11,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(10, 11, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                ))),
             )),
             Box::new(KeywordTerm::new(
                 Location::new(12, 16, &get_import_path()),
@@ -183,11 +182,10 @@ fn with_name_import_it_parses() {
                     None,
                     None,
                 ))],
-                Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
-                    14,
-                    15,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(14, 15, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                ))),
             )),
             Box::new(KeywordTerm::new(
                 Location::new(16, 20, &get_import_path()),
@@ -254,11 +252,10 @@ fn with_name_with_comma_import_it_parses() {
                         &get_import_path(),
                     ))),
                 ],
-                Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
-                    15,
-                    16,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(15, 16, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                ))),
             )),
             Box::new(KeywordTerm::new(
                 Location::new(17, 21, &get_import_path()),
@@ -323,11 +320,10 @@ fn with_name_with_alias_import_it_parses() {
                         "name2",
                     ))),
                 ))],
-                Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
-                    23,
-                    24,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(23, 24, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                ))),
             )),
             Box::new(KeywordTerm::new(
                 Location::new(25, 29, &get_import_path()),
@@ -393,11 +389,10 @@ fn with_name_with_wildcart_import_it_parses() {
                     None,
                     None,
                 ))],
-                Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
-                    16,
-                    17,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(16, 17, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                ))),
             )),
             Box::new(KeywordTerm::new(
                 Location::new(18, 22, &get_import_path()),
@@ -478,11 +473,10 @@ fn with_multiple_imports_it_parses() {
                         None,
                     )),
                 ],
-                Some(Box::new(CloseCurlyBraceTerm::new(Location::new(
-                    22,
-                    23,
-                    &get_import_path(),
-                )))),
+                Some(Box::new(PunctuationSignTerm::new(
+                    Location::new(22, 23, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                ))),
             )),
             Box::new(KeywordTerm::new(
                 Location::new(24, 28, &get_import_path()),

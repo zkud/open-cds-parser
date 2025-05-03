@@ -26,10 +26,10 @@ OpenCurlyBrace: PunctuationSignTerm = {
   },
 }
 
-CloseCurlyBrace: CloseCurlyBraceTerm = {
+CloseCurlyBrace: PunctuationSignTerm = {
   <start: @L> "}" <end: @R> => {
     let location = Location::new(start, end, filepath);
-    CloseCurlyBraceTerm::new(location)
+    PunctuationSignTerm::new(location, PunctuationSign::CloseCurlyBrace)
   },
 }
 

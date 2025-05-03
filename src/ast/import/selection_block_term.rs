@@ -1,6 +1,6 @@
 use crate::ast::Visitable;
 
-use super::super::{CloseCurlyBraceTerm, CommaTerm, PunctuationSignTerm, SelectorTerm};
+use super::super::{CommaTerm, PunctuationSignTerm, SelectorTerm};
 use crate::ast::*;
 use ast_term_derive::ASTTerm;
 
@@ -13,7 +13,7 @@ pub struct SelectionBlockTerm {
     #[subnode_prop]
     selectors: Vec<SelectionBlockSegment>,
     #[subnode_prop]
-    close_brace: Option<Box<CloseCurlyBraceTerm>>,
+    close_brace: Option<Box<PunctuationSignTerm>>,
 }
 
 #[derive(PartialEq, Eq, Debug, Clone)]
