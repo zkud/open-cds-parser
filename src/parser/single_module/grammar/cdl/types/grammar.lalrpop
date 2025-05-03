@@ -48,9 +48,3 @@ StructuredTypeDetails: StructuredTypeDetailsTerm = {
     },
 }
 
-Of: OfTerm = {
-    <start: @L> "of" <end: @R> => {
-        let location = Location::new(start, end, filepath);
-        OfTerm::new(location)
-    },
-}

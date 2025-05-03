@@ -1,12 +1,11 @@
 use super::super::super::KeywordTerm;
-use super::OfTerm;
 use crate::ast::{Visitable, Visitor};
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ArrayPrefix {
     ArrayOf {
         array: Box<KeywordTerm>,
-        of: Box<OfTerm>,
+        of: Box<KeywordTerm>,
     },
     Many(Box<KeywordTerm>),
 }
