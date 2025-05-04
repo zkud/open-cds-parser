@@ -7,7 +7,9 @@ TypeDeclaration: TypeDeclarationTerm = {
 	    define,
 	    Box::new(type_keyword),
 	    Box::new(identifier),
-	    Box::new(resolved_type)
+	    Box::new(colon),
+	    Box::new(resolved_type),
+	    Box::new(semi)
 	)
     },
     <start: @L> <type_keyword:Type> <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
@@ -17,7 +19,9 @@ TypeDeclaration: TypeDeclarationTerm = {
 	    None,
 	    Box::new(type_keyword),
 	    Box::new(identifier),
-	    Box::new(resolved_type)
+	    Box::new(colon),
+	    Box::new(resolved_type),
+	    Box::new(semi)
 	)
     }
 }

@@ -1,4 +1,5 @@
 use crate::ast::KeywordTerm;
+use crate::ast::PunctuationSignTerm;
 
 use super::super::super::Location;
 use super::super::IdentifierTerm;
@@ -16,5 +17,9 @@ pub struct TypeDeclarationTerm {
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]
+    colon: Box<PunctuationSignTerm>,
+    #[subnode_prop]
     resolved_type: Box<TypeReferenceTerm>,
+    #[subnode_prop]
+    semicolumn: Box<PunctuationSignTerm>,
 }
