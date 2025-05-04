@@ -80,8 +80,14 @@ fn test_function_declaration() {
             // Test return type
             let return_decl = function.returns();
             let return_type = return_decl.type_reference();
-            assert_eq!(return_type.type_name().full_name(), "Integer");
-            assert!(!return_type.is_arrayed());
+            let return_type_name =
+                if let TypeDetailsVariant::Simple(simple) = return_type.type_details().as_ref() {
+                    simple.identifier().full_name()
+                } else {
+                    panic!("Unexpected type variant!");
+                };
+            assert_eq!(return_type_name, "Integer");
+            assert!(return_type.array_prefix().is_none());
         } else {
             panic!("Expected function definition");
         }

@@ -1,4 +1,4 @@
-use super::super::ReturnsTerm;
+use super::super::super::KeywordTerm;
 use super::super::TypeReferenceTerm;
 use ast_term_derive::ASTTerm;
 
@@ -7,7 +7,7 @@ pub struct ReturnsDeclarationTerm {
     #[prop]
     location: Location,
     #[subnode_prop]
-    returns: Box<ReturnsTerm>,
+    returns: Box<KeywordTerm>,
     #[subnode_prop]
     type_reference: Box<TypeReferenceTerm>,
 }

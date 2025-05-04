@@ -2,7 +2,7 @@ use ast_term_derive::ASTTerm;
 
 use crate::ast::*;
 
-use super::super::{DotTerm, IdentifierTerm, WildcartTerm};
+use super::super::{IdentifierTerm, PunctuationSignTerm};
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct ImportIdentifierTerm {
@@ -17,10 +17,10 @@ pub enum ImportIdentifierVariant {
     IdentifierOnly(Box<IdentifierTerm>),
     IdentifierWithWildcart {
         identifier: Box<IdentifierTerm>,
-        dot: Box<DotTerm>,
-        wildcart: Box<WildcartTerm>,
+        dot: Box<PunctuationSignTerm>,
+        wildcart: Box<PunctuationSignTerm>,
     },
-    SelectAll(Box<WildcartTerm>),
+    SelectAll(Box<PunctuationSignTerm>),
 }
 
 impl Visitable for ImportIdentifierVariant {

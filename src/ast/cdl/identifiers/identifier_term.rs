@@ -1,8 +1,7 @@
-use ast_term_derive::ASTTerm;
-
-use super::super::super::DotTerm;
+use super::super::super::PunctuationSignTerm;
 use super::SubIdentifierTerm;
 use crate::ast::Location;
+use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct IdentifierTerm {
@@ -40,7 +39,7 @@ impl IdentifierTerm {
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum IdentifierSegment {
     SubIdentifier(SubIdentifierTerm),
-    Dot(DotTerm),
+    Dot(PunctuationSignTerm),
 }
 
 impl Visitable for IdentifierSegment {
@@ -75,7 +74,7 @@ mod tests {
         fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), Self::Error> {
             if let Some(term) = term.try_convert::<SubIdentifierTerm>() {
                 self.visits.push(term.value().clone());
-            } else if let Some(_) = term.try_convert::<DotTerm>() {
+            } else if let Some(_) = term.try_convert::<PunctuationSignTerm>() {
                 self.visits.push(".".to_string());
             }
             Ok(())
@@ -97,7 +96,7 @@ mod tests {
     #[test]
     fn with_dot_it_visits() {
         let location = Location::new_mock();
-        let dot_term = DotTerm::new(location.clone());
+        let dot_term = PunctuationSignTerm::new(location.clone(), PunctuationSign::Dot);
         let term = IdentifierTerm::new(location, vec![IdentifierSegment::Dot(dot_term)]);
         let mut visitor = MockVisitor::new();
 
@@ -111,7 +110,7 @@ mod tests {
     fn with_all_variants_it_visits() {
         let location = Location::new_mock();
         let sub_identifier = SubIdentifierTerm::new(location.clone(), "test".to_string());
-        let dot_term = DotTerm::new(location.clone());
+        let dot_term = PunctuationSignTerm::new(location.clone(), PunctuationSign::Dot);
         let term = IdentifierTerm::new(
             location,
             vec![
@@ -146,7 +145,10 @@ mod tests {
                     Location::new_mock(),
                     "parent1".to_string(),
                 )),
-                IdentifierSegment::Dot(DotTerm::new(Location::new_mock())),
+                IdentifierSegment::Dot(PunctuationSignTerm::new(
+                    Location::new_mock(),
+                    PunctuationSign::Dot,
+                )),
                 IdentifierSegment::SubIdentifier(SubIdentifierTerm::new(
                     Location::new_mock(),
                     "parent2".to_string(),

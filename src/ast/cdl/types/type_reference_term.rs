@@ -1,32 +1,31 @@
 use super::super::super::Location;
-use super::super::IdentifierTerm;
+use super::ArrayPrefix;
+use super::SimpleTypeDetailsTerm;
+use super::StructuredTypeDetailsTerm;
 use ast_term_derive::ASTTerm;
 
-// Temporaral solution to remove ReturnsTerm
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct TypeReferenceTerm {
     #[prop]
     location: Location,
-    #[subnode_prop]
-    type_name: Box<IdentifierTerm>,
     #[prop]
-    is_arrayed: bool,
+    array_prefix: Option<ArrayPrefix>,
+    #[subnode_prop]
+    type_details: Box<TypeDetailsVariant>,
 }
 
-impl TypeReferenceTerm {
-    pub fn new_scalar(location: Location, type_name: Box<IdentifierTerm>) -> TypeReferenceTerm {
-        TypeReferenceTerm {
-            location,
-            type_name,
-            is_arrayed: false,
-        }
-    }
+#[derive(PartialEq, Eq, Debug, Clone)]
+pub enum TypeDetailsVariant {
+    Simple(SimpleTypeDetailsTerm),
+    Structured(StructuredTypeDetailsTerm),
+}
 
-    pub fn new_arrayed(location: Location, type_name: Box<IdentifierTerm>) -> TypeReferenceTerm {
-        TypeReferenceTerm {
-            location,
-            type_name,
-            is_arrayed: true,
-        }
+impl Visitable for TypeDetailsVariant {
+    fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
+        match self {
+            Self::Simple(term) => term.accept(visitor)?,
+            Self::Structured(term) => term.accept(visitor)?,
+        };
+        Ok(())
     }
 }

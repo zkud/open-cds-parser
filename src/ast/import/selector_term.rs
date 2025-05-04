@@ -1,6 +1,6 @@
 use ast_term_derive::ASTTerm;
 
-use super::super::{AsTerm, IdentifierTerm, ImportIdentifierTerm};
+use super::super::{IdentifierTerm, ImportIdentifierTerm, KeywordTerm};
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct SelectorTerm {
@@ -9,7 +9,7 @@ pub struct SelectorTerm {
     #[subnode_prop]
     import_identifier: Box<ImportIdentifierTerm>,
     #[subnode_prop]
-    as_term: Option<Box<AsTerm>>,
+    as_term: Option<Box<KeywordTerm>>,
     #[subnode_prop]
     alias: Option<Box<IdentifierTerm>>,
 }
