@@ -1,3 +1,5 @@
+use crate::ast::KeywordTerm;
+
 use super::super::super::Location;
 use super::super::IdentifierTerm;
 use super::TypeReferenceTerm;
@@ -7,6 +9,10 @@ use ast_term_derive::ASTTerm;
 pub struct TypeDeclarationTerm {
     #[prop]
     location: Location,
+    #[subnode_prop]
+    define: Option<Box<KeywordTerm>>,
+    #[subnode_prop]
+    type_keyword: Box<KeywordTerm>,
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]

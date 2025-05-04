@@ -21,4 +21,6 @@ pub enum Keyword {
     Many,     // many
     Of,       // of
     From,     // from
+    Define,   // define
+    Type,     // type
 }

@@ -123,3 +123,17 @@ From: KeywordTerm = {
     KeywordTerm::new(location, Keyword::From)
   }
 }
+
+Define: KeywordTerm = {
+  <start: @L> "define" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    KeywordTerm::new(location, Keyword::Define)
+  }
+}
+
+Type: KeywordTerm = {
+  <start: @L> "type" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    KeywordTerm::new(location, Keyword::Type)
+  }
+}

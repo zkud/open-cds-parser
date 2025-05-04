@@ -76,6 +76,11 @@ fn get_import_path() -> PathBuf {
 fn build_basic_type_declaration() -> TypeDeclarationTerm {
     TypeDeclarationTerm::new(
         Location::new(9, 31, &get_import_path()),
+        None,
+        Box::new(KeywordTerm::new(
+            Location::new(9, 13, &get_import_path()),
+            Keyword::Type,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(14, 21, &get_import_path()),
             "Example",
@@ -98,6 +103,14 @@ fn build_basic_type_declaration() -> TypeDeclarationTerm {
 fn build_define_type_declaration() -> TypeDeclarationTerm {
     TypeDeclarationTerm::new(
         Location::new(9, 38, &get_import_path()),
+        Some(Box::new(KeywordTerm::new(
+            Location::new(9, 15, &get_import_path()),
+            Keyword::Define,
+        ))),
+        Box::new(KeywordTerm::new(
+            Location::new(16, 20, &get_import_path()),
+            Keyword::Type,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(21, 28, &get_import_path()),
             "Example",
@@ -120,6 +133,11 @@ fn build_define_type_declaration() -> TypeDeclarationTerm {
 fn build_array_type_declaration() -> TypeDeclarationTerm {
     TypeDeclarationTerm::new(
         Location::new(9, 45, &get_import_path()),
+        None,
+        Box::new(KeywordTerm::new(
+            Location::new(9, 13, &get_import_path()),
+            Keyword::Type,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(14, 26, &get_import_path()),
             "ArrayExample",
@@ -151,6 +169,11 @@ fn build_array_type_declaration() -> TypeDeclarationTerm {
 fn build_many_type_declaration() -> TypeDeclarationTerm {
     TypeDeclarationTerm::new(
         Location::new(9, 40, &get_import_path()),
+        None,
+        Box::new(KeywordTerm::new(
+            Location::new(9, 13, &get_import_path()),
+            Keyword::Type,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(14, 25, &get_import_path()),
             "ManyExample",
@@ -176,6 +199,11 @@ fn build_many_type_declaration() -> TypeDeclarationTerm {
 fn build_structured_type_declaration() -> TypeDeclarationTerm {
     TypeDeclarationTerm::new(
         Location::new(9, 33, &get_import_path()),
+        None,
+        Box::new(KeywordTerm::new(
+            Location::new(9, 13, &get_import_path()),
+            Keyword::Type,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(14, 27, &get_import_path()),
             "StructExample",
