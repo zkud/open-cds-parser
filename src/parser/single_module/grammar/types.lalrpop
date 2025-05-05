@@ -1,8 +1,8 @@
 TypeDeclaration: TypeDeclarationTerm = {
-    <start: @L> <define:Define?> <type_keyword:Type> <identifier:Identifier> <colon:Colon?> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
+    <start: @L> <define:Define?> <type_keyword:Type> <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
         let location = Location::new(start, end, filepath);
 	let define = define.map(|d| Box::new(d));
-	let colon = colon.map(|c| Box::new(c));
+	let colon = Some(Box::new(colon));
         TypeDeclarationTerm::new(
 	    location,
 	    define,
@@ -10,6 +10,23 @@ TypeDeclaration: TypeDeclarationTerm = {
 	    Box::new(identifier),
 	    colon,
 	    Box::new(resolved_type),
+	    Box::new(semi)
+	)
+    },
+    // Syntax sugar for quick structured types
+    <start: @L> <define:Define?> <type_keyword:Type> <identifier:Identifier> <structured:StructuredTypeDetails> <semi:Semicolumn> <end: @R> => {
+        let location = Location::new(start, end, filepath);
+	let define = define.map(|d| Box::new(d));
+	let type_reference_location = structured.location().clone();
+	let type_details_variant = TypeDetailsVariant::Structured(structured);
+	let type_reference = TypeReferenceTerm::new(type_reference_location, None, Box::new(type_details_variant));
+        TypeDeclarationTerm::new(
+	    location,
+	    define,
+	    Box::new(type_keyword),
+	    Box::new(identifier),
+	    None,
+	    Box::new(type_reference),
 	    Box::new(semi)
 	)
     },
