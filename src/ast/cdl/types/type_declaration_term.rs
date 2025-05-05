@@ -17,7 +17,7 @@ pub struct TypeDeclarationTerm {
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]
-    colon: Box<PunctuationSignTerm>,
+    colon: Option<Box<PunctuationSignTerm>>,
     #[subnode_prop]
     resolved_type: Box<TypeReferenceTerm>,
     #[subnode_prop]

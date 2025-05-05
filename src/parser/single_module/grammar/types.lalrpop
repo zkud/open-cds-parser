@@ -1,13 +1,14 @@
 TypeDeclaration: TypeDeclarationTerm = {
-    <start: @L> <define:Define?> <type_keyword:Type> <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
+    <start: @L> <define:Define?> <type_keyword:Type> <identifier:Identifier> <colon:Colon?> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
         let location = Location::new(start, end, filepath);
 	let define = define.map(|d| Box::new(d));
+	let colon = colon.map(|c| Box::new(c));
         TypeDeclarationTerm::new(
 	    location,
 	    define,
 	    Box::new(type_keyword),
 	    Box::new(identifier),
-	    Box::new(colon),
+	    colon,
 	    Box::new(resolved_type),
 	    Box::new(semi)
 	)
