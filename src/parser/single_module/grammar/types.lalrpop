@@ -1,7 +1,7 @@
 TypeDeclaration: TypeDeclarationTerm = {
-    <start: @L> <define:Define> <type_keyword:Type> <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
+    <start: @L> <define:Define?> <type_keyword:Type> <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
         let location = Location::new(start, end, filepath);
-	let define = Some(Box::new(define));
+	let define = define.map(|d| Box::new(d));
         TypeDeclarationTerm::new(
 	    location,
 	    define,
@@ -12,18 +12,6 @@ TypeDeclaration: TypeDeclarationTerm = {
 	    Box::new(semi)
 	)
     },
-    <start: @L> <type_keyword:Type> <identifier:Identifier> <colon:Colon> <resolved_type:TypeReference> <semi:Semicolumn> <end: @R> => {
-        let location = Location::new(start, end, filepath);
-        TypeDeclarationTerm::new(
-	    location,
-	    None,
-	    Box::new(type_keyword),
-	    Box::new(identifier),
-	    Box::new(colon),
-	    Box::new(resolved_type),
-	    Box::new(semi)
-	)
-    }
 }
 
 TypeReference: TypeReferenceTerm = {
