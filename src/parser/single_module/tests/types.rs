@@ -56,6 +56,38 @@ fn with_structured_type_it_parses() {
     expect_type_declaration_to_be(result, build_structured_type_declaration());
 }
 
+#[test]
+fn with_structured_type_with_single_field_it_parses() {
+    let source = "
+        type Person : {
+            name: String;
+        };
+    ";
+
+    let result = parse_single_file(&source);
+    expect_type_declaration_to_be(
+        result,
+        build_structured_type_with_single_field_declaration(),
+    );
+}
+
+#[test]
+fn with_structured_type_with_multiple_fields_it_parses() {
+    let source = "
+        type Person : {
+            name: String;
+            age: Integer;
+            email: String;
+        };
+    ";
+
+    let result = parse_single_file(&source);
+    expect_type_declaration_to_be(
+        result,
+        build_structured_type_with_multiple_fields_declaration(),
+    );
+}
+
 #[inline]
 fn parse_single_file(file_content: &str) -> Result<Box<ModuleTerm>, ParseError> {
     let mut files = HashMap::new();
@@ -262,6 +294,130 @@ fn build_structured_type_declaration() -> TypeDeclarationTerm {
         )),
         Box::new(PunctuationSignTerm::new(
             Location::new(32, 33, &get_import_path()),
+            PunctuationSign::Semicolumn,
+        )),
+    )
+}
+
+#[inline]
+fn build_structured_type_with_single_field_declaration() -> TypeDeclarationTerm {
+    TypeDeclarationTerm::new(
+        Location::new(9, 61, &get_import_path()),
+        None,
+        Box::new(KeywordTerm::new(
+            Location::new(9, 13, &get_import_path()),
+            Keyword::Type,
+        )),
+        Box::new(IdentifierTerm::new_basic(
+            Location::new(14, 20, &get_import_path()),
+            "Person",
+        )),
+        Some(Box::new(PunctuationSignTerm::new(
+            Location::new(21, 22, &get_import_path()),
+            PunctuationSign::Colon,
+        ))),
+        Box::new(TypeReferenceTerm::new(
+            Location::new(23, 60, &get_import_path()),
+            None,
+            Box::new(TypeDetailsVariant::Structured(StructureTerm::new(
+                Location::new(23, 60, &get_import_path()),
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(23, 24, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                )),
+                vec![FieldTerm::new(
+                    Location::new(37, 50, &get_import_path()),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(37, 41, &get_import_path()),
+                        "name",
+                    )),
+                    Box::new(IdentifierTerm::new_basic(
+                        Location::new(43, 49, &get_import_path()),
+                        "String",
+                    )),
+                )],
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(59, 60, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                )),
+            ))),
+        )),
+        Box::new(PunctuationSignTerm::new(
+            Location::new(60, 61, &get_import_path()),
+            PunctuationSign::Semicolumn,
+        )),
+    )
+}
+
+#[inline]
+fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTerm {
+    TypeDeclarationTerm::new(
+        Location::new(9, 114, &get_import_path()),
+        None,
+        Box::new(KeywordTerm::new(
+            Location::new(9, 13, &get_import_path()),
+            Keyword::Type,
+        )),
+        Box::new(IdentifierTerm::new_basic(
+            Location::new(14, 20, &get_import_path()),
+            "Person",
+        )),
+        Some(Box::new(PunctuationSignTerm::new(
+            Location::new(21, 22, &get_import_path()),
+            PunctuationSign::Colon,
+        ))),
+        Box::new(TypeReferenceTerm::new(
+            Location::new(23, 113, &get_import_path()),
+            None,
+            Box::new(TypeDetailsVariant::Structured(StructureTerm::new(
+                Location::new(23, 113, &get_import_path()),
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(23, 24, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                )),
+                vec![
+                    FieldTerm::new(
+                        Location::new(37, 50, &get_import_path()),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(37, 41, &get_import_path()),
+                            "name",
+                        )),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(43, 49, &get_import_path()),
+                            "String",
+                        )),
+                    ),
+                    FieldTerm::new(
+                        Location::new(63, 76, &get_import_path()),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(63, 66, &get_import_path()),
+                            "age",
+                        )),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(68, 75, &get_import_path()),
+                            "Integer",
+                        )),
+                    ),
+                    FieldTerm::new(
+                        Location::new(89, 103, &get_import_path()),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(89, 94, &get_import_path()),
+                            "email",
+                        )),
+                        Box::new(IdentifierTerm::new_basic(
+                            Location::new(96, 102, &get_import_path()),
+                            "String",
+                        )),
+                    )
+                ],
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(112, 113, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                )),
+            ))),
+        )),
+        Box::new(PunctuationSignTerm::new(
+            Location::new(113, 114, &get_import_path()),
             PunctuationSign::Semicolumn,
         )),
     )
