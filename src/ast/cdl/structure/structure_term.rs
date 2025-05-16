@@ -1,15 +1,15 @@
 use super::FieldTerm;
-use super::IdentifierTerm;
+use crate::ast::PunctuationSignTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct EntityTerm {
+pub struct StructureTerm {
     #[prop]
     location: Location,
     #[subnode_prop]
-    identifier: Box<IdentifierTerm>,
-    #[subnode_prop]
-    applied_aspects: Vec<IdentifierTerm>,
+    open_brace: Box<PunctuationSignTerm>,
     #[subnode_prop]
     fields: Vec<FieldTerm>,
+    #[subnode_prop]
+    close_brace: Box<PunctuationSignTerm>,
 }
