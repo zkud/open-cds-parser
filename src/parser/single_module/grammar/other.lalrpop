@@ -111,21 +111,13 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
 }
 
 Entity: EntityTerm = {
-  <start: @L> "entity" <identifier:Identifier> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <structure:Structure> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), Vec::new(), Vec::new())
+    EntityTerm::new(location, Box::new(identifier), Vec::new(), Box::new(structure))
   },
-  <start: @L> "entity" <identifier:Identifier> <open:OpenCurlyBrace> <fields:Fields> <close:CloseCurlyBrace> <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), Vec::new(), fields)
-  },
-  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), aspects, Vec::new())
-  },
-  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <open:OpenCurlyBrace> <fields:Fields> <close:CloseCurlyBrace> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), aspects, fields)
+    EntityTerm::new(location, Box::new(identifier), aspects, Box::new(structure))
   }
 }
 
@@ -140,27 +132,6 @@ AspectNames: Vec<IdentifierTerm> = {
     new_aspect_names.extend(aspect_names);
     new_aspect_names.push(aspect_name);
     new_aspect_names
-  }
-}
-
-Fields: Vec<FieldTerm> = {
-  <field:Field> => {
-    let mut fields: Vec<FieldTerm> = Vec::new();
-    fields.push(field);
-    fields
-  },
-  <fields:Fields> <field:Field> => {
-    let mut new_fields: Vec<FieldTerm> = Vec::new();
-    new_fields.extend(fields);
-    new_fields.push(field);
-    new_fields
-  }
-}
-
-Field: FieldTerm = {
-  <start: @L> <identifier:Identifier> <colon:Colon> <type_name:Identifier> <semi:Semicolumn> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    FieldTerm::new(location, Box::new(identifier), Box::new(type_name))
   }
 }
 

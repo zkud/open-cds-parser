@@ -247,9 +247,18 @@ fn build_structured_type_declaration() -> TypeDeclarationTerm {
         Box::new(TypeReferenceTerm::new(
             Location::new(30, 32, &get_import_path()),
             None,
-            Box::new(TypeDetailsVariant::Structured(
-                StructuredTypeDetailsTerm::new(Location::new(30, 32, &get_import_path())),
-            )),
+            Box::new(TypeDetailsVariant::Structured(StructureTerm::new(
+                Location::new(30, 32, &get_import_path()),
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(30, 31, &get_import_path()),
+                    PunctuationSign::OpenCurlyBrace,
+                )),
+                vec![],
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(31, 32, &get_import_path()),
+                    PunctuationSign::CloseCurlyBrace,
+                )),
+            ))),
         )),
         Box::new(PunctuationSignTerm::new(
             Location::new(32, 33, &get_import_path()),

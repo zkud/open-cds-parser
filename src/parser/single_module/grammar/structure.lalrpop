@@ -1,0 +1,36 @@
+Structure: StructureTerm = {
+    <open:OpenCurlyBrace> <close:CloseCurlyBrace> => {
+        let location = Location::new(open.location().start(), close.location().end(), filepath);
+        StructureTerm::new(
+            location,
+            Box::new(open),
+            Vec::new(),
+            Box::new(close)
+        )
+    },
+    <open:OpenCurlyBrace> <fields:Fields> <close:CloseCurlyBrace> => {
+        let location = Location::new(open.location().start(), close.location().end(), filepath);
+        StructureTerm::new(
+            location,
+            Box::new(open),
+            fields,
+            Box::new(close)
+        )
+    },
+}
+
+Fields: Vec<FieldTerm> = {
+    <field:Field> => vec![field],
+    <fields:Fields> <field:Field> => {
+        let mut new_fields = fields;
+        new_fields.push(field);
+        new_fields
+    }
+}
+
+Field: FieldTerm = {
+    <start: @L> <identifier:Identifier> <colon:Colon> <type_name:Identifier> <semi:Semicolumn> <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        FieldTerm::new(location, Box::new(identifier), Box::new(type_name))
+    }
+}

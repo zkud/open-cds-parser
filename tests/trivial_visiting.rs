@@ -24,6 +24,7 @@ impl Visitor for SQLVisitor {
         if let Some(term) = term.try_convert::<EntityTerm>() {
             let name = term.identifier().full_name();
             let fields = term
+                .structure()
                 .fields()
                 .iter()
                 .map(|f| Field {

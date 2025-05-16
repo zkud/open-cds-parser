@@ -17,7 +17,7 @@ pub struct TypeReferenceTerm {
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum TypeDetailsVariant {
     Simple(SimpleTypeDetailsTerm),
-    Structured(StructuredTypeDetailsTerm),
+    Structured(StructureTerm),
 }
 
 impl Visitable for TypeDetailsVariant {
