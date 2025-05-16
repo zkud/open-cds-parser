@@ -1,6 +1,6 @@
+use super::super::Location;
 use super::structure::StructureTerm;
 use super::IdentifierTerm;
-use super::super::Location;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]

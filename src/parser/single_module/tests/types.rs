@@ -408,7 +408,7 @@ fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTe
                             Location::new(96, 102, &get_import_path()),
                             "String",
                         )),
-                    )
+                    ),
                 ],
                 Box::new(PunctuationSignTerm::new(
                     Location::new(112, 113, &get_import_path()),

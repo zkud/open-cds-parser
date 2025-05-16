@@ -219,7 +219,7 @@ fn build_multiple_fields_structure() -> TypeDeclarationTerm {
                             Location::new(124, 131, &get_import_path()),
                             "Boolean",
                         )),
-                    )
+                    ),
                 ],
                 Box::new(PunctuationSignTerm::new(
                     Location::new(141, 142, &get_import_path()),
