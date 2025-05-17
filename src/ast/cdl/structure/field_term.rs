@@ -11,7 +11,7 @@ pub struct FieldTerm {
     #[subnode_prop]
     colon: Box<PunctuationSignTerm>,
     #[subnode_prop]
-    type_name: Box<TypeReferenceTerm>,
+    type_reference: Box<TypeReferenceTerm>,
     #[subnode_prop]
     semicolumn: Box<PunctuationSignTerm>,
 }
