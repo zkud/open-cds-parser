@@ -3,6 +3,10 @@ use std::path::Path;
 use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
 
+mod util;
+
+use util::get_type_name;
+
 struct SQLVisitor {
     pub tables: Vec<Table>,
 }
@@ -29,7 +33,7 @@ impl Visitor for SQLVisitor {
                 .iter()
                 .map(|f| Field {
                     name: f.name().full_name(),
-                    field_type: f.type_name().full_name(),
+                    field_type: get_type_name(&f),
                 })
                 .collect();
             self.tables.push(Table { name, fields });

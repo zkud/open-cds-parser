@@ -1,6 +1,5 @@
+use super::super::TypeReferenceTerm;
 use crate::ast::PunctuationSignTerm;
-
-use super::super::IdentifierTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
@@ -12,7 +11,7 @@ pub struct FieldTerm {
     #[subnode_prop]
     colon: Box<PunctuationSignTerm>,
     #[subnode_prop]
-    type_name: Box<IdentifierTerm>,
+    type_name: Box<TypeReferenceTerm>,
     #[subnode_prop]
     semicolumn: Box<PunctuationSignTerm>,
 }

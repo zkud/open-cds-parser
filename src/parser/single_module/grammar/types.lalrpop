@@ -53,14 +53,7 @@ TypeReference: TypeReferenceTerm = {
 }
 
 TypeDetails: TypeDetailsVariant = {
-    <simple:SimpleTypeDetails> => TypeDetailsVariant::Simple(simple),
+    <identifier:Identifier> => TypeDetailsVariant::Simple(identifier),
     <structure:Structure> => TypeDetailsVariant::Structured(structure),
-}
-
-SimpleTypeDetails: SimpleTypeDetailsTerm = {
-    <start: @L> <identifier:Identifier> <end: @R> => {
-        let location = Location::new(start, end, filepath);
-        SimpleTypeDetailsTerm::new(location, Box::new(identifier))
-    },
 }
 

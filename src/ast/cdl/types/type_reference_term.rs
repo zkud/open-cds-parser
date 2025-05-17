@@ -1,14 +1,13 @@
 use super::super::super::Location;
+use super::super::IdentifierTerm;
 use super::ArrayPrefix;
-use super::SimpleTypeDetailsTerm;
-use super::StructuredTypeDetailsTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
 pub struct TypeReferenceTerm {
     #[prop]
     location: Location,
-    #[prop]
+    #[subnode_prop]
     array_prefix: Option<ArrayPrefix>,
     #[subnode_prop]
     type_details: Box<TypeDetailsVariant>,
@@ -16,7 +15,7 @@ pub struct TypeReferenceTerm {
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum TypeDetailsVariant {
-    Simple(SimpleTypeDetailsTerm),
+    Simple(IdentifierTerm),
     Structured(StructureTerm),
 }
 

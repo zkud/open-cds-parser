@@ -135,9 +135,13 @@ fn build_single_field_structure() -> TypeDeclarationTerm {
                         Location::new(41, 42, &get_import_path()),
                         PunctuationSign::Colon,
                     )),
-                    Box::new(IdentifierTerm::new_basic(
+                    Box::new(TypeReferenceTerm::new(
                         Location::new(43, 49, &get_import_path()),
-                        "String",
+                        None,
+                        Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                            Location::new(43, 49, &get_import_path()),
+                            "String",
+                        ))),
                     )),
                     Box::new(PunctuationSignTerm::new(
                         Location::new(49, 50, &get_import_path()),
@@ -194,9 +198,13 @@ fn build_multiple_fields_structure() -> TypeDeclarationTerm {
                             Location::new(41, 42, &get_import_path()),
                             PunctuationSign::Colon,
                         )),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeReferenceTerm::new(
                             Location::new(43, 49, &get_import_path()),
-                            "String",
+                            None,
+                            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                                Location::new(43, 49, &get_import_path()),
+                                "String",
+                            ))),
                         )),
                         Box::new(PunctuationSignTerm::new(
                             Location::new(49, 50, &get_import_path()),
@@ -213,9 +221,13 @@ fn build_multiple_fields_structure() -> TypeDeclarationTerm {
                             Location::new(66, 67, &get_import_path()),
                             PunctuationSign::Colon,
                         )),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeReferenceTerm::new(
                             Location::new(68, 75, &get_import_path()),
-                            "Integer",
+                            None,
+                            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                                Location::new(68, 75, &get_import_path()),
+                                "Integer",
+                            ))),
                         )),
                         Box::new(PunctuationSignTerm::new(
                             Location::new(75, 76, &get_import_path()),
@@ -232,9 +244,13 @@ fn build_multiple_fields_structure() -> TypeDeclarationTerm {
                             Location::new(94, 95, &get_import_path()),
                             PunctuationSign::Colon,
                         )),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeReferenceTerm::new(
                             Location::new(96, 102, &get_import_path()),
-                            "String",
+                            None,
+                            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                                Location::new(96, 102, &get_import_path()),
+                                "String",
+                            ))),
                         )),
                         Box::new(PunctuationSignTerm::new(
                             Location::new(102, 103, &get_import_path()),
@@ -251,9 +267,13 @@ fn build_multiple_fields_structure() -> TypeDeclarationTerm {
                             Location::new(122, 123, &get_import_path()),
                             PunctuationSign::Colon,
                         )),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeReferenceTerm::new(
                             Location::new(124, 131, &get_import_path()),
-                            "Boolean",
+                            None,
+                            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                                Location::new(124, 131, &get_import_path()),
+                                "Boolean",
+                            ))),
                         )),
                         Box::new(PunctuationSignTerm::new(
                             Location::new(131, 132, &get_import_path()),

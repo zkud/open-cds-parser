@@ -66,12 +66,9 @@ fn build_basic_action() -> ActionDeclarationTerm {
                 Box::new(TypeReferenceTerm::new(
                     Location::new(61, 68, &get_import_path()),
                     None,
-                    Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+                    Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                         Location::new(61, 68, &get_import_path()),
-                        Box::new(IdentifierTerm::new_basic(
-                            Location::new(61, 68, &get_import_path()),
-                            "Example",
-                        )),
+                        "Example",
                     ))),
                 )),
             ))],
@@ -147,12 +144,9 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
                 Box::new(TypeReferenceTerm::new(
                     Location::new(61, 68, &get_import_path()),
                     None,
-                    Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+                    Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                         Location::new(61, 68, &get_import_path()),
-                        Box::new(IdentifierTerm::new_basic(
-                            Location::new(61, 68, &get_import_path()),
-                            "Example",
-                        )),
+                        "Example",
                     ))),
                 )),
             ))],
@@ -170,12 +164,9 @@ fn build_basic_action_plus_return() -> ActionDeclarationTerm {
             Box::new(TypeReferenceTerm::new(
                 Location::new(78, 85, &get_import_path()),
                 None,
-                Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+                Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                     Location::new(78, 85, &get_import_path()),
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(78, 85, &get_import_path()),
-                        "Example",
-                    )),
+                    "Example",
                 ))),
             )),
         ))),
@@ -231,12 +222,9 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                     Box::new(TypeReferenceTerm::new(
                         Location::new(62, 70, &get_import_path()),
                         None,
-                        Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+                        Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                             Location::new(62, 70, &get_import_path()),
-                            Box::new(IdentifierTerm::new_basic(
-                                Location::new(62, 70, &get_import_path()),
-                                "Example1",
-                            )),
+                            "Example1",
                         ))),
                     )),
                 )),
@@ -257,12 +245,9 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                     Box::new(TypeReferenceTerm::new(
                         Location::new(80, 88, &get_import_path()),
                         None,
-                        Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+                        Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                             Location::new(80, 88, &get_import_path()),
-                            Box::new(IdentifierTerm::new_basic(
-                                Location::new(80, 88, &get_import_path()),
-                                "Example2",
-                            )),
+                            "Example2",
                         ))),
                     )),
                 )),
@@ -371,12 +356,9 @@ fn build_the_most_simple_function() -> FunctionDeclarationTerm {
             Box::new(TypeReferenceTerm::new(
                 Location::new(66, 73, &get_import_path()),
                 None,
-                Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+                Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                     Location::new(66, 73, &get_import_path()),
-                    Box::new(IdentifierTerm::new_basic(
-                        Location::new(66, 73, &get_import_path()),
-                        "Example",
-                    )),
+                    "Example",
                 ))),
             )),
         )),
@@ -444,10 +426,10 @@ impl Visitor for ParamCaptureVisitor {
 
 impl ParamCaptureVisitor {
     fn extract_full_name(param: &ParamTerm) -> String {
-        if let TypeDetailsVariant::Simple(simple_type) =
+        if let TypeDetailsVariant::Simple(type_name) =
             param.type_reference().type_details().as_ref()
         {
-            simple_type.identifier().full_name()
+            type_name.full_name()
         } else {
             panic!("Unexpected TypeDetailsVariant");
         }

@@ -124,12 +124,9 @@ fn build_basic_type_declaration() -> TypeDeclarationTerm {
         Box::new(TypeReferenceTerm::new(
             Location::new(24, 30, &get_import_path()),
             None,
-            Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                 Location::new(24, 30, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
-                    Location::new(24, 30, &get_import_path()),
-                    "String",
-                )),
+                "String",
             ))),
         )),
         Box::new(PunctuationSignTerm::new(
@@ -162,12 +159,9 @@ fn build_define_type_declaration() -> TypeDeclarationTerm {
         Box::new(TypeReferenceTerm::new(
             Location::new(31, 37, &get_import_path()),
             None,
-            Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                 Location::new(31, 37, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
-                    Location::new(31, 37, &get_import_path()),
-                    "String",
-                )),
+                "String",
             ))),
         )),
         Box::new(PunctuationSignTerm::new(
@@ -206,12 +200,9 @@ fn build_array_type_declaration() -> TypeDeclarationTerm {
                     Keyword::Of,
                 )),
             }),
-            Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                 Location::new(38, 44, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
-                    Location::new(38, 44, &get_import_path()),
-                    "String",
-                )),
+                "String",
             ))),
         )),
         Box::new(PunctuationSignTerm::new(
@@ -244,12 +235,9 @@ fn build_many_type_declaration() -> TypeDeclarationTerm {
                 Location::new(28, 32, &get_import_path()),
                 Keyword::Many,
             )))),
-            Box::new(TypeDetailsVariant::Simple(SimpleTypeDetailsTerm::new(
+            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                 Location::new(33, 39, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
-                    Location::new(33, 39, &get_import_path()),
-                    "String",
-                )),
+                "String",
             ))),
         )),
         Box::new(PunctuationSignTerm::new(
@@ -335,9 +323,13 @@ fn build_structured_type_with_single_field_declaration() -> TypeDeclarationTerm 
                         Location::new(41, 42, &get_import_path()),
                         PunctuationSign::Colon,
                     )),
-                    Box::new(IdentifierTerm::new_basic(
+                    Box::new(TypeReferenceTerm::new(
                         Location::new(43, 49, &get_import_path()),
-                        "String",
+                        None,
+                        Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                            Location::new(43, 49, &get_import_path()),
+                            "String",
+                        ))),
                     )),
                     Box::new(PunctuationSignTerm::new(
                         Location::new(49, 50, &get_import_path()),
@@ -394,9 +386,13 @@ fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTe
                             Location::new(41, 42, &get_import_path()),
                             PunctuationSign::Colon,
                         )),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeReferenceTerm::new(
                             Location::new(43, 49, &get_import_path()),
-                            "String",
+                            None,
+                            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                                Location::new(43, 49, &get_import_path()),
+                                "String",
+                            ))),
                         )),
                         Box::new(PunctuationSignTerm::new(
                             Location::new(49, 50, &get_import_path()),
@@ -413,9 +409,13 @@ fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTe
                             Location::new(66, 67, &get_import_path()),
                             PunctuationSign::Colon,
                         )),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeReferenceTerm::new(
                             Location::new(68, 75, &get_import_path()),
-                            "Integer",
+                            None,
+                            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                                Location::new(68, 75, &get_import_path()),
+                                "Integer",
+                            ))),
                         )),
                         Box::new(PunctuationSignTerm::new(
                             Location::new(75, 76, &get_import_path()),
@@ -432,9 +432,13 @@ fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTe
                             Location::new(94, 95, &get_import_path()),
                             PunctuationSign::Colon,
                         )),
-                        Box::new(IdentifierTerm::new_basic(
+                        Box::new(TypeReferenceTerm::new(
                             Location::new(96, 102, &get_import_path()),
-                            "String",
+                            None,
+                            Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
+                                Location::new(96, 102, &get_import_path()),
+                                "String",
+                            ))),
                         )),
                         Box::new(PunctuationSignTerm::new(
                             Location::new(102, 103, &get_import_path()),

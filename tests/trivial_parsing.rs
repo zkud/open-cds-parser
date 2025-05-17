@@ -3,6 +3,10 @@ use std::path::PathBuf;
 use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
 
+mod util;
+
+use util::get_type_name;
+
 #[inline]
 fn get_service_path() -> PathBuf {
     PathBuf::from("./tests/projects/trivial/srv/cat-service.cds")
@@ -56,12 +60,12 @@ fn test_entity_structure() {
             // Test first field
             let username_field = &entity.structure().fields()[0];
             assert_eq!(username_field.name().full_name(), "username");
-            assert_eq!(username_field.type_name().full_name(), "String");
+            assert_eq!(get_type_name(username_field), "String");
 
             // Test second field
             let scope_field = &entity.structure().fields()[1];
             assert_eq!(scope_field.name().full_name(), "scope");
-            assert_eq!(scope_field.type_name().full_name(), "String");
+            assert_eq!(get_type_name(scope_field), "String");
         } else {
             panic!("Expected entity definition");
         }
@@ -82,7 +86,7 @@ fn test_function_declaration() {
             let return_type = return_decl.type_reference();
             let return_type_name =
                 if let TypeDetailsVariant::Simple(simple) = return_type.type_details().as_ref() {
-                    simple.identifier().full_name()
+                    simple.full_name()
                 } else {
                     panic!("Unexpected type variant!");
                 };
