@@ -1,6 +1,6 @@
 Structure: StructureTerm = {
-    <open:OpenCurlyBrace> <close:CloseCurlyBrace> => {
-        let location = Location::new(open.location().start(), close.location().end(), filepath);
+    <start: @L> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
+        let location = Location::new(start, end, filepath);
         StructureTerm::new(
             location,
             Box::new(open),
@@ -8,8 +8,8 @@ Structure: StructureTerm = {
             Box::new(close)
         )
     },
-    <open:OpenCurlyBrace> <fields:Fields> <close:CloseCurlyBrace> => {
-        let location = Location::new(open.location().start(), close.location().end(), filepath);
+    <start: @L> <open:OpenCurlyBrace> <fields:Fields> <close:CloseCurlyBrace> <end: @R> => {
+        let location = Location::new(start, end, filepath);
         StructureTerm::new(
             location,
             Box::new(open),
