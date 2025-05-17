@@ -4,6 +4,10 @@ use std::path::{Path, PathBuf};
 use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
 
+mod util;
+
+use util::get_type_name;
+
 /// Helper functions
 #[inline]
 fn get_schema_path() -> PathBuf {
@@ -139,7 +143,7 @@ fn test_entity_basic_properties() {
 
     if let ModuleDefinition::Entity(entity) = &schema_module.definitions()[0] {
         assert_eq!(entity.identifier().full_name(), "Books");
-        assert_eq!(entity.fields().len(), 2);
+        assert_eq!(entity.structure().fields().len(), 2);
     } else {
         panic!("Expected Entity definition");
     }
@@ -151,15 +155,15 @@ fn test_entity_fields() {
     let schema_module = ast.get(&get_schema_path()).unwrap();
 
     if let ModuleDefinition::Entity(entity) = &schema_module.definitions()[0] {
-        let fields = entity.fields();
+        let fields = entity.structure().fields();
 
         // Test id field
         assert_eq!(fields[0].name().full_name(), "id");
-        assert_eq!(fields[0].type_name().full_name(), "UUID");
+        assert_eq!(get_type_name(&fields[0]), "UUID");
 
         // Test name field
         assert_eq!(fields[1].name().full_name(), "name");
-        assert_eq!(fields[1].type_name().full_name(), "String");
+        assert_eq!(get_type_name(&fields[1]), "String");
     } else {
         panic!("Expected Entity definition");
     }

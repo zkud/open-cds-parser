@@ -3,7 +3,6 @@ use crate::parser::fs::MockInMemoryFileSystem;
 use crate::parser::single_module::{SingleModuleParser, SingleModuleParserImpl};
 use crate::parser::ParseError;
 use std::collections::HashMap;
-use std::ops::Deref;
 use std::path::PathBuf;
 use std::sync::Arc;
 
@@ -52,18 +51,12 @@ fn expect_service_to_be(
     module_to_check: Result<Box<ModuleTerm>, ParseError>,
     expected_service: ServiceTerm,
 ) {
-    let module_to_check = module_to_check.expect("Unexpected Error");
-    assert_eq!(module_to_check.definitions().len(), 1);
-    let service = module_to_check
-        .definitions()
-        .get(0)
-        .expect("Unable to retrieve service");
-    let service = if let ModuleDefinition::Service(service) = service {
-        service
-    } else {
-        panic!("Unable to retrieve service")
-    };
-    assert_eq!(service, &expected_service);
+    let parsed_module = module_to_check.unwrap();
+    if let ModuleDefinition::Service(service) = &parsed_module.definitions()[0] {
+        assert_eq!(*service, expected_service);
+        return;
+    }
+    panic!("Service not found!");
 }
 
 #[inline]
@@ -89,12 +82,18 @@ fn build_namespaced_service() -> ServiceTerm {
                     Location::new(17, 19, &get_import_path()),
                     "My".to_string(),
                 )),
-                IdentifierSegment::Dot(DotTerm::new(Location::new(19, 20, &get_import_path()))),
+                IdentifierSegment::Dot(PunctuationSignTerm::new(
+                    Location::new(19, 20, &get_import_path()),
+                    PunctuationSign::Dot,
+                )),
                 IdentifierSegment::SubIdentifier(SubIdentifierTerm::new(
                     Location::new(20, 30, &get_import_path()),
                     "Namespaced".to_string(),
                 )),
-                IdentifierSegment::Dot(DotTerm::new(Location::new(30, 31, &get_import_path()))),
+                IdentifierSegment::Dot(PunctuationSignTerm::new(
+                    Location::new(30, 31, &get_import_path()),
+                    PunctuationSign::Dot,
+                )),
                 IdentifierSegment::SubIdentifier(SubIdentifierTerm::new(
                     Location::new(31, 38, &get_import_path()),
                     "Service".to_string(),

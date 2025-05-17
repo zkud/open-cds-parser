@@ -1,13 +1,17 @@
-use super::super::super::KeywordTerm;
 use super::super::TypeReferenceTerm;
+use crate::ast::PunctuationSignTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct ReturnsDeclarationTerm {
+pub struct FieldTerm {
     #[prop]
     location: Location,
     #[subnode_prop]
-    returns: Box<KeywordTerm>,
+    name: Box<IdentifierTerm>,
+    #[subnode_prop]
+    colon: Box<PunctuationSignTerm>,
     #[subnode_prop]
     type_reference: Box<TypeReferenceTerm>,
+    #[subnode_prop]
+    semicolumn: Box<PunctuationSignTerm>,
 }

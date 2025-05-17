@@ -1,4 +1,5 @@
-use super::field_term::FieldTerm;
+use super::super::Location;
+use super::structure::StructureTerm;
 use super::IdentifierTerm;
 use ast_term_derive::ASTTerm;
 
@@ -11,5 +12,5 @@ pub struct EntityTerm {
     #[subnode_prop]
     applied_aspects: Vec<IdentifierTerm>,
     #[subnode_prop]
-    fields: Vec<FieldTerm>,
+    structure: Box<StructureTerm>,
 }

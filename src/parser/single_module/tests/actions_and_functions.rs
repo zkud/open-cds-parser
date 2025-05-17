@@ -39,45 +39,49 @@ fn get_import_path() -> PathBuf {
 fn build_basic_action() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 70, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 69, &get_import_path()),
-            Box::new(OpenRoundBracketTerm::new(Location::new(
-                53,
-                54,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(53, 54, &get_import_path()),
+                PunctuationSign::OpenRoundBracket,
+            )),
             vec![ParameterOrComma::Parameter(ParamTerm::new(
                 Location::new(54, 68, &get_import_path()),
                 Box::new(IdentifierTerm::new_basic(
                     Location::new(54, 59, &get_import_path()),
                     "param",
                 )),
-                Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(59, 60, &get_import_path()),
+                    PunctuationSign::Colon,
+                )),
+                Box::new(TypeReferenceTerm::new(
                     Location::new(61, 68, &get_import_path()),
-                    Box::new(IdentifierTerm::new_basic(
+                    None,
+                    Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                         Location::new(61, 68, &get_import_path()),
                         "Example",
-                    )),
+                    ))),
                 )),
             ))],
-            Box::new(CloseRoundBracketTerm::new(Location::new(
-                68,
-                69,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(68, 69, &get_import_path()),
+                PunctuationSign::CloseRoundBracket,
+            )),
         )),
         None,
-        Box::new(SemicolumnTerm::new(Location::new(
-            69,
-            70,
-            &get_import_path(),
-        ))),
+        Box::new(PunctuationSignTerm::new(
+            Location::new(69, 70, &get_import_path()),
+            PunctuationSign::Semicolumn,
+        )),
     )
 }
 
@@ -86,28 +90,14 @@ fn expect_action_to_be(
     module_to_check: Result<Box<ModuleTerm>, ParseError>,
     expected_action: ActionDeclarationTerm,
 ) {
-    let module_to_check = module_to_check.expect("Unexpected Error");
-    assert_eq!(module_to_check.definitions().len(), 1);
-    let service = module_to_check
-        .definitions()
-        .get(0)
-        .expect("Unable to retrieve service");
-    let service = if let ModuleDefinition::Service(service) = service {
-        service
-    } else {
-        panic!("Unable to retrieve service")
-    };
-    assert_eq!(service.definitions().len(), 1);
-    let action = service
-        .definitions()
-        .get(0)
-        .expect("Unable to retrieve action");
-    let action = if let ServiceDefinition::Action(action) = action {
-        action
-    } else {
-        panic!("Unable to retrieve action")
-    };
-    assert_eq!(action, &expected_action);
+    let parsed_module = module_to_check.unwrap();
+    if let ModuleDefinition::Service(service) = &parsed_module.definitions()[0] {
+        if let ServiceDefinition::Action(action) = &service.definitions()[0] {
+            assert_eq!(*action, expected_action);
+            return;
+        }
+    }
+    panic!("Action not found!");
 }
 
 #[test]
@@ -127,55 +117,63 @@ fn with_action_with_one_param_and_one_return_it_parses() {
 fn build_basic_action_plus_return() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 86, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 69, &get_import_path()),
-            Box::new(OpenRoundBracketTerm::new(Location::new(
-                53,
-                54,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(53, 54, &get_import_path()),
+                PunctuationSign::OpenRoundBracket,
+            )),
             vec![ParameterOrComma::Parameter(ParamTerm::new(
                 Location::new(54, 68, &get_import_path()),
                 Box::new(IdentifierTerm::new_basic(
                     Location::new(54, 59, &get_import_path()),
                     "param",
                 )),
-                Box::new(ColonTerm::new(Location::new(59, 60, &get_import_path()))),
-                Box::new(TypeReferenceTerm::new_scalar(
+                Box::new(PunctuationSignTerm::new(
+                    Location::new(59, 60, &get_import_path()),
+                    PunctuationSign::Colon,
+                )),
+                Box::new(TypeReferenceTerm::new(
                     Location::new(61, 68, &get_import_path()),
-                    Box::new(IdentifierTerm::new_basic(
+                    None,
+                    Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                         Location::new(61, 68, &get_import_path()),
                         "Example",
-                    )),
+                    ))),
                 )),
             ))],
-            Box::new(CloseRoundBracketTerm::new(Location::new(
-                68,
-                69,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(68, 69, &get_import_path()),
+                PunctuationSign::CloseRoundBracket,
+            )),
         )),
         Some(Box::new(ReturnsDeclarationTerm::new(
             Location::new(70, 85, &get_import_path()),
-            Box::new(ReturnsTerm::new(Location::new(70, 77, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(
+            Box::new(KeywordTerm::new(
+                Location::new(70, 77, &get_import_path()),
+                Keyword::Returns,
+            )),
+            Box::new(TypeReferenceTerm::new(
                 Location::new(78, 85, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
+                None,
+                Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                     Location::new(78, 85, &get_import_path()),
                     "Example",
-                )),
+                ))),
             )),
         ))),
-        Box::new(SemicolumnTerm::new(Location::new(
-            85,
-            86,
-            &get_import_path(),
-        ))),
+        Box::new(PunctuationSignTerm::new(
+            Location::new(85, 86, &get_import_path()),
+            PunctuationSign::Semicolumn,
+        )),
     )
 }
 
@@ -196,18 +194,20 @@ fn with_action_with_several_params_it_parses() {
 fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 90, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 89, &get_import_path()),
-            Box::new(OpenRoundBracketTerm::new(Location::new(
-                53,
-                54,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(53, 54, &get_import_path()),
+                PunctuationSign::OpenRoundBracket,
+            )),
             vec![
                 ParameterOrComma::Parameter(ParamTerm::new(
                     Location::new(54, 70, &get_import_path()),
@@ -215,44 +215,53 @@ fn build_basic_action_with_several_args() -> ActionDeclarationTerm {
                         Location::new(54, 60, &get_import_path()),
                         "param1",
                     )),
-                    Box::new(ColonTerm::new(Location::new(60, 61, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(
+                    Box::new(PunctuationSignTerm::new(
+                        Location::new(60, 61, &get_import_path()),
+                        PunctuationSign::Colon,
+                    )),
+                    Box::new(TypeReferenceTerm::new(
                         Location::new(62, 70, &get_import_path()),
-                        Box::new(IdentifierTerm::new_basic(
+                        None,
+                        Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                             Location::new(62, 70, &get_import_path()),
                             "Example1",
-                        )),
+                        ))),
                     )),
                 )),
-                ParameterOrComma::Comma(CommaTerm::new(Location::new(70, 71, &get_import_path()))),
+                ParameterOrComma::Comma(PunctuationSignTerm::new(
+                    Location::new(70, 71, &get_import_path()),
+                    PunctuationSign::Comma,
+                )),
                 ParameterOrComma::Parameter(ParamTerm::new(
                     Location::new(72, 88, &get_import_path()),
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(72, 78, &get_import_path()),
                         "param2",
                     )),
-                    Box::new(ColonTerm::new(Location::new(78, 79, &get_import_path()))),
-                    Box::new(TypeReferenceTerm::new_scalar(
+                    Box::new(PunctuationSignTerm::new(
+                        Location::new(78, 79, &get_import_path()),
+                        PunctuationSign::Colon,
+                    )),
+                    Box::new(TypeReferenceTerm::new(
                         Location::new(80, 88, &get_import_path()),
-                        Box::new(IdentifierTerm::new_basic(
+                        None,
+                        Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                             Location::new(80, 88, &get_import_path()),
                             "Example2",
-                        )),
+                        ))),
                     )),
                 )),
             ],
-            Box::new(CloseRoundBracketTerm::new(Location::new(
-                88,
-                89,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(88, 89, &get_import_path()),
+                PunctuationSign::CloseRoundBracket,
+            )),
         )),
         None,
-        Box::new(SemicolumnTerm::new(Location::new(
-            89,
-            90,
-            &get_import_path(),
-        ))),
+        Box::new(PunctuationSignTerm::new(
+            Location::new(89, 90, &get_import_path()),
+            PunctuationSign::Semicolumn,
+        )),
     )
 }
 
@@ -273,31 +282,31 @@ fn with_action_with_no_params_it_parses() {
 fn build_basic_action_with_no_args() -> ActionDeclarationTerm {
     ActionDeclarationTerm::new(
         Location::new(39, 56, &get_import_path()),
-        Box::new(ActionTerm::new(Location::new(39, 45, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 45, &get_import_path()),
+            Keyword::Action,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(46, 53, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
             Location::new(53, 55, &get_import_path()),
-            Box::new(OpenRoundBracketTerm::new(Location::new(
-                53,
-                54,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(53, 54, &get_import_path()),
+                PunctuationSign::OpenRoundBracket,
+            )),
             vec![],
-            Box::new(CloseRoundBracketTerm::new(Location::new(
-                54,
-                55,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(54, 55, &get_import_path()),
+                PunctuationSign::CloseRoundBracket,
+            )),
         )),
         None,
-        Box::new(SemicolumnTerm::new(Location::new(
-            55,
-            56,
-            &get_import_path(),
-        ))),
+        Box::new(PunctuationSignTerm::new(
+            Location::new(55, 56, &get_import_path()),
+            PunctuationSign::Semicolumn,
+        )),
     )
 }
 
@@ -318,41 +327,45 @@ fn with_most_basic_function_it_parses() {
 fn build_the_most_simple_function() -> FunctionDeclarationTerm {
     FunctionDeclarationTerm::new(
         Location::new(39, 74, &get_import_path()),
-        Box::new(FunctionTerm::new(Location::new(39, 47, &get_import_path()))),
+        Box::new(KeywordTerm::new(
+            Location::new(39, 47, &get_import_path()),
+            Keyword::Function,
+        )),
         Box::new(IdentifierTerm::new_basic(
             Location::new(48, 55, &get_import_path()),
             "example",
         )),
         Box::new(ParametersBlockTerm::new(
             Location::new(55, 57, &get_import_path()),
-            Box::new(OpenRoundBracketTerm::new(Location::new(
-                55,
-                56,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(55, 56, &get_import_path()),
+                PunctuationSign::OpenRoundBracket,
+            )),
             vec![],
-            Box::new(CloseRoundBracketTerm::new(Location::new(
-                56,
-                57,
-                &get_import_path(),
-            ))),
+            Box::new(PunctuationSignTerm::new(
+                Location::new(56, 57, &get_import_path()),
+                PunctuationSign::CloseRoundBracket,
+            )),
         )),
         Box::new(ReturnsDeclarationTerm::new(
             Location::new(58, 73, &get_import_path()),
-            Box::new(ReturnsTerm::new(Location::new(58, 65, &get_import_path()))),
-            Box::new(TypeReferenceTerm::new_scalar(
+            Box::new(KeywordTerm::new(
+                Location::new(58, 65, &get_import_path()),
+                Keyword::Returns,
+            )),
+            Box::new(TypeReferenceTerm::new(
                 Location::new(66, 73, &get_import_path()),
-                Box::new(IdentifierTerm::new_basic(
+                None,
+                Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
                     Location::new(66, 73, &get_import_path()),
                     "Example",
-                )),
+                ))),
             )),
         )),
-        Box::new(SemicolumnTerm::new(Location::new(
-            73,
-            74,
-            &get_import_path(),
-        ))),
+        Box::new(PunctuationSignTerm::new(
+            Location::new(73, 74, &get_import_path()),
+            PunctuationSign::Semicolumn,
+        )),
     )
 }
 
@@ -361,28 +374,14 @@ fn expect_function_to_be(
     module_to_check: Result<Box<ModuleTerm>, ParseError>,
     expected_function: FunctionDeclarationTerm,
 ) {
-    let module_to_check = module_to_check.expect("Unexpected Error");
-    assert_eq!(module_to_check.definitions().len(), 1);
-    let service = module_to_check
-        .definitions()
-        .get(0)
-        .expect("Unable to retrieve service");
-    let service = if let ModuleDefinition::Service(service) = service {
-        service
-    } else {
-        panic!("Unable to retrieve service")
-    };
-    assert_eq!(service.definitions().len(), 1);
-    let function = service
-        .definitions()
-        .get(0)
-        .expect("Unable to retrieve function");
-    let function = if let ServiceDefinition::Function(function) = function {
-        function
-    } else {
-        panic!("Unable to retrieve function")
-    };
-    assert_eq!(function, &expected_function);
+    let parsed_module = module_to_check.unwrap();
+    if let ModuleDefinition::Service(service) = &parsed_module.definitions()[0] {
+        if let ServiceDefinition::Function(function) = &service.definitions()[0] {
+            assert_eq!(*function, expected_function);
+            return;
+        }
+    }
+    panic!("Function not found!");
 }
 
 #[test]
@@ -409,16 +408,31 @@ impl Visitor for ParamCaptureVisitor {
     fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), Self::Error> {
         if let Some(term) = term.try_convert::<ParamTerm>() {
             let name = term.name().full_name();
-            let param_type = term.type_reference().type_name().full_name();
+            let param_type = Self::extract_full_name(term);
             self.params.push((name.clone(), param_type.clone()));
         }
-        if let Some(_) = term.try_convert::<CommaTerm>() {
+        if let Some(term) = term.try_convert::<PunctuationSignTerm>() {
+            if term.sign() != &PunctuationSign::Comma {
+                return Ok(());
+            }
             if self.params.is_empty() {
                 panic!("Unexpected comma order!!!");
             }
             self.comma_count += 1;
         }
         Ok(())
+    }
+}
+
+impl ParamCaptureVisitor {
+    fn extract_full_name(param: &ParamTerm) -> String {
+        if let TypeDetailsVariant::Simple(type_name) =
+            param.type_reference().type_details().as_ref()
+        {
+            type_name.full_name()
+        } else {
+            panic!("Unexpected TypeDetailsVariant");
+        }
     }
 }
 

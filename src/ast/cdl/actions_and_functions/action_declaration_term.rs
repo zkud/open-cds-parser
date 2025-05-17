@@ -1,10 +1,10 @@
 use crate::ast::Location;
 
-use super::super::super::SemicolumnTerm;
+use super::super::super::PunctuationSignTerm;
 use super::super::IdentifierTerm;
 use super::super::ReturnsDeclarationTerm;
-use super::ActionTerm;
 use super::ParametersBlockTerm;
+use crate::ast::basic::KeywordTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
@@ -12,7 +12,7 @@ pub struct ActionDeclarationTerm {
     #[prop]
     location: Location,
     #[subnode_prop]
-    action: Box<ActionTerm>,
+    action: Box<KeywordTerm>,
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]
@@ -20,5 +20,5 @@ pub struct ActionDeclarationTerm {
     #[subnode_prop]
     returns: Option<Box<ReturnsDeclarationTerm>>,
     #[subnode_prop]
-    semicolumn: Box<SemicolumnTerm>,
+    semicolumn: Box<PunctuationSignTerm>,
 }

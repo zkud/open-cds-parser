@@ -53,7 +53,10 @@ impl SingleModuleParser for MockSingleModuleParser {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         get_mock_location(),
-                        Box::new(UsingTerm::new(Location::new(0, 0, &PathBuf::new()))),
+                        Box::new(KeywordTerm::new(
+                            Location::new(0, 0, &PathBuf::new()),
+                            Keyword::Using,
+                        )),
                         Box::new(SelectionBlockTerm::new(
                             get_mock_location(),
                             None,
@@ -70,12 +73,15 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(
                             get_mock_location(),
                             PathBuf::from("/subdir/file3"),
                         )),
-                        Box::new(SemicolumnTerm::new(get_mock_location())),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),
@@ -120,7 +126,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         get_mock_location(),
-                        Box::new(UsingTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Using)),
                         Box::new(SelectionBlockTerm::new(
                             get_mock_location(),
                             None,
@@ -137,12 +143,15 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(
                             get_mock_location(),
                             PathBuf::from("/subdir/subdir"),
                         )),
-                        Box::new(SemicolumnTerm::new(Location::new(0, 0, &PathBuf::new()))),
+                        Box::new(PunctuationSignTerm::new(
+                            Location::new(0, 0, &PathBuf::new()),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),
@@ -174,7 +183,7 @@ impl SingleModuleParser for MockSingleModuleParser {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         get_mock_location(),
-                        Box::new(UsingTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Using)),
                         Box::new(SelectionBlockTerm::new(
                             get_mock_location(),
                             None,
@@ -191,12 +200,15 @@ impl SingleModuleParser for MockSingleModuleParser {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(
                             get_mock_location(),
                             PathBuf::from("/no_file_present"),
                         )),
-                        Box::new(SemicolumnTerm::new(get_mock_location())),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),
@@ -376,7 +388,10 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                 vec![
                     ModuleDefinition::Import(ImportTerm::new(
                         Location::new(6, 11, &Path::new("./tests/projects/modules/srv/books.cds")),
-                        Box::new(UsingTerm::new(Location::new(0, 0, &Path::new("")))),
+                        Box::new(KeywordTerm::new(
+                            Location::new(0, 0, &Path::new("")),
+                            Keyword::Using,
+                        )),
                         Box::new(SelectionBlockTerm::new(
                             Location::new(
                                 6,
@@ -397,9 +412,12 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                             ))],
                             None,
                         )),
-                        Box::new(FromTerm::new(get_mock_location())),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::From)),
                         Box::new(PathTerm::new(get_mock_location(), PathBuf::from("/file2"))),
-                        Box::new(SemicolumnTerm::new(get_mock_location())),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::Semicolumn,
+                        )),
                     )),
                     ModuleDefinition::Service(ServiceTerm::new(
                         get_mock_location(),

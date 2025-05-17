@@ -3,6 +3,10 @@ use std::path::PathBuf;
 use open_cds_parser::ast::*;
 use open_cds_parser::parser::Parser;
 
+mod util;
+
+use util::get_type_name;
+
 #[inline]
 fn get_service_path() -> PathBuf {
     PathBuf::from("./tests/projects/trivial/srv/cat-service.cds")
@@ -51,17 +55,17 @@ fn test_entity_structure() {
     if let ModuleDefinition::Service(service) = &ast.definitions()[0] {
         if let ServiceDefinition::Entity(entity) = &service.definitions()[0] {
             assert_eq!(entity.identifier().full_name(), "UserScopes");
-            assert_eq!(entity.fields().len(), 2);
+            assert_eq!(entity.structure().fields().len(), 2);
 
             // Test first field
-            let username_field = &entity.fields()[0];
+            let username_field = &entity.structure().fields()[0];
             assert_eq!(username_field.name().full_name(), "username");
-            assert_eq!(username_field.type_name().full_name(), "String");
+            assert_eq!(get_type_name(username_field), "String");
 
             // Test second field
-            let scope_field = &entity.fields()[1];
+            let scope_field = &entity.structure().fields()[1];
             assert_eq!(scope_field.name().full_name(), "scope");
-            assert_eq!(scope_field.type_name().full_name(), "String");
+            assert_eq!(get_type_name(scope_field), "String");
         } else {
             panic!("Expected entity definition");
         }
@@ -80,8 +84,14 @@ fn test_function_declaration() {
             // Test return type
             let return_decl = function.returns();
             let return_type = return_decl.type_reference();
-            assert_eq!(return_type.type_name().full_name(), "Integer");
-            assert!(!return_type.is_arrayed());
+            let return_type_name =
+                if let TypeDetailsVariant::Simple(simple) = return_type.type_details().as_ref() {
+                    simple.full_name()
+                } else {
+                    panic!("Unexpected type variant!");
+                };
+            assert_eq!(return_type_name, "Integer");
+            assert!(return_type.array_prefix().is_none());
         } else {
             panic!("Expected function definition");
         }

@@ -53,11 +53,11 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
 }
 
 Service: ServiceTerm = {
-  <start: @L> "service" <identifier:Identifier> "{" "}" <end: @R> => {
+  <start: @L> "service" <identifier:Identifier> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ServiceTerm::new(location, Box::new(identifier), Vec::new())
   },
-  <start: @L> "service" <identifier:Identifier> "{" <definitions:ServiceDefinitions> "}" <end: @R> => {
+  <start: @L> "service" <identifier:Identifier> <open:OpenCurlyBrace> <definitions:ServiceDefinitions> <close:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
     ServiceTerm::new(location, Box::new(identifier), definitions)
   },
@@ -111,21 +111,13 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
 }
 
 Entity: EntityTerm = {
-  <start: @L> "entity" <identifier:Identifier> "{" "}" <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <structure:Structure> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), Vec::new(), Vec::new())
+    EntityTerm::new(location, Box::new(identifier), Vec::new(), Box::new(structure))
   },
-  <start: @L> "entity" <identifier:Identifier> "{" <fields:Fields> "}" <end: @R> => {
+  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), Vec::new(), fields)
-  },
-  <start: @L> "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" "}" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), aspects, Vec::new())
-  },
-  <start: @L> "entity" <identifier:Identifier> ":" <aspects:AspectNames> "{" <fields:Fields> "}" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), aspects, fields)
+    EntityTerm::new(location, Box::new(identifier), aspects, Box::new(structure))
   }
 }
 
@@ -135,7 +127,7 @@ AspectNames: Vec<IdentifierTerm> = {
     aspect_names.push(aspect_name);
     aspect_names
   },
-  <aspect_names:AspectNames> "," <aspect_name:Identifier> => {
+  <aspect_names:AspectNames> <comma:Comma> <aspect_name:Identifier> => {
     let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
     new_aspect_names.extend(aspect_names);
     new_aspect_names.push(aspect_name);
@@ -143,50 +135,15 @@ AspectNames: Vec<IdentifierTerm> = {
   }
 }
 
-Fields: Vec<FieldTerm> = {
-  <field:Field> => {
-    let mut fields: Vec<FieldTerm> = Vec::new();
-    fields.push(field);
-    fields
-  },
-  <fields:Fields> <field:Field> => {
-    let mut new_fields: Vec<FieldTerm> = Vec::new();
-    new_fields.extend(fields);
-    new_fields.push(field);
-    new_fields
-  }
-}
-
-Field: FieldTerm = {
-  <start: @L> <identifier:Identifier> ":" <type_name:Identifier> ";" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    FieldTerm::new(location, Box::new(identifier), Box::new(type_name))
-  }
-}
-
-From: FromTerm = {
-  <start: @L> "from" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    FromTerm::new(location)
-  }
-}
-
-Using: UsingTerm = {
-  <start: @L> "using" <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    UsingTerm::new(location)
-  },
-}
-
 Path: PathTerm = {
-  <start: @L> <value:r"`[a-zA-Z0-9-/[.]]+`"> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    let trimmed_value = value.to_string().trim_matches('`').to_string();
-    PathTerm::new(location, PathBuf::from(trimmed_value))
-  },
   <start: @L> <value:r"'[a-zA-Z0-9-/[.]]+'"> <end: @R> => {
     let location = Location::new(start, end, filepath);
     let trimmed_value = value.to_string().trim_matches('\'').to_string();
     PathTerm::new(location, PathBuf::from(trimmed_value))
   },
+  <start: @L> <value:r"`[a-zA-Z0-9-/[.]]+`"> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    let trimmed_value = value.to_string().trim_matches('`').to_string();
+    PathTerm::new(location, PathBuf::from(trimmed_value))
+  }
 }
