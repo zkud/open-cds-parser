@@ -6,7 +6,7 @@ pub Module: ModuleTerm = {
 }
 
 ModuleDefinitions: Vec<ModuleDefinition> = {
-  <entity:Entity> => {
+  <entity:EntityDeclaration> => {
     let mut definitions: Vec<ModuleDefinition> = Vec::new();
     definitions.push(ModuleDefinition::Entity(entity));
     definitions
@@ -26,7 +26,7 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     definitions.push(ModuleDefinition::Import(import));
     definitions
   },
-  <definitions:ModuleDefinitions> <entity:Entity> => {
+  <definitions:ModuleDefinitions> <entity:EntityDeclaration> => {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
     new_definitions.push(ModuleDefinition::Entity(entity));
@@ -64,7 +64,7 @@ Service: ServiceTerm = {
 }
 
 ServiceDefinitions: Vec<ServiceDefinition> = {
-  <entity:Entity> => {
+  <entity:EntityDeclaration> => {
     let mut definitions: Vec<ServiceDefinition> = Vec::new();
     definitions.push(ServiceDefinition::Entity(entity));
     definitions
@@ -84,7 +84,7 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
     definitions.push(ServiceDefinition::Type(type_definition));
     definitions
   },
-  <definitions:ServiceDefinitions> <entity:Entity> => {
+  <definitions:ServiceDefinitions> <entity:EntityDeclaration> => {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
     new_definitions.push(ServiceDefinition::Entity(entity));
@@ -108,31 +108,6 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
     new_definitions.push(ServiceDefinition::Type(type_definition));
     new_definitions
   },
-}
-
-Entity: EntityTerm = {
-  <start: @L> "entity" <identifier:Identifier> <structure:Structure> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), Vec::new(), Box::new(structure))
-  },
-  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), aspects, Box::new(structure))
-  }
-}
-
-AspectNames: Vec<IdentifierTerm> = {
-  <aspect_name:Identifier> => {
-    let mut aspect_names: Vec<IdentifierTerm> = Vec::new();
-    aspect_names.push(aspect_name);
-    aspect_names
-  },
-  <aspect_names:AspectNames> <comma:Comma> <aspect_name:Identifier> => {
-    let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
-    new_aspect_names.extend(aspect_names);
-    new_aspect_names.push(aspect_name);
-    new_aspect_names
-  }
 }
 
 Path: PathTerm = {

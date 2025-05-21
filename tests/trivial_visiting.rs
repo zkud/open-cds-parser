@@ -25,7 +25,7 @@ impl Visitor for SQLVisitor {
     type Error = ();
 
     fn process<T: ASTTerm>(&mut self, term: &T) -> Result<(), ()> {
-        if let Some(term) = term.try_convert::<EntityTerm>() {
+        if let Some(term) = term.try_convert::<EntityDeclarationTerm>() {
             let name = term.identifier().full_name();
             let fields = term
                 .structure()
