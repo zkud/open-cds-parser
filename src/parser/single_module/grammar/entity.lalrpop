@@ -1,11 +1,23 @@
 EntityDeclaration: EntityDeclarationTerm = {
-  <start: @L> "entity" <identifier:Identifier> <structure:Structure> <end: @R> => {
+  <start: @L> <entity:Entity> <identifier:Identifier> <structure:Structure> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    EntityDeclarationTerm::new(location, Box::new(identifier), Vec::new(), Box::new(structure))
+    EntityDeclarationTerm::new(
+      location, 
+      Box::new(entity),
+      Box::new(identifier),
+      Vec::new(),
+      Box::new(structure)
+    )
   },
-  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <end: @R> => {
+  <start: @L> <entity:Entity> <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    EntityDeclarationTerm::new(location, Box::new(identifier), aspects, Box::new(structure))
+    EntityDeclarationTerm::new(
+      location,
+      Box::new(entity),
+      Box::new(identifier),
+      aspects,
+      Box::new(structure)
+    )
   }
 }
 

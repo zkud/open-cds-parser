@@ -1,4 +1,5 @@
 use crate::ast::IdentifierTerm;
+use crate::ast::KeywordTerm;
 use crate::ast::Location;
 use crate::ast::StructureTerm;
 use ast_term_derive::ASTTerm;
@@ -7,6 +8,8 @@ use ast_term_derive::ASTTerm;
 pub struct EntityDeclarationTerm {
     #[prop]
     location: Location,
+    #[subnode_prop]
+    entity: Box<KeywordTerm>,
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]
