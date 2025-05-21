@@ -137,3 +137,10 @@ Type: KeywordTerm = {
     KeywordTerm::new(location, Keyword::Type)
   }
 }
+
+EntityKeyword: KeywordTerm = {
+  <start: @L> "entity" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    KeywordTerm::new(location, Keyword::Entity)
+  }
+}

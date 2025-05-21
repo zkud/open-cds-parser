@@ -23,4 +23,5 @@ pub enum Keyword {
     From,     // from
     Define,   // define
     Type,     // type
+    Entity,   // entity
 }
