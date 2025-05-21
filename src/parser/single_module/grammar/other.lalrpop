@@ -110,31 +110,6 @@ ServiceDefinitions: Vec<ServiceDefinition> = {
   },
 }
 
-Entity: EntityTerm = {
-  <start: @L> "entity" <identifier:Identifier> <structure:Structure> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), Vec::new(), Box::new(structure))
-  },
-  <start: @L> "entity" <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <end: @R> => {
-    let location = Location::new(start, end, filepath);
-    EntityTerm::new(location, Box::new(identifier), aspects, Box::new(structure))
-  }
-}
-
-AspectNames: Vec<IdentifierTerm> = {
-  <aspect_name:Identifier> => {
-    let mut aspect_names: Vec<IdentifierTerm> = Vec::new();
-    aspect_names.push(aspect_name);
-    aspect_names
-  },
-  <aspect_names:AspectNames> <comma:Comma> <aspect_name:Identifier> => {
-    let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
-    new_aspect_names.extend(aspect_names);
-    new_aspect_names.push(aspect_name);
-    new_aspect_names
-  }
-}
-
 Path: PathTerm = {
   <start: @L> <value:r"'[a-zA-Z0-9-/[.]]+'"> <end: @R> => {
     let location = Location::new(start, end, filepath);
