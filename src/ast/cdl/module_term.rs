@@ -1,8 +1,8 @@
 use crate::ast::*;
 
 use super::super::import::ImportTerm;
-use super::entity_term::EntityTerm;
 use super::service_term::ServiceTerm;
+use super::EntityTerm;
 use super::TypeDeclarationTerm;
 use ast_term_derive::ASTTerm;
 

@@ -1,8 +1,8 @@
 use crate::ast::*;
 
 use super::super::Location;
-use super::entity_term::EntityTerm;
 use super::ActionDeclarationTerm;
+use super::EntityTerm;
 use super::FunctionDeclarationTerm;
 use super::IdentifierTerm;
 use super::TypeDeclarationTerm;
