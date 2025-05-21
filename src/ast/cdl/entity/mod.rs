@@ -1,3 +1,3 @@
-mod entity_term;
+mod entity_declaration_term;
 
-pub use entity_term::*;
+pub use entity_declaration_term::*;

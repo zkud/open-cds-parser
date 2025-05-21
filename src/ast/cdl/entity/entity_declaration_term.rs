@@ -4,7 +4,7 @@ use crate::ast::StructureTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct EntityTerm {
+pub struct EntityDeclarationTerm {
     #[prop]
     location: Location,
     #[subnode_prop]

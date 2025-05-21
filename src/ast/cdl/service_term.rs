@@ -2,7 +2,7 @@ use crate::ast::*;
 
 use super::super::Location;
 use super::ActionDeclarationTerm;
-use super::EntityTerm;
+use super::EntityDeclarationTerm;
 use super::FunctionDeclarationTerm;
 use super::IdentifierTerm;
 use super::TypeDeclarationTerm;
@@ -20,7 +20,7 @@ pub struct ServiceTerm {
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ServiceDefinition {
-    Entity(EntityTerm),
+    Entity(EntityDeclarationTerm),
     Function(FunctionDeclarationTerm),
     Action(ActionDeclarationTerm),
     Type(TypeDeclarationTerm),
@@ -29,7 +29,7 @@ pub enum ServiceDefinition {
 impl Visitable for ServiceDefinition {
     fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
-            ServiceDefinition::Entity(entity) => entity.accept(visitor)?,
+            ServiceDefinition::Entity(entity_declaration) => entity_declaration.accept(visitor)?,
             ServiceDefinition::Function(function) => function.accept(visitor)?,
             ServiceDefinition::Action(action) => action.accept(visitor)?,
             ServiceDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
