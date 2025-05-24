@@ -1,22 +1,32 @@
 EntityDeclaration: EntityDeclarationTerm = {
-  <start: @L> <entity:Entity> <identifier:Identifier> <structure:Structure> <end: @R> => {
+  <start: @L> <define:Define?> <entity:Entity> <identifier:Identifier> <structure:Structure> <semicolumn:Semicolumn?> <end: @R> => {
     let location = Location::new(start, end, filepath);
+    let define = define.map(|d| Box::new(d));
+    let semicolumn = semicolumn.map(|s| Box::new(s));
     EntityDeclarationTerm::new(
       location, 
+      define,
       Box::new(entity),
       Box::new(identifier),
+      None,
       Vec::new(),
-      Box::new(structure)
+      Box::new(structure),
+      semicolumn,
     )
   },
-  <start: @L> <entity:Entity> <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <end: @R> => {
+  <start: @L> <define:Define?> <entity:Entity> <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <semicolumn:Semicolumn?> <end: @R> => {
     let location = Location::new(start, end, filepath);
+    let define = define.map(|d| Box::new(d));
+    let semicolumn = semicolumn.map(|s| Box::new(s));
     EntityDeclarationTerm::new(
       location,
+      define,
       Box::new(entity),
       Box::new(identifier),
+      Some(Box::new(colon)),
       aspects,
-      Box::new(structure)
+      Box::new(structure),
+      semicolumn,
     )
   }
 }
