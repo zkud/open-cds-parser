@@ -176,10 +176,10 @@ fn build_entity_with_single_aspect_declaration() -> EntityDeclarationTerm {
             Location::new(15, 16, &get_import_path()),
             PunctuationSign::Colon,
         ))),
-        vec![IdentifierTerm::new_basic(
+        vec![AppliedAspectSegment::Aspect(IdentifierTerm::new_basic(
             Location::new(17, 24, &get_import_path()),
             "Aspect1",
-        )],
+        ))],
         Box::new(StructureTerm::new(
             Location::new(25, 27, &get_import_path()),
             Box::new(PunctuationSignTerm::new(
@@ -217,8 +217,18 @@ fn build_entity_with_multiple_aspects_declaration() -> EntityDeclarationTerm {
             PunctuationSign::Colon,
         ))),
         vec![
-            IdentifierTerm::new_basic(Location::new(17, 24, &get_import_path()), "Aspect1"),
-            IdentifierTerm::new_basic(Location::new(26, 33, &get_import_path()), "Aspect2"),
+            AppliedAspectSegment::Aspect(IdentifierTerm::new_basic(
+                Location::new(17, 24, &get_import_path()),
+                "Aspect1",
+            )),
+            AppliedAspectSegment::Comma(PunctuationSignTerm::new(
+                Location::new(24, 25, &get_import_path()),
+                PunctuationSign::Comma,
+            )),
+            AppliedAspectSegment::Aspect(IdentifierTerm::new_basic(
+                Location::new(26, 33, &get_import_path()),
+                "Aspect2",
+            )),
         ],
         Box::new(StructureTerm::new(
             Location::new(34, 36, &get_import_path()),

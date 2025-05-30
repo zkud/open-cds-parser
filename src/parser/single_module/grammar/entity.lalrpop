@@ -14,7 +14,7 @@ EntityDeclaration: EntityDeclarationTerm = {
       semicolumn,
     )
   },
-  <start: @L> <define:Define?> <entity:Entity> <identifier:Identifier> <colon:Colon> <aspects:AspectNames> <structure:Structure> <semicolumn:Semicolumn?> <end: @R> => {
+  <start: @L> <define:Define?> <entity:Entity> <identifier:Identifier> <colon:Colon> <aspects:AppliedAspects> <structure:Structure> <semicolumn:Semicolumn?> <end: @R> => {
     let location = Location::new(start, end, filepath);
     let define = define.map(|d| Box::new(d));
     let semicolumn = semicolumn.map(|s| Box::new(s));
@@ -31,16 +31,17 @@ EntityDeclaration: EntityDeclarationTerm = {
   }
 }
 
-AspectNames: Vec<IdentifierTerm> = {
-  <aspect_name:Identifier> => {
-    let mut aspect_names: Vec<IdentifierTerm> = Vec::new();
-    aspect_names.push(aspect_name);
-    aspect_names
+AppliedAspects: Vec<AppliedAspectSegment> = {
+  <aspect:Identifier> => {
+    let mut aspects: Vec<AppliedAspectSegment> = Vec::new();
+    aspects.push(AppliedAspectSegment::Aspect(aspect));
+    aspects
   },
-  <aspect_names:AspectNames> <comma:Comma> <aspect_name:Identifier> => {
-    let mut new_aspect_names: Vec<IdentifierTerm> = Vec::new();
-    new_aspect_names.extend(aspect_names);
-    new_aspect_names.push(aspect_name);
-    new_aspect_names
+  <aspects:AppliedAspects> <comma:Comma> <aspect:Identifier> => {
+    let mut new_aspects: Vec<AppliedAspectSegment> = Vec::new();
+    new_aspects.extend(aspects);
+    new_aspects.push(AppliedAspectSegment::Comma(comma));
+    new_aspects.push(AppliedAspectSegment::Aspect(aspect));
+    new_aspects
   }
 }

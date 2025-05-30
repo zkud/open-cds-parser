@@ -18,9 +18,25 @@ pub struct EntityDeclarationTerm {
     #[subnode_prop]
     colon: Option<Box<PunctuationSignTerm>>,
     #[subnode_prop]
-    applied_aspects: Vec<IdentifierTerm>,
+    applied_aspects: Vec<AppliedAspectSegment>,
     #[subnode_prop]
     structure: Box<StructureTerm>,
     #[subnode_prop]
     semicolumn: Option<Box<PunctuationSignTerm>>,
+}
+
+#[derive(PartialEq, Eq, Debug, Clone)]
+pub enum AppliedAspectSegment {
+    Aspect(IdentifierTerm),
+    Comma(PunctuationSignTerm),
+}
+
+impl Visitable for AppliedAspectSegment {
+    fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
+        match self {
+            Self::Aspect(aspect) => aspect.accept(visitor)?,
+            Self::Comma(comma) => comma.accept(visitor)?,
+        };
+        Ok(())
+    }
 }
