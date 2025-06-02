@@ -24,4 +24,5 @@ pub enum Keyword {
     Define,   // define
     Type,     // type
     Entity,   // entity
+    Service,  // service
 }

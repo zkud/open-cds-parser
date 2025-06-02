@@ -1,11 +1,25 @@
-Service: ServiceTerm = {
-  <start: @L> "service" <identifier:Identifier> <open:OpenCurlyBrace> <close:CloseCurlyBrace> <end: @R> => {
+ServiceDeclaration: ServiceDeclarationTerm = {
+  <start: @L> <service:Service> <identifier:Identifier> <open_brace:OpenCurlyBrace> <close_brace:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    ServiceTerm::new(location, Box::new(identifier), Vec::new())
+    ServiceDeclarationTerm::new(
+      location,
+      Box::new(service),
+      Box::new(identifier),
+      Box::new(open_brace),
+      Vec::new(),
+      Box::new(close_brace),
+    )
   },
-  <start: @L> "service" <identifier:Identifier> <open:OpenCurlyBrace> <definitions:ServiceDefinitions> <close:CloseCurlyBrace> <end: @R> => {
+  <start: @L> <service:Service> <identifier:Identifier> <open_brace:OpenCurlyBrace> <definitions:ServiceDefinitions> <close_brace:CloseCurlyBrace> <end: @R> => {
     let location = Location::new(start, end, filepath);
-    ServiceTerm::new(location, Box::new(identifier), definitions)
+    ServiceDeclarationTerm::new(
+      location,
+      Box::new(service),
+      Box::new(identifier),
+      Box::new(open_brace),
+      definitions,
+      Box::new(close_brace),
+    )
   },
 }
 

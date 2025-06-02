@@ -1,3 +1,3 @@
-mod service_term;
+mod service_declaration_term;
 
-pub use service_term::*;
+pub use service_declaration_term::*;

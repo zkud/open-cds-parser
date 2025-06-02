@@ -83,13 +83,22 @@ impl SingleModuleParser for MockSingleModuleParser {
                             PunctuationSign::Semicolumn,
                         )),
                     )),
-                    ModuleDefinition::Service(ServiceTerm::new(
+                    ModuleDefinition::Service(ServiceDeclarationTerm::new(
                         get_mock_location(),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                         Box::new(IdentifierTerm::new_basic(
                             get_mock_location(),
                             "BooksService",
                         )),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::OpenCurlyBrace,
+                        )),
                         vec![],
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::CloseCurlyBrace,
+                        )),
                     )),
                 ],
             )));
@@ -97,26 +106,44 @@ impl SingleModuleParser for MockSingleModuleParser {
         if path == get_file_2_path() {
             return Ok(Box::new(ModuleTerm::new(
                 get_mock_location(),
-                vec![ModuleDefinition::Service(ServiceTerm::new(
+                vec![ModuleDefinition::Service(ServiceDeclarationTerm::new(
                     get_mock_location(),
+                    Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                     Box::new(IdentifierTerm::new_basic(
                         get_mock_location(),
                         "AuthorsService1",
                     )),
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::OpenCurlyBrace,
+                    )),
                     vec![],
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::CloseCurlyBrace,
+                    )),
                 ))],
             )));
         }
         if path == get_subdir_file_3_path() {
             return Ok(Box::new(ModuleTerm::new(
                 get_mock_location(),
-                vec![ModuleDefinition::Service(ServiceTerm::new(
+                vec![ModuleDefinition::Service(ServiceDeclarationTerm::new(
                     get_mock_location(),
+                    Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                     Box::new(IdentifierTerm::new_basic(
                         get_mock_location(),
                         "AuthorsService2",
                     )),
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::OpenCurlyBrace,
+                    )),
                     vec![],
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::CloseCurlyBrace,
+                    )),
                 ))],
             )));
         }
@@ -153,13 +180,22 @@ impl SingleModuleParser for MockSingleModuleParser {
                             PunctuationSign::Semicolumn,
                         )),
                     )),
-                    ModuleDefinition::Service(ServiceTerm::new(
+                    ModuleDefinition::Service(ServiceDeclarationTerm::new(
                         get_mock_location(),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                         Box::new(IdentifierTerm::new_basic(
                             get_mock_location(),
                             "BooksService",
                         )),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::OpenCurlyBrace,
+                        )),
                         vec![],
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::CloseCurlyBrace,
+                        )),
                     )),
                 ],
             )));
@@ -167,13 +203,22 @@ impl SingleModuleParser for MockSingleModuleParser {
         if path == get_subdir_subdir_index_path() {
             return Ok(Box::new(ModuleTerm::new(
                 get_mock_location(),
-                vec![ModuleDefinition::Service(ServiceTerm::new(
+                vec![ModuleDefinition::Service(ServiceDeclarationTerm::new(
                     get_mock_location(),
+                    Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                     Box::new(IdentifierTerm::new_basic(
                         get_mock_location(),
                         "AuthorsService2",
                     )),
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::OpenCurlyBrace,
+                    )),
                     vec![],
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::CloseCurlyBrace,
+                    )),
                 ))],
             )));
         }
@@ -210,13 +255,22 @@ impl SingleModuleParser for MockSingleModuleParser {
                             PunctuationSign::Semicolumn,
                         )),
                     )),
-                    ModuleDefinition::Service(ServiceTerm::new(
+                    ModuleDefinition::Service(ServiceDeclarationTerm::new(
                         get_mock_location(),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                         Box::new(IdentifierTerm::new_basic(
                             get_mock_location(),
                             "BooksService",
                         )),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::OpenCurlyBrace,
+                        )),
                         vec![],
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::CloseCurlyBrace,
+                        )),
                     )),
                 ],
             )));
@@ -419,13 +473,22 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
                             PunctuationSign::Semicolumn,
                         )),
                     )),
-                    ModuleDefinition::Service(ServiceTerm::new(
+                    ModuleDefinition::Service(ServiceDeclarationTerm::new(
                         get_mock_location(),
+                        Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                         Box::new(IdentifierTerm::new_basic(
                             get_mock_location(),
                             "BooksService",
                         )),
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::OpenCurlyBrace,
+                        )),
                         vec![],
+                        Box::new(PunctuationSignTerm::new(
+                            get_mock_location(),
+                            PunctuationSign::CloseCurlyBrace,
+                        )),
                     )),
                 ],
             )));
@@ -433,26 +496,44 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
         if path == Path::new("/file2.cds") {
             return Ok(Box::new(ModuleTerm::new(
                 get_mock_location(),
-                vec![ModuleDefinition::Service(ServiceTerm::new(
+                vec![ModuleDefinition::Service(ServiceDeclarationTerm::new(
                     get_mock_location(),
+                    Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                     Box::new(IdentifierTerm::new_basic(
                         get_mock_location(),
                         "AuthorsService1",
                     )),
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::OpenCurlyBrace,
+                    )),
                     vec![],
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::CloseCurlyBrace,
+                    )),
                 ))],
             )));
         }
         if path == Path::new("/file2/index.cds") {
             return Ok(Box::new(ModuleTerm::new(
                 get_mock_location(),
-                vec![ModuleDefinition::Service(ServiceTerm::new(
+                vec![ModuleDefinition::Service(ServiceDeclarationTerm::new(
                     get_mock_location(),
+                    Box::new(KeywordTerm::new(get_mock_location(), Keyword::Service)),
                     Box::new(IdentifierTerm::new_basic(
                         get_mock_location(),
                         "AuthorsService2",
                     )),
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::OpenCurlyBrace,
+                    )),
                     vec![],
+                    Box::new(PunctuationSignTerm::new(
+                        get_mock_location(),
+                        PunctuationSign::CloseCurlyBrace,
+                    )),
                 ))],
             )));
         }

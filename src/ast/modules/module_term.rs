@@ -1,4 +1,6 @@
-use crate::ast::{EntityDeclarationTerm, ImportTerm, Location, ServiceTerm, TypeDeclarationTerm};
+use crate::ast::{
+    EntityDeclarationTerm, ImportTerm, Location, ServiceDeclarationTerm, TypeDeclarationTerm,
+};
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
@@ -13,7 +15,7 @@ pub struct ModuleTerm {
 pub enum ModuleDefinition {
     Entity(EntityDeclarationTerm),
     Type(TypeDeclarationTerm),
-    Service(ServiceTerm),
+    Service(ServiceDeclarationTerm),
     Import(ImportTerm),
 }
 
