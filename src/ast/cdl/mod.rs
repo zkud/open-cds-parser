@@ -3,7 +3,7 @@ mod entity;
 mod identifiers;
 mod modules;
 mod path_term;
-mod service_term;
+mod services;
 mod structure;
 mod types;
 
@@ -12,6 +12,6 @@ pub use entity::*;
 pub use identifiers::*;
 pub use modules::*;
 pub use path_term::*;
-pub use service_term::*;
+pub use services::*;
 pub use structure::*;
 pub use types::*;
