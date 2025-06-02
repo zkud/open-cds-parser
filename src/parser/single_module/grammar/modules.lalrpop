@@ -1,0 +1,54 @@
+pub Module: ModuleTerm = {
+  <start: @L> <definitions:ModuleDefinitions> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ModuleTerm::new(location, definitions)
+  },
+}
+
+ModuleDefinitions: Vec<ModuleDefinition> = {
+  <entity:EntityDeclaration> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Entity(entity));
+    definitions
+  },
+  <service:Service> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Service(service));
+    definitions
+  },
+  <type_definition:TypeDeclaration> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Type(type_definition));
+    definitions
+  },
+  <import:Import> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Import(import));
+    definitions
+  },
+  <definitions:ModuleDefinitions> <entity:EntityDeclaration> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Entity(entity));
+    new_definitions
+  },
+  <definitions:ModuleDefinitions> <service:Service> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Service(service));
+    new_definitions
+  },
+  <definitions:ModuleDefinitions> <type_definition:TypeDeclaration> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Type(type_definition));
+    new_definitions
+  },
+  <definitions:ModuleDefinitions> <import:Import> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Import(import));
+    new_definitions
+  }
+}
+

@@ -1,9 +1,4 @@
-use crate::ast::*;
-
-use super::super::import::ImportTerm;
-use super::service_term::ServiceTerm;
-use super::EntityDeclarationTerm;
-use super::TypeDeclarationTerm;
+use crate::ast::{EntityDeclarationTerm, ImportTerm, Location, ServiceTerm, TypeDeclarationTerm};
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
