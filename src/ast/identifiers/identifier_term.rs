@@ -1,4 +1,4 @@
-use super::super::super::PunctuationSignTerm;
+use super::super::PunctuationSignTerm;
 use super::SubIdentifierTerm;
 use crate::ast::Location;
 use ast_term_derive::ASTTerm;

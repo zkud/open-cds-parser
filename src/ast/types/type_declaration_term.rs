@@ -1,8 +1,8 @@
 use crate::ast::KeywordTerm;
 use crate::ast::PunctuationSignTerm;
 
-use super::super::super::Location;
 use super::super::IdentifierTerm;
+use super::super::Location;
 use super::TypeReferenceTerm;
 use ast_term_derive::ASTTerm;
 
