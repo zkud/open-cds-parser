@@ -100,3 +100,15 @@ ImportIdentifier: ImportIdentifierTerm = {
   },
 }
 
+Path: PathTerm = {
+  <start: @L> <value:r"'[a-zA-Z0-9-/[.]]+'"> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    let trimmed_value = value.to_string().trim_matches('\'').to_string();
+    PathTerm::new(location, PathBuf::from(trimmed_value))
+  },
+  <start: @L> <value:r"`[a-zA-Z0-9-/[.]]+`"> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    let trimmed_value = value.to_string().trim_matches('`').to_string();
+    PathTerm::new(location, PathBuf::from(trimmed_value))
+  }
+}

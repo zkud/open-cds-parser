@@ -1,21 +1,27 @@
 use crate::ast::*;
 
-use super::super::Location;
-use super::ActionDeclarationTerm;
-use super::EntityDeclarationTerm;
-use super::FunctionDeclarationTerm;
-use super::IdentifierTerm;
-use super::TypeDeclarationTerm;
+use crate::ast::ActionDeclarationTerm;
+use crate::ast::EntityDeclarationTerm;
+use crate::ast::FunctionDeclarationTerm;
+use crate::ast::IdentifierTerm;
+use crate::ast::Location;
+use crate::ast::TypeDeclarationTerm;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct ServiceTerm {
+pub struct ServiceDeclarationTerm {
     #[prop]
     location: Location,
     #[subnode_prop]
+    service: Box<KeywordTerm>,
+    #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]
+    open_brace: Box<PunctuationSignTerm>,
+    #[subnode_prop]
     definitions: Vec<ServiceDefinition>,
+    #[subnode_prop]
+    close_brace: Box<PunctuationSignTerm>,
 }
 
 #[derive(PartialEq, Eq, Debug, Clone)]

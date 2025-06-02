@@ -1,4 +1,4 @@
-use super::super::super::KeywordTerm;
+use super::super::KeywordTerm;
 use crate::ast::{Visitable, Visitor};
 
 #[derive(PartialEq, Eq, Debug, Clone)]

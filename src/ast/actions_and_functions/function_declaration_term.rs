@@ -1,24 +1,23 @@
-use crate::ast::Location;
-
-use super::super::super::PunctuationSignTerm;
 use super::super::IdentifierTerm;
+use super::super::KeywordTerm;
+use super::super::ParametersBlockTerm;
+use super::super::PunctuationSignTerm;
 use super::super::ReturnsDeclarationTerm;
-use super::ParametersBlockTerm;
-use crate::ast::basic::KeywordTerm;
+use crate::ast::Location;
 use ast_term_derive::ASTTerm;
 
 #[derive(ASTTerm, PartialEq, Eq, Debug, Clone)]
-pub struct ActionDeclarationTerm {
+pub struct FunctionDeclarationTerm {
     #[prop]
     location: Location,
     #[subnode_prop]
-    action: Box<KeywordTerm>,
+    function: Box<KeywordTerm>,
     #[subnode_prop]
     identifier: Box<IdentifierTerm>,
     #[subnode_prop]
     parameters: Box<ParametersBlockTerm>,
     #[subnode_prop]
-    returns: Option<Box<ReturnsDeclarationTerm>>,
+    returns: Box<ReturnsDeclarationTerm>,
     #[subnode_prop]
     semicolumn: Box<PunctuationSignTerm>,
 }

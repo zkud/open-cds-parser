@@ -1,0 +1,72 @@
+ServiceDeclaration: ServiceDeclarationTerm = {
+  <start: @L> <service:Service> <identifier:Identifier> <open_brace:OpenCurlyBrace> <close_brace:CloseCurlyBrace> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ServiceDeclarationTerm::new(
+      location,
+      Box::new(service),
+      Box::new(identifier),
+      Box::new(open_brace),
+      Vec::new(),
+      Box::new(close_brace),
+    )
+  },
+  <start: @L> <service:Service> <identifier:Identifier> <open_brace:OpenCurlyBrace> <definitions:ServiceDefinitions> <close_brace:CloseCurlyBrace> <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    ServiceDeclarationTerm::new(
+      location,
+      Box::new(service),
+      Box::new(identifier),
+      Box::new(open_brace),
+      definitions,
+      Box::new(close_brace),
+    )
+  },
+}
+
+ServiceDefinitions: Vec<ServiceDefinition> = {
+  <entity:EntityDeclaration> => {
+    let mut definitions: Vec<ServiceDefinition> = Vec::new();
+    definitions.push(ServiceDefinition::Entity(entity));
+    definitions
+  },
+  <action:ActionDeclaration> => {
+    let mut definitions: Vec<ServiceDefinition> = Vec::new();
+    definitions.push(ServiceDefinition::Action(action));
+    definitions
+  },
+  <function:FunctionDeclaration> => {
+    let mut definitions: Vec<ServiceDefinition> = Vec::new();
+    definitions.push(ServiceDefinition::Function(function));
+    definitions
+  },
+  <type_definition:TypeDeclaration> => {
+    let mut definitions: Vec<ServiceDefinition> = Vec::new();
+    definitions.push(ServiceDefinition::Type(type_definition));
+    definitions
+  },
+  <definitions:ServiceDefinitions> <entity:EntityDeclaration> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ServiceDefinition::Entity(entity));
+    new_definitions
+  },
+  <definitions:ServiceDefinitions> <action:ActionDeclaration> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ServiceDefinition::Action(action));
+    new_definitions
+  },
+  <definitions:ServiceDefinitions> <function:FunctionDeclaration> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ServiceDefinition::Function(function));
+    new_definitions
+  },
+  <definitions:ServiceDefinitions> <type_definition:TypeDeclaration> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ServiceDefinition::Type(type_definition));
+    new_definitions
+  },
+}
+

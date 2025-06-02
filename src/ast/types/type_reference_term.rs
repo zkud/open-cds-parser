@@ -1,5 +1,5 @@
-use super::super::super::Location;
 use super::super::IdentifierTerm;
+use super::super::Location;
 use super::ArrayPrefix;
 use ast_term_derive::ASTTerm;
 

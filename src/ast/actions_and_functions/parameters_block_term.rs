@@ -1,7 +1,7 @@
 use crate::ast::Visitable;
 
-use super::super::super::PunctuationSignTerm;
 use super::super::ParamTerm;
+use super::super::PunctuationSignTerm;
 use crate::ast::Location;
 use ast_term_derive::ASTTerm;
 
