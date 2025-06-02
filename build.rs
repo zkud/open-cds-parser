@@ -26,7 +26,7 @@ fn create_concatenated_file(dest_path: &Path, src_dir: &Path) {
         fs::File::create(dest_path).expect("Failed to create cds.lalrpop file");
 
     // Process the header.lalrpop file first
-    let header_path = src_dir.join("./parser/single_module/header.lalrpop");
+    let header_path = src_dir.join("./parser/single_module/grammar/header.lalrpop");
     if header_path.exists() {
         let header_contents = read_file_contents(&header_path);
         write_to_concatenated_file(&mut concatenated_file, &header_contents);
