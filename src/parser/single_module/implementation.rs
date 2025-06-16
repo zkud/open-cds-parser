@@ -25,16 +25,14 @@ impl SingleModuleParser for SingleModuleParserImpl {
 
         let module = match super::cds::ModuleParser::new().parse(&path, &content) {
             Ok(module_ast) => module_ast,
-            Err(lalrpop_auto_generated_error) => {
-                return Err(ParseError::new(
-                    format!(
-                        "File: {} Error: {}",
-                        path.to_string_lossy().to_string(),
-                        lalrpop_auto_generated_error
-                    ),
-                    ParseErrorType::SyntaxError,
-                ))
-            }
+            Err(lalrpop_auto_generated_error) => return Err(ParseError::new(
+                format!(
+                    "Failed to parse the file \"{}\".\nPlease see the internal parser error: \"{}\"",
+                    path.to_string_lossy().to_string(),
+                    lalrpop_auto_generated_error
+                ),
+                ParseErrorType::SyntaxError,
+            )),
         };
 
         Ok(Box::new(module))
