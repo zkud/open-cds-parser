@@ -42,11 +42,7 @@ impl ParseError {
 
 impl fmt::Display for ParseError {
     fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(
-            formatter,
-            "parse error {}, reason: {}",
-            self.error_type, self.message
-        )
+        write!(formatter, "Error({}): {}", self.error_type, self.message)
     }
 }
 
@@ -78,13 +74,10 @@ mod tests {
         let file_error = ParseError::new("file error".to_string(), ParseErrorType::FileIOError);
         let syntax_error = ParseError::new("syntax error".to_string(), ParseErrorType::SyntaxError);
 
-        assert_eq!(
-            format!("{}", file_error),
-            "parse error FileIOError, reason: file error"
-        );
+        assert_eq!(format!("{}", file_error), "Error(FileIOError): file error");
         assert_eq!(
             format!("{}", syntax_error),
-            "parse error SyntaxError, reason: syntax error"
+            "Error(SyntaxError): syntax error"
         );
     }
 }
