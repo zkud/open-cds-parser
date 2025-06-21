@@ -5,8 +5,8 @@ use std::sync::Arc;
 use crate::parser::fs::FileSystem;
 
 use super::super::super::ast::ModuleTerm;
+use super::super::parse_error::ErrorCode;
 use super::super::parse_error::ParseError;
-use super::super::parse_error::ParseErrorType;
 use super::SingleModuleParser;
 
 pub struct SingleModuleParserImpl {
@@ -31,7 +31,7 @@ impl SingleModuleParser for SingleModuleParserImpl {
                     path.to_string_lossy().to_string(),
                     lalrpop_auto_generated_error
                 ),
-                ParseErrorType::SyntaxError,
+                ErrorCode::SyntaxError,
             )),
         };
 

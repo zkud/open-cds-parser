@@ -7,8 +7,8 @@ use crate::ast::*;
 use crate::parser::fs::FileSystem;
 use crate::parser::single_module::SingleModuleParser;
 
+use super::super::super::parse_error::ErrorCode;
 use super::super::super::parse_error::ParseError;
-use super::super::super::parse_error::ParseErrorType;
 use crate::ast::ModuleTerm;
 
 use super::super::MultiModuleParser;
@@ -59,7 +59,7 @@ impl MultiModuleParserImpl {
 
         Err(ParseError::new(
             "Invalid path: ".to_string() + &path.to_string_lossy(),
-            ParseErrorType::FileIOError,
+            ErrorCode::FileIOError,
         ))
     }
 
@@ -130,13 +130,13 @@ impl MultiModuleParserImpl {
                             "Unexpected duplication {}, both file and dir/index.cds are present",
                             path.to_string_lossy().to_string()
                         ),
-                        ParseErrorType::FileIOError,
+                        ErrorCode::FileIOError,
                     ))
                 }
                 _ => {
                     return Err(ParseError::new(
                         format!("Cannot find import {}", path.to_string_lossy().to_string()),
-                        ParseErrorType::FileIOError,
+                        ErrorCode::FileIOError,
                     ))
                 }
             };
