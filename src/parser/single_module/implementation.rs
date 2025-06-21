@@ -1,5 +1,4 @@
 use std::path::Path;
-use std::path::PathBuf;
 use std::sync::Arc;
 
 use crate::parser::fs::FileSystem;
@@ -26,12 +25,12 @@ impl SingleModuleParser for SingleModuleParserImpl {
         let module = match super::cds::ModuleParser::new().parse(&path, &content) {
             Ok(module_ast) => module_ast,
             Err(lalrpop_auto_generated_error) => return Err(ParseError::new(
+                ErrorCode::SyntaxError,
                 format!(
                     "Failed to parse the file \"{}\".\nPlease see the internal parser error: \"{}\"",
                     path.to_string_lossy().to_string(),
                     lalrpop_auto_generated_error
                 ),
-                ErrorCode::SyntaxError,
             )),
         };
 

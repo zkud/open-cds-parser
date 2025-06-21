@@ -58,8 +58,8 @@ impl MultiModuleParserImpl {
         }
 
         Err(ParseError::new(
-            "Invalid path: ".to_string() + &path.to_string_lossy(),
             ErrorCode::FileIOError,
+            "Invalid path: ".to_string() + &path.to_string_lossy(),
         ))
     }
 
@@ -126,17 +126,17 @@ impl MultiModuleParserImpl {
                 }
                 (true, true) => {
                     return Err(ParseError::new(
+                        ErrorCode::FileIOError,
                         format!(
                             "Unexpected duplication {}, both file and dir/index.cds are present",
                             path.to_string_lossy().to_string()
                         ),
-                        ErrorCode::FileIOError,
                     ))
                 }
                 _ => {
                     return Err(ParseError::new(
-                        format!("Cannot find import {}", path.to_string_lossy().to_string()),
                         ErrorCode::FileIOError,
+                        format!("Cannot find import {}", path.to_string_lossy().to_string()),
                     ))
                 }
             };

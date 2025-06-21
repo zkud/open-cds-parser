@@ -10,7 +10,7 @@ pub struct ParseError {
 }
 
 impl ParseError {
-    pub fn new(message: String, error_code: ErrorCode) -> ParseError {
+    pub fn new(error_code: ErrorCode, message: String) -> ParseError {
         ParseError {
             message,
             error_code,
@@ -34,7 +34,7 @@ impl fmt::Display for ParseError {
 
 impl From<FileSystemError> for ParseError {
     fn from(error: FileSystemError) -> ParseError {
-        ParseError::new(format!("{}", error), ErrorCode::FileIOError)
+        ParseError::new(ErrorCode::FileIOError, format!("{}", error))
     }
 }
 
@@ -45,8 +45,8 @@ mod tests {
 
     #[test]
     fn it_inits() {
-        let file_error = ParseError::new("file error".to_string(), ErrorCode::FileIOError);
-        let syntax_error = ParseError::new("syntax error".to_string(), ErrorCode::SyntaxError);
+        let file_error = ParseError::new(ErrorCode::FileIOError, "file error".to_string());
+        let syntax_error = ParseError::new(ErrorCode::SyntaxError, "syntax error".to_string());
 
         assert_eq!(file_error.get_message(), "file error");
         assert_eq!(file_error.get_error_type(), ErrorCode::FileIOError);
@@ -57,8 +57,8 @@ mod tests {
 
     #[test]
     fn it_displayable() {
-        let file_error = ParseError::new("file error".to_string(), ErrorCode::FileIOError);
-        let syntax_error = ParseError::new("syntax error".to_string(), ErrorCode::SyntaxError);
+        let file_error = ParseError::new(ErrorCode::FileIOError, "file error".to_string());
+        let syntax_error = ParseError::new(ErrorCode::SyntaxError, "syntax error".to_string());
 
         assert_eq!(format!("{}", file_error), "Error(FileIOError): file error");
         assert_eq!(

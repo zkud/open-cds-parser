@@ -276,8 +276,8 @@ impl SingleModuleParser for MockSingleModuleParser {
             )));
         }
         return Err(ParseError::new(
-            "Unexpected file".to_string(),
             ErrorCode::FileIOError,
+            "Unexpected file".to_string(),
         ));
     }
 }
@@ -538,8 +538,8 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
             )));
         }
         Err(ParseError::new(
-            "Unexpected file".to_string(),
             ErrorCode::FileIOError,
+            "Unexpected file".to_string(),
         ))
     }
 }
