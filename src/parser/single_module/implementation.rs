@@ -5,8 +5,8 @@ use std::sync::Arc;
 use crate::parser::fs::FileSystem;
 
 use super::super::super::ast::ModuleTerm;
-use super::super::parse_error::ErrorCode;
-use super::super::parse_error::ParseError;
+use super::super::error::ErrorCode;
+use super::super::error::ParseError;
 use super::SingleModuleParser;
 
 pub struct SingleModuleParserImpl {

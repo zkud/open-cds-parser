@@ -1,7 +1,7 @@
 use super::*;
 use crate::ast::*;
+use crate::parser::error::ParseError;
 use crate::parser::fs::MockInMemoryFileSystem;
-use crate::parser::parse_error::ParseError;
 use crate::parser::single_module::SingleModuleParser;
 use crate::parser::ErrorCode;
 use std::collections::HashMap;

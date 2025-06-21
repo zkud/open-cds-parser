@@ -1,6 +1,6 @@
 use std::fmt;
 
-use super::fs::FileSystemError;
+use super::super::fs::FileSystemError;
 
 #[derive(fmt::Debug)]
 pub struct ParseError {

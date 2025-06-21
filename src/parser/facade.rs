@@ -9,7 +9,7 @@ use super::multi_module::*;
 use super::single_module::*;
 
 use super::super::ast::ModuleTerm;
-use super::parse_error::ParseError;
+use super::error::ParseError;
 
 pub struct Parser {
     single_module_parser: Arc<dyn SingleModuleParser>,

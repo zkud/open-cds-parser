@@ -7,8 +7,8 @@ use crate::ast::*;
 use crate::parser::fs::FileSystem;
 use crate::parser::single_module::SingleModuleParser;
 
-use super::super::super::parse_error::ErrorCode;
-use super::super::super::parse_error::ParseError;
+use super::super::super::error::ErrorCode;
+use super::super::super::error::ParseError;
 use crate::ast::ModuleTerm;
 
 use super::super::MultiModuleParser;
