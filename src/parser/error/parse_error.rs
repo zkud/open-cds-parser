@@ -1,26 +1,12 @@
 use std::fmt;
 
 use super::super::fs::FileSystemError;
+use super::ErrorCode;
 
 #[derive(fmt::Debug)]
 pub struct ParseError {
     error_code: ErrorCode,
     message: String,
-}
-
-#[derive(fmt::Debug, Clone, PartialEq)]
-pub enum ErrorCode {
-    FileIOError,
-    SyntaxError,
-}
-
-impl fmt::Display for ErrorCode {
-    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
-        match self {
-            ErrorCode::FileIOError => write!(formatter, "FileIOError"),
-            ErrorCode::SyntaxError => write!(formatter, "SyntaxError"),
-        }
-    }
 }
 
 impl ParseError {
