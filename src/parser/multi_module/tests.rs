@@ -1,9 +1,9 @@
 use super::*;
 use crate::ast::*;
+use crate::parser::error::ParseError;
 use crate::parser::fs::MockInMemoryFileSystem;
-use crate::parser::parse_error::ParseError;
 use crate::parser::single_module::SingleModuleParser;
-use crate::parser::ParseErrorType;
+use crate::parser::ErrorCode;
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
@@ -276,8 +276,8 @@ impl SingleModuleParser for MockSingleModuleParser {
             )));
         }
         return Err(ParseError::new(
+            ErrorCode::FileIOError,
             "Unexpected file".to_string(),
-            ParseErrorType::FileIOError,
         ));
     }
 }
@@ -429,7 +429,7 @@ fn test_parse_invalid_path_in_import() {
 
     assert!(result.is_err());
     let parse_error = result.err().unwrap();
-    assert_eq!(parse_error.get_error_type(), ParseErrorType::FileIOError);
+    assert_eq!(parse_error.get_error_type(), ErrorCode::LinkingError);
 }
 
 struct MockSingleModuleParserForDuplication;
@@ -538,8 +538,8 @@ impl SingleModuleParser for MockSingleModuleParserForDuplication {
             )));
         }
         Err(ParseError::new(
+            ErrorCode::FileIOError,
             "Unexpected file".to_string(),
-            ParseErrorType::FileIOError,
         ))
     }
 }
@@ -570,5 +570,5 @@ fn test_parse_duplication() {
 
     assert!(result.is_err());
     let parse_error = result.err().unwrap();
-    assert_eq!(parse_error.get_error_type(), ParseErrorType::FileIOError);
+    assert_eq!(parse_error.get_error_type(), ErrorCode::LinkingError);
 }
