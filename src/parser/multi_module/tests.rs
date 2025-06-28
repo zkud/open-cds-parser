@@ -429,7 +429,7 @@ fn test_parse_invalid_path_in_import() {
 
     assert!(result.is_err());
     let parse_error = result.err().unwrap();
-    assert_eq!(parse_error.get_error_type(), ErrorCode::FileIOError);
+    assert_eq!(parse_error.get_error_type(), ErrorCode::LinkingError);
 }
 
 struct MockSingleModuleParserForDuplication;
@@ -570,5 +570,5 @@ fn test_parse_duplication() {
 
     assert!(result.is_err());
     let parse_error = result.err().unwrap();
-    assert_eq!(parse_error.get_error_type(), ErrorCode::FileIOError);
+    assert_eq!(parse_error.get_error_type(), ErrorCode::LinkingError);
 }

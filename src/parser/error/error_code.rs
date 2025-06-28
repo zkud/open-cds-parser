@@ -4,6 +4,7 @@ use std::fmt;
 pub enum ErrorCode {
     FileIOError,
     SyntaxError,
+    LinkingError,
 }
 
 impl fmt::Display for ErrorCode {
@@ -11,6 +12,7 @@ impl fmt::Display for ErrorCode {
         match self {
             ErrorCode::FileIOError => write!(formatter, "FileIOError"),
             ErrorCode::SyntaxError => write!(formatter, "SyntaxError"),
+            ErrorCode::LinkingError => write!(formatter, "LinkingError"),
         }
     }
 }
