@@ -44,26 +44,56 @@ mod tests {
     use super::ParseError;
 
     #[test]
-    fn it_inits() {
-        let file_error = ParseError::new(ErrorCode::FileIOError, "file error".to_string());
-        let syntax_error = ParseError::new(ErrorCode::SyntaxError, "syntax error".to_string());
+    fn with_any_possible_error_it_provides_correct_messages() {
+        get_all_possible_parse_errors()
+            .iter()
+            .zip(get_expected_messages())
+            .for_each(|(error, message)| assert_eq!(error.get_message(), message));
+    }
 
-        assert_eq!(file_error.get_message(), "file error");
-        assert_eq!(file_error.get_error_type(), ErrorCode::FileIOError);
+    fn get_all_possible_parse_errors() -> Vec<ParseError> {
+        vec![
+            ParseError::new(ErrorCode::FileIOError, "file error".to_string()),
+            ParseError::new(ErrorCode::SyntaxError, "syntax error".to_string()),
+            ParseError::new(ErrorCode::LinkingError, "linking error".to_string()),
+        ]
+    }
 
-        assert_eq!(syntax_error.get_message(), "syntax error");
-        assert_eq!(syntax_error.get_error_type(), ErrorCode::SyntaxError);
+    fn get_expected_messages() -> [&'static str; 3] {
+        ["file error", "syntax error", "linking error"]
     }
 
     #[test]
-    fn it_displayable() {
-        let file_error = ParseError::new(ErrorCode::FileIOError, "file error".to_string());
-        let syntax_error = ParseError::new(ErrorCode::SyntaxError, "syntax error".to_string());
+    fn with_any_possible_error_it_provides_correct_codes() {
+        get_all_possible_parse_errors()
+            .iter()
+            .zip(get_all_possible_parse_error_codes())
+            .for_each(|(error, code)| assert_eq!(error.get_error_type(), code));
+    }
 
-        assert_eq!(format!("{}", file_error), "Error(FileIOError): file error");
-        assert_eq!(
-            format!("{}", syntax_error),
-            "Error(SyntaxError): syntax error"
-        );
+    fn get_all_possible_parse_error_codes() -> [ErrorCode; 3] {
+        [
+            ErrorCode::FileIOError,
+            ErrorCode::SyntaxError,
+            ErrorCode::LinkingError,
+        ]
+    }
+
+    #[test]
+    fn with_all_possible_error_messages_it_converts_to_string_correctly() {
+        get_all_possible_parse_errors()
+            .iter()
+            .zip(get_all_string_convertions())
+            .for_each(|(error, expected_string_convertion)| {
+                assert_eq!(error.to_string(), expected_string_convertion)
+            });
+    }
+
+    fn get_all_string_convertions() -> [&'static str; 3] {
+        [
+            "Error(FileIOError): file error",
+            "Error(SyntaxError): syntax error",
+            "Error(LinkingError): linking error",
+        ]
     }
 }
