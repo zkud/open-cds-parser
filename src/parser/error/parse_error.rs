@@ -17,11 +17,11 @@ impl ParseError {
         }
     }
 
-    pub fn get_message(&self) -> String {
+    pub fn message(&self) -> String {
         self.message.clone()
     }
 
-    pub fn get_error_type(&self) -> ErrorCode {
+    pub fn error_code(&self) -> ErrorCode {
         self.error_code.clone()
     }
 }
@@ -48,7 +48,7 @@ mod tests {
         get_all_possible_parse_errors()
             .iter()
             .zip(get_expected_messages())
-            .for_each(|(error, message)| assert_eq!(error.get_message(), message));
+            .for_each(|(error, message)| assert_eq!(error.message(), message));
     }
 
     fn get_all_possible_parse_errors() -> Vec<ParseError> {
@@ -68,7 +68,7 @@ mod tests {
         get_all_possible_parse_errors()
             .iter()
             .zip(get_all_possible_parse_error_codes())
-            .for_each(|(error, code)| assert_eq!(error.get_error_type(), code));
+            .for_each(|(error, code)| assert_eq!(error.error_code(), code));
     }
 
     fn get_all_possible_parse_error_codes() -> [ErrorCode; 3] {
