@@ -60,7 +60,7 @@ impl MultiModuleParserImpl {
         Err(ParseError::new(
             ErrorCode::FileIOError,
             format!(
-                "Cannot open file by the path {}, it is neither file nor directory, other file types such as simlinks are not supported",
+                "Cannot open file by the path {}, it is neither file nor directory, other file types such as symlinks are not supported",
                 path.to_string_lossy().to_string()
             )
         ))
