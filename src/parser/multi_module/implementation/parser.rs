@@ -58,8 +58,11 @@ impl MultiModuleParserImpl {
         }
 
         Err(ParseError::new(
-            ErrorCode::LinkingError,
-            "Invalid path: ".to_string() + &path.to_string_lossy(),
+            ErrorCode::FileIOError,
+            format!(
+                "Cannot open file by the path {}, it is neither file nor directory, other file types such as simlinks are not supported",
+                path.to_string_lossy().to_string()
+            )
         ))
     }
 
@@ -89,7 +92,7 @@ impl MultiModuleParserImpl {
         result.insert(absolute_path, (*module_term).clone());
 
         let abstract_paths = self.collect_abstract_paths(path, &module_term)?;
-        let concrete_paths = self.resolve_paths(&abstract_paths)?;
+        let concrete_paths = self.resolve_paths(path, &abstract_paths)?;
         for path in concrete_paths {
             self.parse_single_file(&path, result)?;
         }
@@ -108,7 +111,11 @@ impl MultiModuleParserImpl {
         Ok(using_visitor.modules_to_parse())
     }
 
-    fn resolve_paths(&self, abstract_paths: &[PathBuf]) -> Result<Vec<PathBuf>, ParseError> {
+    fn resolve_paths(
+        &self,
+        parsed_path: &Path,
+        abstract_paths: &[PathBuf],
+    ) -> Result<Vec<PathBuf>, ParseError> {
         let mut concrete_paths = vec![];
 
         for path in abstract_paths {
@@ -128,15 +135,20 @@ impl MultiModuleParserImpl {
                     return Err(ParseError::new(
                         ErrorCode::LinkingError,
                         format!(
-                            "Unexpected duplication {}, both file and dir/index.cds are present",
-                            path.to_string_lossy().to_string()
+                            "Unexpected duplication of the import '{}' from {}.\nBoth file and directory's index.cds are present",
+                            path.to_string_lossy().to_string(),
+                            parsed_path.to_string_lossy().to_string()
                         ),
                     ))
                 }
                 _ => {
                     return Err(ParseError::new(
                         ErrorCode::LinkingError,
-                        format!("Cannot find import {}", path.to_string_lossy().to_string()),
+                        format!(
+                            "Cannot find the import '{}' from {}",
+                            path.to_string_lossy().to_string(),
+                            parsed_path.to_string_lossy().to_string()
+                        ),
                     ))
                 }
             };
