@@ -3,6 +3,7 @@ mod basic_cdl;
 mod entities;
 mod identifiers;
 mod imports;
+mod parsing_error;
 mod services;
 mod structure;
 mod types;
