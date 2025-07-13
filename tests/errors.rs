@@ -31,6 +31,18 @@ Please see the internal parser error:";
 }
 
 #[test]
+#[cfg(target_os = "windows")]
+// I haven't found a way how to avoid path differences in this exact case
+// if you have any ideas, please post an issue
+fn with_linking_errors_it_returns_a_readable_error() {
+    let result = parse_multiple_modules("./tests/projects/errors/srv/linkingerror.cds");
+
+    let expected_error_message="Error(LinkingError): Cannot find the import './tests/projects/errors/srv\\./missingpath' from ./tests/projects/errors/srv/linkingerror.cds";
+    assert_eq!(result.unwrap_err().to_string(), expected_error_message);
+}
+
+#[test]
+#[cfg(not(target_os = "windows"))]
 fn with_linking_errors_it_returns_a_readable_error() {
     let result = parse_multiple_modules("./tests/projects/errors/srv/linkingerror.cds");
 
