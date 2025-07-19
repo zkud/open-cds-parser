@@ -27,7 +27,7 @@ impl Visitor for CounterVisitor {
 }
 
 #[test]
-fn with_correct_and_trivial_cds_it_buids_a_tree() {
+fn with_correct_and_trivial_cds_it_visits_it_correctly() {
     let parser = Parser::new_with_native_fs();
     let path = Path::new("./tests/projects/trivial/srv/books-service.cds");
 
