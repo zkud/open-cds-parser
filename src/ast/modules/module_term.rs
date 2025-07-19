@@ -1,5 +1,6 @@
 use crate::ast::{
-    EntityDeclarationTerm, ImportTerm, Location, ServiceDeclarationTerm, TypeDeclarationTerm,
+    EntityDeclarationTerm, ImportTerm, Location, NamespaceDeclarationTerm, ServiceDeclarationTerm,
+    TypeDeclarationTerm,
 };
 use ast_term_derive::ASTTerm;
 
@@ -13,6 +14,7 @@ pub struct ModuleTerm {
 
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum ModuleDefinition {
+    Namespace(NamespaceDeclarationTerm),
     Entity(EntityDeclarationTerm),
     Type(TypeDeclarationTerm),
     Service(ServiceDeclarationTerm),
@@ -22,6 +24,9 @@ pub enum ModuleDefinition {
 impl Visitable for ModuleDefinition {
     fn accept<V: Visitor>(&self, visitor: &mut V) -> Result<(), V::Error> {
         match self {
+            ModuleDefinition::Namespace(namespace_declaration) => {
+                namespace_declaration.accept(visitor)?
+            }
             ModuleDefinition::Entity(entity_declaration) => entity_declaration.accept(visitor)?,
             ModuleDefinition::Type(type_declaration) => type_declaration.accept(visitor)?,
             ModuleDefinition::Service(service) => service.accept(visitor)?,

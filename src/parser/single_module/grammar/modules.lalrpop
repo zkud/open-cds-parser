@@ -26,6 +26,11 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     definitions.push(ModuleDefinition::Import(import));
     definitions
   },
+  <namespace:NamespaceDeclaration> => {
+    let mut definitions: Vec<ModuleDefinition> = Vec::new();
+    definitions.push(ModuleDefinition::Namespace(namespace));
+    definitions
+  },
   <definitions:ModuleDefinitions> <entity:EntityDeclaration> => {
     let mut new_definitions = Vec::new();
     new_definitions.extend(definitions);
@@ -49,6 +54,12 @@ ModuleDefinitions: Vec<ModuleDefinition> = {
     new_definitions.extend(definitions);
     new_definitions.push(ModuleDefinition::Import(import));
     new_definitions
-  }
+  },
+  <definitions:ModuleDefinitions> <namespace:NamespaceDeclaration> => {
+    let mut new_definitions = Vec::new();
+    new_definitions.extend(definitions);
+    new_definitions.push(ModuleDefinition::Namespace(namespace));
+    new_definitions
+  },
 }
 
