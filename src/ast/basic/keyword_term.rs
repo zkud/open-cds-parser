@@ -12,17 +12,18 @@ pub struct KeywordTerm {
 /// All possible CDS keywords
 #[derive(PartialEq, Eq, Debug, Clone)]
 pub enum Keyword {
-    As,       // as
-    Using,    // using
-    Action,   // action
-    Returns,  // returns
-    Function, // function
-    Array,    // array
-    Many,     // many
-    Of,       // of
-    From,     // from
-    Define,   // define
-    Type,     // type
-    Entity,   // entity
-    Service,  // service
+    As,        // as
+    Using,     // using
+    Action,    // action
+    Returns,   // returns
+    Function,  // function
+    Array,     // array
+    Many,      // many
+    Of,        // of
+    From,      // from
+    Define,    // define
+    Type,      // type
+    Entity,    // entity
+    Service,   // service
+    Namespace, // namespace
 }

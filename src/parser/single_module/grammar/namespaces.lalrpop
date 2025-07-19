@@ -1,0 +1,13 @@
+NamespaceDeclaration: NamespaceDeclarationTerm = {
+    <start: @L> <namespace:Namespace> <identifier:Identifier> <semi:Semicolumn> <end: @R> => {
+        let location = Location::new(start, end, filepath);
+        NamespaceDeclarationTerm::new(
+            location,
+            Box::new(namespace),
+            Box::new(identifier),
+            Box::new(semi)
+        )
+    },
+}
+
+

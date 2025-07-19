@@ -151,3 +151,10 @@ Service: KeywordTerm = {
     KeywordTerm::new(location, Keyword::Service)
   }
 }
+
+Namespace: KeywordTerm = {
+  <start: @L> "namespace" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    KeywordTerm::new(location, Keyword::Namespace)
+  }
+}
