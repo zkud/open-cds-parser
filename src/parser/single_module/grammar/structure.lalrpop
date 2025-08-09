@@ -29,7 +29,7 @@ Fields: Vec<FieldTerm> = {
 }
 
 Field: FieldTerm = {
-    <start: @L> <identifier:Identifier> <colon:Colon> <type_ref:TypeReference> <semi:Semicolumn> <end: @R> => {
+    <start: @L> <key:Key?> <identifier:Identifier> <colon:Colon> <type_ref:TypeReference> <semi:Semicolumn> <end: @R> => {
         let location = Location::new(start, end, filepath);
         FieldTerm::new(
             location,

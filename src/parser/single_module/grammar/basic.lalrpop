@@ -158,3 +158,10 @@ Namespace: KeywordTerm = {
     KeywordTerm::new(location, Keyword::Namespace)
   }
 }
+
+Key: KeywordTerm = {
+  <start: @L> "key" <end: @R> => {
+    let location = Location::new(start, end, filepath);
+    KeywordTerm::new(location, Keyword::Key)
+  }
+}
