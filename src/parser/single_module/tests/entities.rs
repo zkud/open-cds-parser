@@ -330,7 +330,10 @@ fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
             vec![
                 FieldTerm::new(
                     Location::new(38, 52, &get_import_path()),
-                    None,
+                    Some(Box::new(KeywordTerm::new(
+                        Location::new(38, 41, &get_import_path()),
+                        Keyword::Key,
+                    ))),
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(42, 44, &get_import_path()),
                         "id",
