@@ -26,4 +26,5 @@ pub enum Keyword {
     Entity,    // entity
     Service,   // service
     Namespace, // namespace
+    Key,       // key
 }

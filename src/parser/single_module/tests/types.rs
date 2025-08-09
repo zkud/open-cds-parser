@@ -315,6 +315,7 @@ fn build_structured_type_with_single_field_declaration() -> TypeDeclarationTerm 
                 )),
                 vec![FieldTerm::new(
                     Location::new(37, 50, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(37, 41, &get_import_path()),
                         "name",
@@ -378,6 +379,7 @@ fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTe
                 vec![
                     FieldTerm::new(
                         Location::new(37, 50, &get_import_path()),
+                        None,
                         Box::new(IdentifierTerm::new_basic(
                             Location::new(37, 41, &get_import_path()),
                             "name",
@@ -401,6 +403,7 @@ fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTe
                     ),
                     FieldTerm::new(
                         Location::new(63, 76, &get_import_path()),
+                        None,
                         Box::new(IdentifierTerm::new_basic(
                             Location::new(63, 66, &get_import_path()),
                             "age",
@@ -424,6 +427,7 @@ fn build_structured_type_with_multiple_fields_declaration() -> TypeDeclarationTe
                     ),
                     FieldTerm::new(
                         Location::new(89, 103, &get_import_path()),
+                        None,
                         Box::new(IdentifierTerm::new_basic(
                             Location::new(89, 94, &get_import_path()),
                             "email",

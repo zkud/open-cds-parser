@@ -59,7 +59,7 @@ fn with_entity_declaration_with_structure_it_parses() {
 fn with_entity_declaration_with_multiple_fields_it_parses() {
     let source = "
         entity Example {
-            id : UUID;
+            key id : UUID;
             name : String;
             age : Integer;
             email : String;
@@ -272,6 +272,7 @@ fn build_entity_with_structure_declaration() -> EntityDeclarationTerm {
             )),
             vec![FieldTerm::new(
                 Location::new(38, 54, &get_import_path()),
+                None,
                 Box::new(IdentifierTerm::new_basic(
                     Location::new(38, 44, &get_import_path()),
                     "field1",
@@ -308,7 +309,7 @@ fn build_entity_with_structure_declaration() -> EntityDeclarationTerm {
 #[inline]
 fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
     EntityDeclarationTerm::new(
-        Location::new(9, 173, &get_import_path()),
+        Location::new(9, 177, &get_import_path()),
         None,
         Box::new(KeywordTerm::new(
             Location::new(9, 15, &get_import_path()),
@@ -321,135 +322,143 @@ fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
         None,
         Vec::new(),
         Box::new(StructureTerm::new(
-            Location::new(24, 172, &get_import_path()),
+            Location::new(24, 176, &get_import_path()),
             Box::new(PunctuationSignTerm::new(
                 Location::new(24, 25, &get_import_path()),
                 PunctuationSign::OpenCurlyBrace,
             )),
             vec![
                 FieldTerm::new(
-                    Location::new(38, 48, &get_import_path()),
+                    Location::new(38, 52, &get_import_path()),
+                    Some(Box::new(KeywordTerm::new(
+                        Location::new(38, 41, &get_import_path()),
+                        Keyword::Key,
+                    ))),
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(38, 40, &get_import_path()),
+                        Location::new(42, 44, &get_import_path()),
                         "id",
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(41, 42, &get_import_path()),
+                        Location::new(45, 46, &get_import_path()),
                         PunctuationSign::Colon,
                     )),
                     Box::new(TypeReferenceTerm::new(
-                        Location::new(43, 47, &get_import_path()),
+                        Location::new(47, 51, &get_import_path()),
                         None,
                         Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
-                            Location::new(43, 47, &get_import_path()),
+                            Location::new(47, 51, &get_import_path()),
                             "UUID",
                         ))),
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(47, 48, &get_import_path()),
+                        Location::new(51, 52, &get_import_path()),
                         PunctuationSign::Semicolumn,
                     )),
                 ),
                 FieldTerm::new(
-                    Location::new(61, 75, &get_import_path()),
+                    Location::new(65, 79, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(61, 65, &get_import_path()),
+                        Location::new(65, 69, &get_import_path()),
                         "name",
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(66, 67, &get_import_path()),
+                        Location::new(70, 71, &get_import_path()),
                         PunctuationSign::Colon,
                     )),
                     Box::new(TypeReferenceTerm::new(
-                        Location::new(68, 74, &get_import_path()),
+                        Location::new(72, 78, &get_import_path()),
                         None,
                         Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
-                            Location::new(68, 74, &get_import_path()),
+                            Location::new(72, 78, &get_import_path()),
                             "String",
                         ))),
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(74, 75, &get_import_path()),
+                        Location::new(78, 79, &get_import_path()),
                         PunctuationSign::Semicolumn,
                     )),
                 ),
                 FieldTerm::new(
-                    Location::new(88, 102, &get_import_path()),
+                    Location::new(92, 106, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(88, 91, &get_import_path()),
+                        Location::new(92, 95, &get_import_path()),
                         "age",
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(92, 93, &get_import_path()),
+                        Location::new(96, 97, &get_import_path()),
                         PunctuationSign::Colon,
                     )),
                     Box::new(TypeReferenceTerm::new(
-                        Location::new(94, 101, &get_import_path()),
+                        Location::new(98, 105, &get_import_path()),
                         None,
                         Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
-                            Location::new(94, 101, &get_import_path()),
+                            Location::new(98, 105, &get_import_path()),
                             "Integer",
                         ))),
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(101, 102, &get_import_path()),
+                        Location::new(105, 106, &get_import_path()),
                         PunctuationSign::Semicolumn,
                     )),
                 ),
                 FieldTerm::new(
-                    Location::new(115, 130, &get_import_path()),
+                    Location::new(119, 134, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(115, 120, &get_import_path()),
+                        Location::new(119, 124, &get_import_path()),
                         "email",
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(121, 122, &get_import_path()),
+                        Location::new(125, 126, &get_import_path()),
                         PunctuationSign::Colon,
                     )),
                     Box::new(TypeReferenceTerm::new(
-                        Location::new(123, 129, &get_import_path()),
+                        Location::new(127, 133, &get_import_path()),
                         None,
                         Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
-                            Location::new(123, 129, &get_import_path()),
+                            Location::new(127, 133, &get_import_path()),
                             "String",
                         ))),
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(129, 130, &get_import_path()),
+                        Location::new(133, 134, &get_import_path()),
                         PunctuationSign::Semicolumn,
                     )),
                 ),
                 FieldTerm::new(
-                    Location::new(143, 162, &get_import_path()),
+                    Location::new(147, 166, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
-                        Location::new(143, 151, &get_import_path()),
+                        Location::new(147, 155, &get_import_path()),
                         "isActive",
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(152, 153, &get_import_path()),
+                        Location::new(156, 157, &get_import_path()),
                         PunctuationSign::Colon,
                     )),
                     Box::new(TypeReferenceTerm::new(
-                        Location::new(154, 161, &get_import_path()),
+                        Location::new(158, 165, &get_import_path()),
                         None,
                         Box::new(TypeDetailsVariant::Simple(IdentifierTerm::new_basic(
-                            Location::new(154, 161, &get_import_path()),
+                            Location::new(158, 165, &get_import_path()),
                             "Boolean",
                         ))),
                     )),
                     Box::new(PunctuationSignTerm::new(
-                        Location::new(161, 162, &get_import_path()),
+                        Location::new(165, 166, &get_import_path()),
                         PunctuationSign::Semicolumn,
                     )),
                 ),
             ],
             Box::new(PunctuationSignTerm::new(
-                Location::new(171, 172, &get_import_path()),
+                Location::new(175, 176, &get_import_path()),
                 PunctuationSign::CloseCurlyBrace,
             )),
         )),
         Some(Box::new(PunctuationSignTerm::new(
-            Location::new(172, 173, &get_import_path()),
+            Location::new(176, 177, &get_import_path()),
             PunctuationSign::Semicolumn,
         ))),
     )
