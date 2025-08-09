@@ -272,6 +272,7 @@ fn build_entity_with_structure_declaration() -> EntityDeclarationTerm {
             )),
             vec![FieldTerm::new(
                 Location::new(38, 54, &get_import_path()),
+                None,
                 Box::new(IdentifierTerm::new_basic(
                     Location::new(38, 44, &get_import_path()),
                     "field1",
@@ -329,6 +330,7 @@ fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
             vec![
                 FieldTerm::new(
                     Location::new(38, 52, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(42, 44, &get_import_path()),
                         "id",
@@ -352,6 +354,7 @@ fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
                 ),
                 FieldTerm::new(
                     Location::new(65, 79, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(65, 69, &get_import_path()),
                         "name",
@@ -375,6 +378,7 @@ fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
                 ),
                 FieldTerm::new(
                     Location::new(92, 106, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(92, 95, &get_import_path()),
                         "age",
@@ -398,6 +402,7 @@ fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
                 ),
                 FieldTerm::new(
                     Location::new(119, 134, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(119, 124, &get_import_path()),
                         "email",
@@ -421,6 +426,7 @@ fn build_entity_with_multiple_fields_declaration() -> EntityDeclarationTerm {
                 ),
                 FieldTerm::new(
                     Location::new(147, 166, &get_import_path()),
+                    None,
                     Box::new(IdentifierTerm::new_basic(
                         Location::new(147, 155, &get_import_path()),
                         "isActive",

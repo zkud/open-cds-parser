@@ -33,6 +33,7 @@ Field: FieldTerm = {
         let location = Location::new(start, end, filepath);
         FieldTerm::new(
             location,
+	    None,
             Box::new(identifier),
             Box::new(colon),
             Box::new(type_ref),
